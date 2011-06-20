@@ -30,7 +30,7 @@
 /* Website */
 body {
   background-color: #000000;
-  color: #000000;
+  color: #FFFFFF;
   font-family: Verdana, Helvetica, Arial, sans-serif;
   font-size: 80%;
   margin: 0;
@@ -815,6 +815,7 @@ td div.blacklast {color: #FFFFFF; background: url(../images/black-stone-last.png
 /* Container with data und chat container */
 div#channeldata {
   display: inline-block;
+  height: 42.3em;
   margin: 0;
   padding: 0;
   width: 26em;
