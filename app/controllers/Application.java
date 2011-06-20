@@ -23,7 +23,8 @@ public class Application extends Controller {
 
 	public static void watch(int number) {
 		Channel channel = Channel.find("byNumber", number).first();
-		render(channel);
+		int size = channel.game.size.getLength();
+		render(channel, size);
 	}
 
 	public static void restart() {
