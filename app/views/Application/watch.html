@@ -15,119 +15,96 @@
 
 <tr>
   <th></th>
-
-  #{list items: 'A'..'H', as:'letter'}
-    <th>${letter}</th>
-  #{/list}
-
+#{list items: 'A'..'H', as:'l'}
+  <th>${l}</th>
+#{/list}
   <th>J</th>
-
-  #{if channel.game.size > models.Size.s9x9}
-    #{list items: 'K'..'N', as:'letter'}
-      <th>${letter}</th>
-    #{/list}
-  #{/if}
-
-  #{if channel.game.size > models.Size.s13x13}
-    #{list items: 'O'..'T', as:'letter'}
-      <th>${letter}</th>
-    #{/list}
-  #{/if}
-
+#{if size > 9}#{list items: 'K'..'N', as:'l'}
+  <th>${l}</th>
+#{/list}#{/if}
+#{if size > 13}#{list items: 'O'..'T', as:'l'}
+  <th>${l}</th>
+#{/list}#{/if}
   <th></th>
 </tr>
 
-#{list items: (channel.game.size == models.Size.s19x19 ? 19..1 : (channel.game.size == models.Size.s13x13 ? 13..1 : 9..1)), as:'number'}
-
-<tr class="${number_isFirst ? 'first' : (number_isLast ? 'last' : '')}">
-  <th>${number}</th>
-  
-  <td class="${number_isFirst ? 'blanktl' : (number_isLast ? 'blankbl' : 'blankl')}">
-    <div id="A${number}" class="empty"></div>
-  </td>
-
-  <td class="blank">
-    <div id="B${number}" class="empty"></div>
-  </td>
-
-  <td class="${channel.game.size == models.Size.s9x9 && (number == 3 || number == 7) ? 'hoshi' : 'blank'}">
-    <div id="C${number}" class="empty"></div>
-  </td>
-
-  <td class="${channel.game.size != models.Size.s9x9 && (number == 4 || number == 10 || number == 16) ? 'hoshi' : 'blank'}">
-    <div id="D${number}" class="empty"></div>
-  </td>
-
-  <td class="blank">
-    <div id="E${number}" class="empty"></div>
+#{list items: (size == 19 ? 19..1 : (size == 13 ? 13..1 : 9..1)), as:'nr'}
+<tr class="${nr_isFirst ? 'first' : (nr_isLast ? 'last' : '')}">
+  <th>${nr}</th>
+  <td class="${nr_isFirst ? 'blanktl' : (nr_isLast ? 'blankbl' : 'blankl')}">
+    <div id="A${nr}" class="empty"></div>
   </td>
   <td class="blank">
-    <div id="F${number}" class="empty"></div>
+    <div id="B${nr}" class="empty"></div>
   </td>
-
-  <td class="${((channel.game.size == models.Size.s9x9 && (number == 3 || number == 7)) || (channel.game.size == models.Size.s13x13 && number == 7)) ? 'hoshi' : 'blank'}">
-    <div id="G${number}" class="empty"></div>
+  <td class="${size == 9 && (nr == 3 || nr == 7) ? 'hoshi' : 'blank'}">
+    <div id="C${nr}" class="empty"></div>
+  </td>
+  <td class="${size != 9 && (nr == 4 || nr == 10 || nr == 16) ? 'hoshi' : 'blank'}">
+    <div id="D${nr}" class="empty"></div>
   </td>
   <td class="blank">
-    <div id="H${number}" class="empty"></div>
+    <div id="E${nr}" class="empty"></div>
   </td>
-
-  #{if channel.game.size == models.Size.s9x9}
-  <td class="${number_isFirst ? 'blanktr' : (number_isLast ? 'blankbr' : 'blankr')}">
-    <div id="J${number}" class="empty"></div>
+  <td class="blank">
+    <div id="F${nr}" class="empty"></div>
   </td>
-  #{/if}
-
-  #{if channel.game.size > models.Size.s9x9}
-    <td class="blank">
-      <div id="J${number}" class="empty"></div>
-    </td>
-    <td class="${number == 4 || number == 10 || number == 16 ? 'hoshi' : 'blank'}">
-      <div id="K${number}" class="empty"></div>
-    </td>
-    <td class="blank">
-      <div id="L${number}" class="empty"></div>
-    </td>
-    <td class="blank">
-      <div id="M${number}" class="empty"></div>
-    </td>
-
-    #{if channel.game.size == models.Size.s13x13}
-      <td class="${number_isFirst ? 'blanktr' : (number_isLast ? 'blankbr' : 'blankr')}">
-        <div id="N${number}" class="empty"></div>
-      </td>
-    #{/if}
-
-    #{if channel.game.size > models.Size.s13x13}
-      <td class="blank">
-        <div id="N${number}" class="empty"></div>
-      </td>
-      <td class="blank">
-        <div id="O${number}" class="empty"></div>
-      </td>
-      <td class="blank">
-        <div id="P${number}" class="empty"></div>
-      </td>
-      <td class="${number == 4 || number == 10 || number == 16 ? 'hoshi' : 'blank'}">
-        <div id="Q${number}" class="empty"></div>
-      </td>
-      <td class="blank">
-        <div id="R${number}" class="empty"></div>
-      </td>
-      <td class="blank">
-        <div id="S${number}" class="empty"></div>
-      </td>
-    #{/if}
-  
-    #{if channel.game.size == models.Size.s19x19}
-      <td class="${number_isFirst ? 'blanktr' : (number_isLast ? 'blankbr' : 'blankr')}">
-        <div id="T${number}" class="empty"></div>
-      </td>
-    #{/if}
-
-  #{/if}
-
-  <th>${number}</th>
+  <td class="${((size == 9 && (nr == 3 || nr == 7)) || (size == 13 && nr == 7)) ? 'hoshi' : 'blank'}">
+    <div id="G${nr}" class="empty"></div>
+  </td>
+  <td class="blank">
+    <div id="H${nr}" class="empty"></div>
+  </td>
+#{if size == 9}
+  <td class="${nr_isFirst ? 'blanktr' : (nr_isLast ? 'blankbr' : 'blankr')}">
+    <div id="J${nr}" class="empty"></div>
+  </td>
+#{/if}
+#{if size > 9}
+  <td class="blank">
+    <div id="J${nr}" class="empty"></div>
+  </td>
+  <td class="${nr == 4 || nr == 10 || nr == 16 ? 'hoshi' : 'blank'}">
+    <div id="K${nr}" class="empty"></div>
+  </td>
+  <td class="blank">
+    <div id="L${nr}" class="empty"></div>
+  </td>
+  <td class="blank">
+    <div id="M${nr}" class="empty"></div>
+  </td>
+#{if size == 13}
+  <td class="${nr_isFirst ? 'blanktr' : (nr_isLast ? 'blankbr' : 'blankr')}">
+    <div id="N${nr}" class="empty"></div>
+  </td>
+#{/if}
+#{if size > 13}
+  <td class="blank">
+    <div id="N${nr}" class="empty"></div>
+  </td>
+  <td class="blank">
+    <div id="O${nr}" class="empty"></div>
+  </td>
+  <td class="blank">
+    <div id="P${nr}" class="empty"></div>
+  </td>
+  <td class="${nr == 4 || nr == 10 || nr == 16 ? 'hoshi' : 'blank'}">
+    <div id="Q${nr}" class="empty"></div>
+  </td>
+  <td class="blank">
+    <div id="R${nr}" class="empty"></div>
+  </td>
+  <td class="blank">
+    <div id="S${nr}" class="empty"></div>
+  </td>
+#{/if}
+#{if size == 19}
+  <td class="${nr_isFirst ? 'blanktr' : (nr_isLast ? 'blankbr' : 'blankr')}">
+    <div id="T${nr}" class="empty"></div>
+  </td>
+#{/if}
+#{/if}
+  <th>${nr}</th>
 </tr>
 #{/list}
 

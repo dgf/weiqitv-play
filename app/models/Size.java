@@ -6,7 +6,7 @@ import java.util.Map;
 
 public enum Size {
 
-	s9x9("9x9"), s13x13("13x13"), s19x19("19x19");
+	s9x9(9), s13x13(13), s19x19(19);
 
 	private static final Map<String, Size> lookup = new HashMap<String, Size>();
 
@@ -21,12 +21,19 @@ public enum Size {
 
 	private String code;
 
-	Size(String rc) {
-		code = rc;
+	private int length;
+
+	Size(int l) {
+		length = l;
+		code = "" + l + "x" + l;
 	}
 
 	public String getCode() {
 		return code;
+	}
+
+	public int getLength() {
+		return length;
 	}
 
 	@Override
