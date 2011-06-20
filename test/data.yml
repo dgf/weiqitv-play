@@ -1,0 +1,91 @@
+User(admin):
+    fullname: Administrator
+    mail:     admin@g2d.de
+    website:  http://www.g2d.de
+    password: secretAdmin
+    isAdmin:  true
+
+User(aProUser):
+    fullname: Pro User account
+    mail:     prouser@g2d.de
+    website:  http://www.g2d.de
+    password: secretPro
+    isPro:    true
+
+User(aUser):
+    fullname: User account
+    mail:     user@g2d.de
+    website:  http://www.g2d.de
+    password: secretUser
+
+Channel(proGames):
+    title:    pro games
+    author:   admin
+    postedAt: 2011-06-16
+    content:  >
+              view the hotest games
+
+Channel(danGames):
+    title:    amateur games
+    author:   admin
+    postedAt: 2011-06-17
+    content:  >
+              watch dan games
+
+Channel(kyuGames):
+    title:    intermediate games
+    author:   admin
+    postedAt: 2011-06-18
+    content:  >
+              single digit kyu
+
+Comment(proComment1):
+    channel:  proGames
+    author:   Guest
+    postedAt: 2011-06-16
+    content:  >
+              a detailed description about go professionals can be found at wikipedia,
+              see http://en.wikipedia.org/wiki/Go_professional
+              and http://en.wikipedia.org/wiki/Go_players
+
+Comment(proComment2):
+    channel:  proGames
+    author:   Mike
+    postedAt: 2011-06-17
+    content:  >
+              I knew that ...
+
+Comment(proComment3):
+    channel:  proGames
+    postedAt: 2011-06-18
+    author:   Tom
+    content:  >
+              This post is useless ?
+
+Comment(kyuComment3):
+    channel:  kyuGames
+    author:   SingleDigitKyu
+    postedAt: 2011-06-19
+    content:  >
+              I am pleased to see a channel in my playing ability.
+
+GameInfo(aDanPlayer_aKyuPlayer):
+    gameId:
+        server: igs.joyjoy.net
+        onlineId: 37
+    white:
+        name: beginner
+        rank:
+            nr: 1
+            type: DAN
+    black:
+        name: newcomer
+        rank:
+            nr: 3
+            type: KYU
+    size: s19x19
+    komi: 0.5
+    timestamp: 2011-06-19
+    move: 153
+    handicap: 
+        stones: 3

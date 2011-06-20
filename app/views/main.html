@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
+<head>
+
+<title>#{get 'title' /}</title>
+
+<meta charset="${_response_encoding}" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="author" content="dagnu" />
+<meta name="description" content="WeiqiTV: Go, Baduk, Weiqi - on TV" />
+<meta name="publisher" content="dagnu" />
+<meta name="copyright" content="dagnu" />
+<meta name="content-language" content="de" />
+<meta name="language" content="de" />
+<meta name="robots" content="NOINDEX,NOFOLLOW" />
+<meta name="title" content="${title}" />
+
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/screen.css'}" />
+<link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}" />
+
+#{get 'moreStyles' /}
+<script src="@{'/public/javascripts/jquery-1.6.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+#{get 'moreScripts' /}
+</head>
+
+<body>
+  <h1>#{get 'title' /}</h1>
+
+  <!--main container-->
+  <div id="main">
+
+    <!--Zapper-->
+    <div id="zapper">
+      <ul>
+        <li><a name="info"><abbr title="Info">i</abbr> </a>
+          <ul>
+            <li class="branding">0: preview</li>
+            <li class="branding">1-9: channel</li>
+            <li><a href="channel-cnr.html" title="zap to channel $channeltitle">1</a></li>
+            <li class="second"><a href="channel-cnr.html" title="zap to channel $channeltitle">2</a></li>
+            <li class="third"><a href="channel-cnr.html" title="zap to channel $channeltitle">3</a></li>
+            <li><a href="channel-cnr.html" title="zap to channel $channeltitle">4</a></li>
+            <li class="second"><a href="channel-cnr.html" title="zap to channel $channeltitle">5</a></li>
+            <li class="third"><a href="channel-cnr.html" title="zap to channel $channeltitle">6</a></li>
+            <li><a href="channel-cnr.html" title="zap to channel $channeltitle">7</a></li>
+            <li class="second"><a href="channel-cnr.html" title="zap to channel $channeltitle">8</a></li>
+            <li class="third"><a href="channel-cnr.html" title="zap to channel $channeltitle">9</a></li>
+            <li>&nbsp;</li>
+            <li class="second"><a href="channel-cnr.html" title="zap to channel $channeltitle">&#8657;</a></li>
+            <li class="third">&nbsp;</li>
+            <li><a href="channel-cnr.html" title="zap to channel $channeltitle">&#8656;</a></li>
+            <li class="second"><span>0</span></li>
+            <li class="third"><a href="channel-cnr.html" title="zap to channel $channeltitle">&#8658;</a></li>
+            <li>&nbsp;</li>
+            <li class="second"><a href="channel-cnr.html" title="zap to channel $channeltitle">&#8659;</a></li>
+            <li class="third">&nbsp;</li>
+            <li>&nbsp;</li>
+            <li class="branding">WeiqiTV</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <!--/Zapper-->
+
+    <h2>#{get 'page' /}</h2>
+
+    <p id="note">#{get 'note' /}</p>
+
+    <!--content container-->
+    <div id="content">
+      #{doLayout /}
+    </div>
+    <!--/content container-->
+
+  </div>
+  <!--/main container-->
+
+  <!--footer container-->
+  <div id="footer">
+    <p>
+      <code>www.weiqiTV.de</code>
+      - <span lang="en" xml:lang="en">coded by</span> <a href="http://www.dagnu.de" title="zur Webseite von Danny Gräf [Link führt zu externer Seite]">dagnu</a>, <span lang="en"
+        xml:lang="en">designed by</span> <a href="http://www.itib.de" title="zur Webseite von Christiane Müller [Link führt zu externer Seite]">kiskane</a>
+    </p>
+  </div>
+  <!--/footer container-->
+
+</body>
+</html>

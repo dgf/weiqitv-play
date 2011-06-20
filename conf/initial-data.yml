@@ -1,0 +1,159 @@
+User(dagnu):
+    fullname: Danny Gräf
+    mail:     go@dagnu.de
+    website:  http://www.dagnu.de
+    password: secret
+    isAdmin:  true
+    isPro:    true
+
+User(kiskane):
+    fullname: Christiane Müller
+    mail:     kiskane@itib.de
+    website:  http://www.itib.de
+    password: secret
+    isPro:    true
+
+Rank(4k):
+    nr: 4
+    type: KYU
+
+Rank(5k):
+    nr: 5
+    type: KYU
+
+Rank(11k):
+    nr: 11
+    type: KYU
+
+Handicap(h0):
+    stones: 0
+
+Handicap(h3):
+    stones: 3
+
+Handicap(h6):
+    stones: 6
+
+Player(phuzen):
+    name: phuzen
+
+Player(dagnu):
+    name: dagnu
+    user: dagnu
+
+Player(kiskane):
+    name: kiskane
+    user: kiskane
+
+GamePlayer(phuzen4k):
+    player: phuzen
+    rank: 4k
+
+GamePlayer(dagnu5k):
+    player: dagnu
+    rank: 5k
+
+GamePlayer(kiskane11k):
+    player: kiskane
+    rank: 11k
+
+GameServer(igs):
+    server: igs.joyjoy.net
+
+GameInfo(phuzen_dagnu):
+    onlineId: 37
+    server: igs
+    white: phuzen4k
+    black: dagnu5k
+    size: s19x19
+    komi: 6.5
+    timestamp: 2011-06-19
+    turn: 183
+    handicap: h0
+
+GameInfo(dagnu_kiskane):
+    onlineId: 171
+    server: igs
+    white: dagnu5k
+    black: kiskane11k
+    size: s9x9
+    komi: 0.5
+    timestamp: 2011-06-19
+    turn: 13
+    handicap: h3
+
+GameInfo(phuzen_kiskane):
+    onlineId: 437
+    server: igs
+    white: phuzen4k
+    black: kiskane11k
+    size: s13x13
+    komi: 0.5
+    timestamp: 2011-06-19
+    turn: 54
+    handicap: h6
+
+Channel(pro):
+    number:   1
+    title:    Professional
+    author:   dagnu
+    postedAt: 2011-06-16
+    game:     dagnu_kiskane
+    content:  >
+              Professional players have professional dan ranks (abbreviated p), 
+              these ranks are separate from amateur ranks. 
+              1–9p (where 10p is special title)
+
+Channel(dan):
+    number:   2
+    title:    Amateur
+    author:   dagnu
+    postedAt: 2011-06-16
+    game:     phuzen_kiskane
+    content:  >
+              Dan grades (abbreviated d) are considered master grades, 
+              and increase from 1st dan to 7th dan. First dan equals a 
+              black belt in eastern martial arts using this system.
+
+Channel(kyu):
+    number:   3
+    title:    Intermediate
+    author:   kiskane
+    postedAt: 2011-06-17
+    game:     phuzen_dagnu
+    nextGame: dagnu_kiskane
+    observer: 67
+    content:  >
+              Kyu grades (abbreviated k) are considered student grades 
+              and decrease as playing level increases, meaning 
+              1st kyu is the strongest available kyu grade.
+
+Comment(c1):
+    channel:  pro
+    author:   Guest
+    postedAt: 2011-06-17
+    content:  >
+              a detailed description about go professionals can be found at wikipedia,
+              see http://en.wikipedia.org/wiki/Go_professional
+              and http://en.wikipedia.org/wiki/Go_players
+
+Comment(c2):
+    channel:  pro    
+    author:   Mike
+    postedAt: 2011-06-18
+    content:  >
+              I knew that ...
+
+Comment(c3):
+    channel:  pro
+    postedAt: 2011-06-18
+    author:   Tom
+    content:  >
+              This post is useless ?
+
+Comment(c4):
+    channel:  kyu
+    author:   SingleDigitKyu
+    postedAt: 2011-06-17
+    content:  >
+              I am pleased to see a channel in my playing ability.
