@@ -1,0 +1,14 @@
+<tr>
+  <th></th>
+#{list items: 'A'..'H', as:'l'}
+  <th>${l}</th>
+#{/list}
+  <th>J</th>
+#{if _arg > 9}#{list items: 'K'..'N', as:'l'}
+  <th>${l}</th>
+#{/list}#{/if}
+#{if _arg > 13}#{list items: 'O'..'T', as:'l'}
+  <th>${l}</th>
+#{/list}#{/if}
+  <th></th>
+</tr>

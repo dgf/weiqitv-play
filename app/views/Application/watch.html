@@ -17,22 +17,7 @@ size = game.size.getLength();
 
 <table>
 <caption>${game} ${game.size}</caption>
-
-<tr>
-  <th></th>
-#{list items: 'A'..'H', as:'l'}
-  <th>${l}</th>
-#{/list}
-  <th>J</th>
-#{if size > 9}#{list items: 'K'..'N', as:'l'}
-  <th>${l}</th>
-#{/list}#{/if}
-#{if size > 13}#{list items: 'O'..'T', as:'l'}
-  <th>${l}</th>
-#{/list}#{/if}
-  <th></th>
-</tr>
-
+#{board_head size /}
 #{list items: (size == 19 ? 19..1 : (size == 13 ? 13..1 : 9..1)), as:'nr'}
 <tr class="${nr_isFirst ? 'first' : (nr_isLast ? 'last' : '')}">
   <th>${nr}</th>
@@ -112,6 +97,7 @@ size = game.size.getLength();
   <th>${nr}</th>
 </tr>
 #{/list}
+#{board_head size /}
 </table>
 
 <div id="thread">
