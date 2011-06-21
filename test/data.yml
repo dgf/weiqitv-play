@@ -18,74 +18,152 @@ User(aUser):
     website:  http://www.g2d.de
     password: secretUser
 
-Channel(proGames):
+Rank(9p):
+    nr: 9
+    type: PRO
+
+Rank(1p):
+    nr: 1
+    type: PRO
+
+Rank(9d):
+    nr: 9
+    type: DAN
+
+Rank(1d):
+    nr: 1
+    type: DAN
+
+Rank(1k):
+    nr: 1
+    type: KYU
+
+Rank(9k):
+    nr: 9
+    type: KYU
+
+Handicap(h0):
+    stones: 0
+
+Handicap(h3):
+    stones: 3
+
+Handicap(h4):
+    stones: 4
+
+Handicap(h6):
+    stones: 6
+
+Player(beginner):
+    name: beginner
+    user: aProUser
+
+Player(newcomer):
+    name: newcomer
+    user: aUser
+
+GamePlayer(beginner1d):
+    player: beginner
+    rank:   1d
+
+GamePlayer(newcomer1k):
+    player: newcomer
+    rank:   1k
+
+Game(beginner_newcomer):
+    gameId:
+      server:   tv.g2d.de
+      onlineId: 37
+    white:      beginner1d
+    black:      newcomer1k
+    size:       s19x19
+    komi:       0.5
+    timestamp:  2011-06-19
+    move:       153
+    handicap:   h3
+
+Move(bQ17):
+    game: beginner_newcomer
+    player: BLACK
+    coordinate: Q17
+    secondsLeft: 300
+    byoYomi: -1
+
+Move(wD4):
+    game: beginner_newcomer
+    player: WHITE
+    coordinate: D3
+    secondsLeft: 291
+    byoYomi: -1
+
+Criteria(proGames):
+    name: Professional games
+    minRank: 1p
+    maxRank: 9p
+    minHandicap: h0
+    maxHandicap: h4
+
+Criteria(danGames):
+    name: Amateur games
+    minRank: 1d
+    maxRank: 9d
+    minHandicap: h0
+    maxHandicap: h4
+
+Criteria(kyuGames):
+    name: Intermediate games
+    minRank: 9k
+    maxRank: 1k
+    minHandicap: h0
+    maxHandicap: h4
+
+Channel(pro):
+    number:   1
+    criteria: proGames
     title:    pro games
     author:   admin
-    postedAt: 2011-06-16
     content:  >
               view the hotest games
 
-Channel(danGames):
+Channel(dan):
+    number:   2
+    criteria: danGames
     title:    amateur games
+    game:     beginner_newcomer
     author:   admin
-    postedAt: 2011-06-17
     content:  >
               watch dan games
 
-Channel(kyuGames):
+Channel(kyu):
+    number:   3
+    criteria: kyuGames
     title:    intermediate games
     author:   admin
-    postedAt: 2011-06-18
     content:  >
               single digit kyu
 
 Comment(proComment1):
-    channel:  proGames
+    channel:  pro
     author:   Guest
-    postedAt: 2011-06-16
     content:  >
               a detailed description about go professionals can be found at wikipedia,
               see http://en.wikipedia.org/wiki/Go_professional
               and http://en.wikipedia.org/wiki/Go_players
 
 Comment(proComment2):
-    channel:  proGames
+    channel:  pro
     author:   Mike
-    postedAt: 2011-06-17
     content:  >
               I knew that ...
 
 Comment(proComment3):
-    channel:  proGames
-    postedAt: 2011-06-18
+    channel:  pro
     author:   Tom
     content:  >
               This post is useless ?
 
 Comment(kyuComment3):
-    channel:  kyuGames
+    channel:  kyu
     author:   SingleDigitKyu
-    postedAt: 2011-06-19
     content:  >
               I am pleased to see a channel in my playing ability.
-
-GameInfo(aDanPlayer_aKyuPlayer):
-    gameId:
-        server: igs.joyjoy.net
-        onlineId: 37
-    white:
-        name: beginner
-        rank:
-            nr: 1
-            type: DAN
-    black:
-        name: newcomer
-        rank:
-            nr: 3
-            type: KYU
-    size: s19x19
-    komi: 0.5
-    timestamp: 2011-06-19
-    move: 153
-    handicap: 
-        stones: 3

@@ -1,23 +1,17 @@
 package models;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 import play.data.validation.MaxSize;
 import play.data.validation.Required;
-import play.db.jpa.Model;
 
 @Entity
-public class Comment extends Model {
+public class Comment extends TemporalModel {
 
 	@Required
 	public String author;
-
-	@Required
-	public Date postedAt;
 
 	@Lob
 	@Required
@@ -31,12 +25,11 @@ public class Comment extends Model {
 		this.channel = channel;
 		this.author = author;
 		this.content = content;
-		this.postedAt = new Date();
 	}
 
 	@Override
 	public String toString() {
-		return channel + " " + author + " " + postedAt;
+		return channel + " " + author + " " + created;
 	}
 
 }

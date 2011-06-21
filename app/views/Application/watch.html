@@ -7,11 +7,16 @@
 <p style="color: #c00">${flash.error}</p>
 #{/if}
 
+%{
+game = channel.game;
+size = game.size.getLength();
+}%
+
 <!--Channel-->
 <div id="channel">
 
 <table>
-<caption>${channel.game} ${channel.game.size}</caption>
+<caption>${game} ${game.size}</caption>
 
 <tr>
   <th></th>
@@ -107,8 +112,26 @@
   <th>${nr}</th>
 </tr>
 #{/list}
-
 </table>
+
+<div id="thread">
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+  var socket = new WebSocket('@@{ChannelSocket.stream()}');
+  var display = function(event) { $('#thread').append(' ' + event + ''); }
+  socket.onmessage = function(event) { display(event.data); }
+  var listAction = #{jsAction @listTurns(':game') /}
+  $.getJSON(listAction({game: '${game.id}'}), function(data) {
+    var items = [];
+    $.each(data, function(key, val) {
+      $("#" + val.coordinate).removeClass('empty').addClass(val.player.toLowerCase());
+    });
+  });
+});
+
+</script>
+
 </div>
 <!--/Channel-->
 

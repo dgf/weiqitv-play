@@ -1,6 +1,6 @@
 package model;
 
-import models.GameInfo;
+import models.Game;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +18,7 @@ public class GameInfoTest extends UnitTest {
 
 	@Test
 	public void count() throws Exception {
-		assertEquals(1, GameInfo.count());
+		assertEquals(1, Game.count());
 	}
 
 	@Test

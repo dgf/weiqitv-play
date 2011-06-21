@@ -5,27 +5,6 @@
     open('/')
     assertNotTitle('Application error')
 
-    // Check that it is the form
     assertTextPresent('WeiqiTV - Watching Weiqi like on TV (α-Status)')
-    
-    // Submit the form
-    clickAndWait('css=input[type=submit]')
-    
-    // Check the error
-    assertTextPresent('Oops, please enter your name!')
-    
-    // Type the name and submit
-    type('css=input[type=text]', 'bob')
-    clickAndWait('css=input[type=submit]')
-    
-    // Check the result
-    assertTextPresent('Hello bob!')
-    assertTextPresent('The Hello world app.')
-    
-    // Check the back link
-    clickAndWait('link=Back to form')
-    
-    // Home page?
-    assertTextNotPresent('Hello bob!')
 
 #{/selenium}

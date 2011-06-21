@@ -1,7 +1,6 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,10 +10,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import play.data.validation.Required;
-import play.db.jpa.Model;
 
 @Entity
-public class Channel extends Model {
+public class Channel extends TemporalModel {
 
 	@Required
 	@Column(unique = true)
@@ -25,8 +23,8 @@ public class Channel extends Model {
 	public String title;
 
 	@Required
-	@Column(nullable = false)
-	public Date postedAt;
+	@ManyToOne
+	public Criteria criteria;
 
 	@Required
 	@Column(nullable = false)
@@ -39,10 +37,10 @@ public class Channel extends Model {
 	public int observer;
 
 	@ManyToOne
-	public GameInfo game;
+	public Game game;
 
 	@ManyToOne
-	public GameInfo nextGame;
+	public Game nextGame;
 
 	@OneToMany(mappedBy = "channel", cascade = CascadeType.ALL)
 	public List<Comment> comments;
@@ -53,10 +51,9 @@ public class Channel extends Model {
 		this.content = content;
 
 		this.comments = new ArrayList<Comment>();
-		this.postedAt = new Date();
 		this.observer = 0;
-		this.game = new GameInfo();
-		this.nextGame = new GameInfo();
+		this.game = new Game();
+		this.nextGame = new Game();
 	}
 
 	@Override

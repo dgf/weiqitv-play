@@ -13,12 +13,36 @@ User(kiskane):
     password: secret
     isPro:    true
 
+Rank(9p):
+    nr: 9
+    type: PRO
+
+Rank(1p):
+    nr: 1
+    type: PRO
+
+Rank(9d):
+    nr: 9
+    type: DAN
+
+Rank(1d):
+    nr: 1
+    type: DAN
+
+Rank(1k):
+    nr: 1
+    type: KYU
+
 Rank(4k):
     nr: 4
     type: KYU
 
 Rank(5k):
     nr: 5
+    type: KYU
+
+Rank(9k):
+    nr: 9
     type: KYU
 
 Rank(11k):
@@ -30,6 +54,9 @@ Handicap(h0):
 
 Handicap(h3):
     stones: 3
+
+Handicap(h4):
+    stones: 4
 
 Handicap(h6):
     stones: 6
@@ -60,45 +87,77 @@ GamePlayer(kiskane11k):
 GameServer(igs):
     server: igs.joyjoy.net
 
-GameInfo(phuzen_dagnu):
+Game(phuzen_dagnu):
     onlineId: 37
     server: igs
     white: phuzen4k
     black: dagnu5k
     size: s19x19
     komi: 6.5
-    timestamp: 2011-06-19
-    turn: 183
     handicap: h0
+    turn: 183
 
-GameInfo(dagnu_kiskane):
+Move(bQ16):
+    game: phuzen_dagnu
+    player: BLACK
+    coordinate: Q16
+    secondsLeft: 300
+    byoYomi: -1
+
+Move(wD4):
+    game: phuzen_dagnu
+    player: WHITE
+    coordinate: D4
+    secondsLeft: 291
+    byoYomi: -1
+
+Game(dagnu_kiskane):
     onlineId: 171
     server: igs
     white: dagnu5k
     black: kiskane11k
     size: s9x9
     komi: 0.5
-    timestamp: 2011-06-19
     turn: 13
     handicap: h3
 
-GameInfo(phuzen_kiskane):
+Game(phuzen_kiskane):
     onlineId: 437
     server: igs
     white: phuzen4k
     black: kiskane11k
     size: s13x13
     komi: 0.5
-    timestamp: 2011-06-19
     turn: 54
     handicap: h6
+
+Criteria(proGames):
+    name: Professional games
+    minRank: 1p
+    maxRank: 9p
+    minHandicap: h0
+    maxHandicap: h4
+
+Criteria(danGames):
+    name: Amateur games
+    minRank: 1d
+    maxRank: 9d
+    minHandicap: h0
+    maxHandicap: h4
+
+Criteria(kyuGames):
+    name: Intermediate games
+    minRank: 9k
+    maxRank: 1k
+    minHandicap: h0
+    maxHandicap: h4
 
 Channel(pro):
     number:   1
     title:    Professional
-    author:   dagnu
-    postedAt: 2011-06-16
+    criteria: proGames
     game:     dagnu_kiskane
+    author:   dagnu
     content:  >
               Professional players have professional dan ranks (abbreviated p), 
               these ranks are separate from amateur ranks. 
@@ -107,9 +166,9 @@ Channel(pro):
 Channel(dan):
     number:   2
     title:    Amateur
-    author:   dagnu
-    postedAt: 2011-06-16
+    criteria: danGames
     game:     phuzen_kiskane
+    author:   dagnu
     content:  >
               Dan grades (abbreviated d) are considered master grades, 
               and increase from 1st dan to 7th dan. First dan equals a 
@@ -118,9 +177,9 @@ Channel(dan):
 Channel(kyu):
     number:   3
     title:    Intermediate
-    author:   kiskane
-    postedAt: 2011-06-17
+    criteria: kyuGames
     game:     phuzen_dagnu
+    author:   kiskane
     nextGame: dagnu_kiskane
     observer: 67
     content:  >
@@ -131,7 +190,6 @@ Channel(kyu):
 Comment(c1):
     channel:  pro
     author:   Guest
-    postedAt: 2011-06-17
     content:  >
               a detailed description about go professionals can be found at wikipedia,
               see http://en.wikipedia.org/wiki/Go_professional
@@ -140,13 +198,11 @@ Comment(c1):
 Comment(c2):
     channel:  pro    
     author:   Mike
-    postedAt: 2011-06-18
     content:  >
               I knew that ...
 
 Comment(c3):
     channel:  pro
-    postedAt: 2011-06-18
     author:   Tom
     content:  >
               This post is useless ?
@@ -154,6 +210,5 @@ Comment(c3):
 Comment(c4):
     channel:  kyu
     author:   SingleDigitKyu
-    postedAt: 2011-06-17
     content:  >
               I am pleased to see a channel in my playing ability.

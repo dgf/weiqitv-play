@@ -33,7 +33,6 @@ public class ChannelTest extends UnitTest {
 		Channel actual = channels.get(0);
 		assertNotNull(actual);
 		assertEquals("pro games", actual.title);
-		assertNotNull(actual.postedAt);
 	}
 
 	@Test
