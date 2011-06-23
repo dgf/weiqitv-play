@@ -1,0 +1,53 @@
+#{extends 'main.html' /}
+#{set title:'WeiqiTV :: Program Preview' /}
+#{set page:'Program Preview' /}
+#{set note:'WeiqiTV - Watching Weiqi like on TV (α-Status)' /}
+
+#{if channels.size() > 1}
+#{list items:channels, as:'channel'}
+
+<!-- ##################### Channelpreview ###################### -->
+<div class="channelpreview">
+
+  <!--Channel Preview: Content-->
+  <div class="channelpreviewcontent">
+    <h3>
+      ${channel.title} <span>${channel.observer}</span>
+    </h3>
+#{if channel.game}
+%{
+  game = channel.game;
+  percent = Math.round(channel.game.turn / 280 * 100);
+}%
+      <ul>
+        <li class="white">${game.white}</li>
+        <li class="black">${game.black}</li>
+      </ul>
+      <div class="progress">
+        <div class="progressbar">
+          <div class="bar" style="width: ${percent}%;"></div>
+          <div class="percent">${percent}%</div>
+        </div>
+        <div class="turn">${game.turn}</div>
+      </div>
+    #{/if}
+    #{if channel.nextGame}
+        <p class="next">
+          Upcoming:<br /> ${channel.nextGame}
+        </p>
+    #{/if}
+  </div>
+  <!--/Channel Preview: Content-->
+  
+  #{if channel.game}
+    <!--Channel Preview: Link-->
+    <div class="channelzapper">
+      <a href="@{WeiqiTV.watch(channel.number)}" title="zap to channel ${channel.title}">&nbsp;</a>      
+    </div>
+    <!--/Channel Preview: Link-->
+  #{/if}
+</div>
+<!-- ##################### /Channelpreview ##################### -->
+
+#{/list}
+#{/if}

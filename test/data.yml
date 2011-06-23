@@ -30,6 +30,10 @@ Rank(9d):
     nr: 9
     type: DAN
 
+Rank(7d):
+    nr: 7
+    type: DAN
+
 Rank(1d):
     nr: 1
     type: DAN
@@ -54,6 +58,9 @@ Handicap(h4):
 Handicap(h6):
     stones: 6
 
+Player(gonerd):
+    name: gonerd
+
 Player(beginner):
     name: beginner
     user: aProUser
@@ -61,6 +68,10 @@ Player(beginner):
 Player(newcomer):
     name: newcomer
     user: aUser
+
+GamePlayer(gonerd7d):
+    player: gonerd
+    rank:   7d
 
 GamePlayer(beginner1d):
     player: beginner
@@ -78,23 +89,58 @@ Game(beginner_newcomer):
     black:      newcomer1k
     size:       s19x19
     komi:       0.5
-    timestamp:  2011-06-19
     move:       153
     handicap:   h3
 
-Move(bQ17):
-    game: beginner_newcomer
-    player: BLACK
-    coordinate: Q17
+Move(bR16):
+    game:        beginner_newcomer
+    number:      1
+    player:      BLACK
+    coordinate:  R16
     secondsLeft: 300
-    byoYomi: -1
+    byoYomi:     -1
 
 Move(wD4):
-    game: beginner_newcomer
-    player: WHITE
-    coordinate: D3
+    game:        beginner_newcomer
+    number:      2
+    player:      WHITE
+    coordinate:  D3
     secondsLeft: 291
-    byoYomi: -1
+    byoYomi:     -1
+
+Game(gonerd_newcomer):
+    gameId:
+      server:   tv.g2d.de
+      onlineId: 765
+    white:      gonerd7d
+    black:      beginner1d
+    size:       s19x19
+    komi:       0.5
+    move:       153
+    handicap:   h6
+
+Move(bQ16):
+    game:        gonerd_newcomer
+    number:      1
+    player:      BLACK
+    coordinate:  Q16
+    secondsLeft: 300
+    byoYomi:     -1
+
+Move(wK10):
+    game:        gonerd_newcomer
+    number:      2
+    player:      WHITE
+    coordinate:  K10
+    secondsLeft: 291
+    byoYomi:     -1
+
+Pass(bPass):
+    game:        gonerd_newcomer
+    number:      3
+    player:      BLACK
+    secondsLeft: 278
+    byoYomi:     -1
 
 Criteria(proGames):
     name: Professional games
@@ -121,6 +167,7 @@ Channel(pro):
     number:   1
     criteria: proGames
     title:    pro games
+    game:     gonerd_newcomer
     author:   admin
     content:  >
               view the hotest games

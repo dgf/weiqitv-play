@@ -8,15 +8,15 @@ public enum Size {
 
 	s9x9(9), s13x13(13), s19x19(19);
 
-	private static final Map<String, Size> lookup = new HashMap<String, Size>();
+	private static final Map<Integer, Size> lookup = new HashMap<Integer, Size>();
 
 	static {
 		for (Size e : EnumSet.allOf(Size.class))
-			lookup.put(e.getCode(), e);
+			lookup.put(e.getLength(), e);
 	}
 
-	public static Size get(String code) {
-		return lookup.get(code);
+	public static Size get(int length) {
+		return lookup.get(length);
 	}
 
 	private String code;

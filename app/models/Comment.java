@@ -1,6 +1,7 @@
 package models;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
@@ -18,7 +19,7 @@ public class Comment extends TemporalModel {
 	@MaxSize(1000)
 	public String content;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	public Channel channel;
 
 	public Comment(Channel channel, String author, String content) {

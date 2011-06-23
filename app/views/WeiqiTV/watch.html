@@ -1,0 +1,200 @@
+#{extends 'main.html' /}
+#{set title: channel.title /}
+#{set page: channel.title /}
+#{set note:'WeiqiTV - Watching Weiqi like on TV (α-Status)' /}
+
+%{
+game = channel.game;
+size = game.size.getLength();
+}%
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+  // create event socket callback
+  var display = function(event) { 
+    $('#output').prepend(event + '\n');
+    eval("e = " + event);
+    $("#" + e.coordinate).removeClass('empty black white ko')
+      .addClass(e.player.toLowerCase())
+      .append(e.number);
+  }
+  
+  // create web socket
+  var socket = new WebSocket('@@{ChannelSocket.stream()}');
+  socket.onmessage = function(event) { display(event.data); }
+
+  // initialize board
+  var listAction = #{jsAction @listTurns(':game') /}
+  $.getJSON(listAction({game: '${game.id}'}), function(data) {
+    var items = [];
+    $.each(data, function(key, val) {
+      $("#" + val.coordinate).removeClass('empty').addClass(val.player.toLowerCase());
+    });
+  });
+});
+
+</script>
+
+<!--Channel-->
+<div id="channel">
+
+<table>
+<caption>${game} ${game.size}</caption>
+#{board/head size /}
+#{list items: (size == 19 ? 19..1 : (size == 13 ? 13..1 : 9..1)), as:'nr'}
+<tr class="${nr_isFirst ? 'first' : (nr_isLast ? 'last' : '')}">
+  <th>${nr}</th>
+  <td class="${nr_isFirst ? 'blanktl' : (nr_isLast ? 'blankbl' : 'blankl')}">
+    <div id="A${nr}" class="empty"></div>
+  </td>
+  <td class="blank">
+    <div id="B${nr}" class="empty"></div>
+  </td>
+  <td class="${size == 9 && (nr == 3 || nr == 7) ? 'hoshi' : 'blank'}">
+    <div id="C${nr}" class="empty"></div>
+  </td>
+  <td class="${size != 9 && (nr == 4 || nr == 10 || nr == 16) ? 'hoshi' : 'blank'}">
+    <div id="D${nr}" class="empty"></div>
+  </td>
+  <td class="blank">
+    <div id="E${nr}" class="empty"></div>
+  </td>
+  <td class="blank">
+    <div id="F${nr}" class="empty"></div>
+  </td>
+  <td class="${((size == 9 && (nr == 3 || nr == 7)) || (size == 13 && nr == 7)) ? 'hoshi' : 'blank'}">
+    <div id="G${nr}" class="empty"></div>
+  </td>
+  <td class="blank">
+    <div id="H${nr}" class="empty"></div>
+  </td>
+#{if size == 9}
+  <td class="${nr_isFirst ? 'blanktr' : (nr_isLast ? 'blankbr' : 'blankr')}">
+    <div id="J${nr}" class="empty"></div>
+  </td>
+#{/if}
+#{if size > 9}
+  <td class="blank">
+    <div id="J${nr}" class="empty"></div>
+  </td>
+  <td class="${nr == 4 || nr == 10 || nr == 16 ? 'hoshi' : 'blank'}">
+    <div id="K${nr}" class="empty"></div>
+  </td>
+  <td class="blank">
+    <div id="L${nr}" class="empty"></div>
+  </td>
+  <td class="blank">
+    <div id="M${nr}" class="empty"></div>
+  </td>
+#{if size == 13}
+  <td class="${nr_isFirst ? 'blanktr' : (nr_isLast ? 'blankbr' : 'blankr')}">
+    <div id="N${nr}" class="empty"></div>
+  </td>
+#{/if}
+#{if size > 13}
+  <td class="blank">
+    <div id="N${nr}" class="empty"></div>
+  </td>
+  <td class="blank">
+    <div id="O${nr}" class="empty"></div>
+  </td>
+  <td class="blank">
+    <div id="P${nr}" class="empty"></div>
+  </td>
+  <td class="${nr == 4 || nr == 10 || nr == 16 ? 'hoshi' : 'blank'}">
+    <div id="Q${nr}" class="empty"></div>
+  </td>
+  <td class="blank">
+    <div id="R${nr}" class="empty"></div>
+  </td>
+  <td class="blank">
+    <div id="S${nr}" class="empty"></div>
+  </td>
+#{/if}
+#{if size == 19}
+  <td class="${nr_isFirst ? 'blanktr' : (nr_isLast ? 'blankbr' : 'blankr')}">
+    <div id="T${nr}" class="empty"></div>
+  </td>
+#{/if}
+#{/if}
+  <th>${nr}</th>
+</tr>
+#{/list}
+#{board/head size /}
+</table>
+
+</div>
+<!--/Channel-->
+
+<!--Channeldata-->
+<div id="channeldata">
+
+<!--Data-->
+<div id="data">
+
+<!--Data for White-->
+
+<div id="white">
+<h3>${channel.game.white}</h3>
+<ul>
+ <li>$whitetime</li>
+ <li><dl>
+      <dt>$whiteprisoners</dt>
+        <dd class="first">1</dd>
+
+        <dd>2</dd>
+        <dd>3</dd>
+        <dd>4</dd>
+        <dd>5</dd>
+      </dl></li>
+</ul>
+</div>
+<!--/Data for White-->
+
+<!--Data for Black-->
+<div id="black">
+<h3>${channel.game.black}</h3>
+<ul>
+ <li>$blacktime</li>
+ <li><dl>
+      <dt>$blackprisoners</dt>
+
+        <dd class="first">1</dd>
+        <dd>2</dd>
+        <dd>3</dd>
+        <dd>4</dd>
+        <dd>5</dd>
+      </dl></li>
+
+</ul>
+</div>
+<!--/Data for Black-->
+
+<p>
+Komi: ${game.komi}<br />
+Byo: $byo<br />
+frei / gewertet<br />
+<a href="@@{Admin.observe(channel.number, game.onlineId)}">game: ${game.onlineId}</a>
+</p>
+</div>
+<!--/Data-->
+
+<!--Chat-->
+<div id="chat">
+<h3>$chattitle</h3>
+
+<form action="" method="get" enctype="text/plain" accept-charset="ISO-8859-1">
+<fieldset>
+ <p><label for="output">Dialog:</label>
+    <textarea id="output" name="output" rows="5" cols="30" readonly="readonly" disabled="disabled"></textarea></p>
+ <p><label for="input">Your Comment:</label>
+    <textarea id="input" name="input" rows="1" cols="30"></textarea></p>
+</fieldset>
+</form>
+</div>
+
+<!--/Chat-->
+
+</div>
+<!--/Channeldata-->

@@ -9,10 +9,13 @@ import play.db.jpa.Model;
 public class GameServer extends Model {
 
 	@Required
-	public String server;
+	public String host;
+
+	@Required
+	public int port;
 
 	@Override
 	public String toString() {
-		return server;
+		return host + ":" + port;
 	}
 }

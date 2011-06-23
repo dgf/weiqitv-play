@@ -1,4 +1,5 @@
 User(dagnu):
+    name:     dagnu
     fullname: Danny Gräf
     mail:     go@dagnu.de
     website:  http://www.dagnu.de
@@ -7,6 +8,7 @@ User(dagnu):
     isPro:    true
 
 User(kiskane):
+    name:     kiskane
     fullname: Christiane Müller
     mail:     kiskane@itib.de
     website:  http://www.itib.de
@@ -85,7 +87,8 @@ GamePlayer(kiskane11k):
     rank: 11k
 
 GameServer(igs):
-    server: igs.joyjoy.net
+    host: igs.joyjoy.net
+    port: 7777
 
 Game(phuzen_dagnu):
     onlineId: 37
@@ -98,6 +101,7 @@ Game(phuzen_dagnu):
     turn: 183
 
 Move(bQ16):
+    number: 1
     game: phuzen_dagnu
     player: BLACK
     coordinate: Q16
@@ -105,6 +109,7 @@ Move(bQ16):
     byoYomi: -1
 
 Move(wD4):
+    number: 2
     game: phuzen_dagnu
     player: WHITE
     coordinate: D4

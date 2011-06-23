@@ -11,48 +11,14 @@ public class Handicap extends Model {
 	@Required
 	public int stones;
 
-	public Handicap() {
-		this(0);
-	}
-
-	public Handicap(int stones) {
-		setHandicap(stones);
-	}
-
-	public Handicap(String stones) {
-		setHandicap(stones);
-	}
-
-	// @Override
-	public int compareTo(Handicap o) {
-		return Integer.valueOf(stones).compareTo(o.stones);
-	}
-
-	// @Override
-	public String getName() {
-		return "handicap";
-	}
-
-	// @Override
-	public String getValue() {
-		return "" + stones;
-	}
-
-	public void setHandicap(int h) {
-		if (h == 0 || (h > 1 && h < 10)) {
-			this.stones = h;
-		} else {
-			throw new IllegalArgumentException("unsupported handicap: " + h);
+	public static Handicap getHandicap(int stones) {
+		Handicap handicap = find("stones", stones).first();
+		if (handicap == null) {
+			handicap = new Handicap();
+			handicap.stones = stones;
+			handicap.save();
 		}
-	}
-
-	public void setHandicap(String stones) {
-		setHandicap(Integer.parseInt(stones));
-	}
-
-	// @Override
-	public void setValue(String value) {
-		setHandicap(value);
+		return handicap;
 	}
 
 	@Override

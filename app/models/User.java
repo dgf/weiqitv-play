@@ -7,9 +7,20 @@ import play.data.validation.Password;
 import play.data.validation.Required;
 import play.data.validation.URL;
 import play.db.jpa.Model;
+import play.modules.search.Field;
+import play.modules.search.Indexed;
 
+@Indexed
 @Entity
 public class User extends Model {
+
+	@Field
+	@Required
+	public String name;
+
+	@Field
+	@Required
+	public String fullname;
 
 	@Email
 	@Required
@@ -18,9 +29,6 @@ public class User extends Model {
 	@Password
 	@Required
 	public String password;
-
-	@Required
-	public String fullname;
 
 	@URL
 	public String website;
@@ -35,8 +43,8 @@ public class User extends Model {
 		this.fullname = fullname;
 	}
 
-	public static User connect(String mail, String password) {
-		return find("byMailAndPassword", mail, password).first();
+	public static User connect(String name, String password) {
+		return find("byNameAndPassword", name, password).first();
 	}
 
 	@Override

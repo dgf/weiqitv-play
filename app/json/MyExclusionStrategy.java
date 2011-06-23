@@ -1,6 +1,6 @@
 package json;
 
-import annotations.Hide;
+import annotations.JSONhide;
 
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
@@ -12,6 +12,6 @@ public class MyExclusionStrategy implements ExclusionStrategy {
 	}
 
 	public boolean shouldSkipField(FieldAttributes f) {
-		return f.getAnnotation(Hide.class) != null;
+		return f.getAnnotation(JSONhide.class) != null;
 	}
 }
