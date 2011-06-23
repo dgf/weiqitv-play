@@ -1037,12 +1037,12 @@ div#content div#data h3 {
   border-bottom: 1px solid #CFCFCF;
   border-left: 1px solid #FFFFFF;
   height: auto;
-  min-height: 3em;
   margin: 0;
-  overflow: auto;
   padding: 0;
   width: auto;
 }
+
+#content div#admin div#panel {min-height: 3em;}
 
 /* Admin buttons for game interaction */
 #content div#admin div#panel ul {
@@ -1060,6 +1060,8 @@ div#content div#data h3 {
   margin: 0;
   padding: 0;
 }
+
+#content div#chat div#comments {height: 10em; overflow: auto;}
 
 /* Chat on game channels: list with comments */
 #content div#chat div#comments ul {padding: .5em;}
