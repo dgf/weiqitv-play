@@ -743,24 +743,48 @@ div#result {
 table {
   background-color: #D0B499;
   border-collapse: collapse;
-  border: 1px solid #D09E6D;
+  border-top: 0;
+  border-right: 1px solid #CFCFCF;
+  border-bottom: 1px solid #CFCFCF;
+  border-left: 1px solid #FFFFFF;
   color: #000000;
   margin: auto;
+  padding: 0;
+}
+
+caption {
+  background-color: #D0B499;
+  border-top: 1px solid #FFFFFF;
+  border-bottom: 1px solid #CFCFCF;
+  border-top-right-radius: .5em;
+  border-top-left-radius: .5em;
+  -moz-border-radius-topright: .5em;
+  -moz-border-radius-topleft: .5em;
+  -webkit-border-top-right-radius: .5em;
+  -webkit-border-top-left-radius: .5em;
+  color: #000000;
+  font-size: 1em;
+  font-weight: bold;
+  line-height: 1em;
+  margin: 0;
   padding: 0;
   width: auto;
 }
 
 th {
+  background-color: #EFEFEF;
   border: 0;
   border-collapse: collapse;
   font-size: .8em;
   font-weight: normal;
   height: 1em;
   margin: 0;
-  padding: 0;
+  padding: 0 .3em;
   text-align: center;
-  max-width: 3%;
+  width: 1em;
 }
+
+th + th {padding: .2em .3em;}
 
 td {
   border: 0;
@@ -801,7 +825,7 @@ td.blankl {background: url(../images/blank-l.png) top left no-repeat;}
 td.blankr {background: url(../images/blank-r.png) top left no-repeat;}
 
 /* Go board - placing the stone */
-td div {height: 23px; width: 23px; text-align: center; font-size: .8em; line-height: 23px; vertical-align: top;}
+td div {font-size: .8em; height: 23px; line-height: 22px; text-align: center; width: 23px;}
 td div.empty {background-image: none;}
 
 /* Go board - placing the stone: white */
@@ -815,6 +839,9 @@ td div.whitelast {color: #000000; background: url(../images/white-stone-last.png
 
 /* Go board - placing the stone: last stone by black */
 td div.blacklast {color: #FFFFFF; background: url(../images/black-stone-last.png) top left no-repeat;}
+
+/* Go board - placing the stone: dead stone */
+.dead {opacity: 0.6;}
 
 /* Game result */
 div#result {
@@ -835,7 +862,6 @@ div#result {
 /* Container with data und chat container */
 div#channeldata {
   display: block;
-  height: auto;
   margin: 0;
   padding: 0;
   width: auto;
@@ -863,7 +889,6 @@ div#chat {
   -webkit-border-bottom-right-radius: .5em;
   -webkit-border-bottom-left-radius: .5em;
   color: #000000;
-  float: none;
   margin: 0;
   min-height: 10em;
   padding: .5em .5em 0 .5em;
@@ -907,7 +932,6 @@ div#data div#black {
   -moz-border-radius-bottomright: .5em;
   -webkit-border-top-right-radius: .5em;
   -webkit-border-bottom-right-radius: .5em;
-  width: 48.5%;
 }
 
 /* Player statistics: Header */
@@ -915,9 +939,9 @@ div#content div#data h3 {
   border-bottom: 1px solid #CFCFCF;
   float: none;
   font-size: 1em;
-  line-height: 25px;
+  line-height: 23px;
   margin: 0 0 .5em 0;
-  padding: 0 0 0 30px;
+  padding: 0 0 0 25px;
   width: auto;
 }
 
