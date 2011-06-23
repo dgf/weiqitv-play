@@ -546,7 +546,6 @@ div#admin ul li a:focus {display: inline;}
   font-weight: bold;
   margin: 0;
   padding: 0 .5em .2em .5em;
-  float: none;
 }
 
 /* viewers on channel */
@@ -732,9 +731,10 @@ div#result {
   -webkit-border-bottom-left-radius: .5em;
   color: #000000;
   display: block;
-  margin: 0;
   height: auto;
+  margin: 0;
   padding: .5em;
+  position: relative;
   text-align: left;
   width: auto;
 }
@@ -848,22 +848,24 @@ div#result {
   font-weight: bold;
   height: 14em;
   left: 50%;
-  margin: -8em 0 0 -8em;
+  margin: -7em 0 0 -8em;
   opacity: 0.9;
   padding: 1em;
   position: absolute;
   text-align: center;
   top: 50%;
+  visibility: hidden;
   width: 14em;
 }
 
 /* ######################## CHANNEL DATA ######################## */
 
-/* Container with data und chat container */
+/* Container with data, admin and chat container */
 div#channeldata {
   display: block;
   margin: 0;
   padding: 0;
+  vertical-align: top;
   width: auto;
 }
 
@@ -890,15 +892,15 @@ div#chat {
   -webkit-border-bottom-left-radius: .5em;
   color: #000000;
   margin: 0;
-  min-height: 10em;
-  padding: .5em .5em 0 .5em;
+  height: auto;
+  padding: .5em;
   text-align: left;
   width: auto;
 }
 
 div#admin {min-height: 2em; margin-top: 1em;}
 
-div#chat {min-height: 10em; margin-top: 1em;}
+div#chat {margin-top: 1em;}
 
 /* Player statistics */
 div#data div {
@@ -937,7 +939,6 @@ div#data div#black {
 /* Player statistics: Header */
 div#content div#data h3 {
   border-bottom: 1px solid #CFCFCF;
-  float: none;
   font-size: 1em;
   line-height: 23px;
   margin: 0 0 .5em 0;
@@ -1004,32 +1005,64 @@ div#content div#data h3 {
 
 #content div#data p {clear: both; background-color: #EFEFEF; text-align: center; margin-bottom: .5em;}
 
+/* Chat on game channels: header */
+#content div#admin h3,
+#content div#chat h3 {
+  background-color: #D0B499;
+  border-top: 1px solid #FFFFFF;
+  border-bottom: 1px solid #CFCFCF;
+  border-top-right-radius: .5em;
+  border-top-left-radius: .5em;
+  -moz-border-radius-topright: .5em;
+  -moz-border-radius-topleft: .5em;
+  -webkit-border-top-right-radius: .5em;
+  -webkit-border-top-left-radius: .5em;
+  color: #000000;
+  font-size: 1em;
+  font-weight: bold;
+  line-height: 23px;
+  margin: 0;
+  padding: 0 .5em;
+  width: auto;
+}
+
+/* Admin panel and game channel chat: inner containers */
+#content div#admin div#panel,
+#content div#chat div#comments {
+  border-top: 0;
+  border-right: 1px solid #CFCFCF;
+  border-bottom: 1px solid #CFCFCF;
+  border-left: 1px solid #FFFFFF;
+  height: auto;
+  min-height: 3em;
+  margin: 0;
+  overflow: scroll;
+  padding: 0;
+  width: auto;
+}
+
 /* Admin buttons for game interaction */
-#admin ul {
+#content div#admin div#panel ul {
   float: left;
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: .5em 0;
   text-align: center;
   width: 100%;
 }
 
-#admin ul li {
+#content div#admin div#panel ul li {
   display: inline;
   font-size: 1em;
   margin: 0;
   padding: 0;
 }
 
-#content div#chat h3 {
-  border-bottom: 1px solid #CFCFCF;
-  float: none;
-  font-size: 1em;
-  line-height: 1.2em;
-  margin: 0;
-  padding: 0;
-  width: auto;
-}
+/* Chat on game channels: list with comments */
+#content div#chat div#comments ul {padding: .5em;}
+
+#content div#chat div#comments ul li.igs {color: #505050;}
+#content div#chat div#comments ul li.wqtv {color: #D09E6D;}
 
 /* ############################################################## */
 /* ########################### FOOTER ########################### */
