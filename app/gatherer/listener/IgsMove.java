@@ -2,20 +2,19 @@ package gatherer.listener;
 
 import static gatherer.IgsConstants.*;
 import gatherer.TelnetOutputListener;
+import gatherer.WeiqiStorage;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import jobs.CreateMoves;
 import models.BlackOrWhite;
-import models.Move;
 import play.Logger;
 
 // 15 Game 43 I: ryoken (14 359 4) vs rokujidoo (15 598 24)
+// 15 Game 530 I: k4152 (16 533 7) vs kindol (2 531 19)
 // 15 269(W): J9 K9
 // 2
 // 1 8
@@ -26,8 +25,6 @@ public class IgsMove implements TelnetOutputListener {
 	private boolean retrieveMoveList;
 
 	private GameStatus status;
-
-	private List<Move> moves;
 
 	private static final Pattern GAME_STATUS = Pattern.compile("15 Game +" //
 			+ "([0-9]+) " // game nr
@@ -41,8 +38,11 @@ public class IgsMove implements TelnetOutputListener {
 			+ "([0-9]+)\\((W|B)\\): " // move nr and player
 			+ "([A-HJ-T0-9 ]+)"); // coordinates
 
-	public IgsMove(String server) {
+	private final WeiqiStorage storage;
+
+	public IgsMove(String server, WeiqiStorage storage) {
 		this.server = server;
+		this.storage = storage;
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class IgsMove implements TelnetOutputListener {
 				return true;
 			} else if (line.equals(OK) //
 					|| line.equals(MOVE_LIST_OK)) { // all moves readed
-				new CreateMoves(server, status.getId(), moves).now();
+				Logger.debug("move list of %s retrieved", status.getId());
 				retrieveMoveList = false;
 				return false;
 			}
@@ -63,7 +63,6 @@ public class IgsMove implements TelnetOutputListener {
 		// Game 13 I: SHIGE08 (2 546 17) vs YMT123 (3 462 1)
 		Matcher gsm = GAME_STATUS.matcher(line);
 		if (gsm.matches()) {
-			moves = new ArrayList<Move>();
 			status = getGameStatus(gsm);
 			Logger.debug("game status: " + status);
 			retrieveMoveList = true;
@@ -73,9 +72,29 @@ public class IgsMove implements TelnetOutputListener {
 		// 15 269(W): J9 K9
 		Matcher mpm = MOVE_PATTERN.matcher(line);
 		if (mpm.matches()) {
-			Move turn = getMove(mpm);
-			moves.add(turn);
-			Logger.debug("move %s", line);
+
+			int number = Integer.parseInt(mpm.group(1));
+			BlackOrWhite player = BlackOrWhite.get(mpm.group(2));
+
+			List<String> list = Arrays.asList(mpm.group(3).split(" "));
+			LinkedList<String> stones = new LinkedList<String>(list);
+			String coordinate = stones.remove();
+			String[] prisoners = stones.toArray(new String[] {});
+
+			GamePlayerStatus gps;
+			if (player == BlackOrWhite.WHITE) {
+				gps = status.getWhite();
+			} else {
+				gps = status.getBlack();
+			}
+
+			String game = status.getId();
+			int seconds = gps.getSeconds();
+			int byoYomi = gps.getByo();
+
+			String id = storage.addMove(server, game, number, player, coordinate, //
+					seconds, byoYomi, prisoners);
+			Logger.debug("game %s move %s", id, line);
 			return true;
 		}
 
@@ -88,36 +107,13 @@ public class IgsMove implements TelnetOutputListener {
 		GamePlayerStatus white = new GamePlayerStatus();
 		white.setSeconds(Integer.parseInt(gsm.group(3)));
 		white.setPrisoners(Integer.parseInt(gsm.group(4)));
-		white.setByoYomi(Integer.parseInt(gsm.group(5)));
+		white.setByo(Integer.parseInt(gsm.group(5)));
 
 		GamePlayerStatus black = new GamePlayerStatus();
-		black.setSeconds(Integer.parseInt(gsm.group(3)));
-		black.setPrisoners(Integer.parseInt(gsm.group(4)));
-		black.setByoYomi(Integer.parseInt(gsm.group(5)));
+		black.setSeconds(Integer.parseInt(gsm.group(7)));
+		black.setPrisoners(Integer.parseInt(gsm.group(8)));
+		black.setByo(Integer.parseInt(gsm.group(9)));
 
 		return new GameStatus(id, white, black);
-	}
-
-	private Move getMove(Matcher mpm) {
-		Move move = new Move();
-		move.number = Integer.parseInt(mpm.group(1));
-
-		BlackOrWhite player = BlackOrWhite.get(mpm.group(2));
-		GamePlayerStatus gps;
-		if (player == BlackOrWhite.WHITE) {
-			gps = status.getWhite();
-		} else {
-			gps = status.getBlack();
-		}
-
-		List<String> list = Arrays.asList(mpm.group(3).split(" "));
-		LinkedList<String> stones = new LinkedList<String>(list);
-		move.player = player;
-		move.coordinate = stones.remove();
-		move.secondsLeft = gps.getSeconds();
-		move.byoYomi = gps.getByoYomi();
-		move.prisoners = stones.toArray(new String[] {});
-
-		return move;
 	}
 }

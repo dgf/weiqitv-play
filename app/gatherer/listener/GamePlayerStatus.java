@@ -7,12 +7,12 @@ class GamePlayerStatus {
 
 	private int seconds;
 
-	private int byoYomi;
+	private int byo;
 
 	private int prisoners;
 
-	public int getByoYomi() {
-		return byoYomi;
+	public int getByo() {
+		return byo;
 	}
 
 	public int getPrisoners() {
@@ -23,8 +23,8 @@ class GamePlayerStatus {
 		return seconds;
 	}
 
-	public void setByoYomi(int byoYomi) {
-		this.byoYomi = byoYomi;
+	public void setByo(int byo) {
+		this.byo = byo;
 	}
 
 	public void setPrisoners(int prisoners) {

@@ -5,14 +5,12 @@ import javax.persistence.ManyToOne;
 
 import play.data.validation.Required;
 import play.db.jpa.Model;
-import play.modules.search.Field;
-import play.modules.search.Indexed;
 
-@Indexed
+//@Indexed
 @Entity
 public class Player extends Model {
 
-	@Field
+	// @Field
 	@Required
 	public String name;
 

@@ -16,7 +16,7 @@ import java.util.Set;
 
 import play.Logger;
 
-public class IgsGatherer implements Gatherer {
+public class IgsGatherer implements WeiqiGameGatherer {
 
 	private TelnetUtil telnet;
 
@@ -28,8 +28,11 @@ public class IgsGatherer implements Gatherer {
 
 	private int port;
 
-	public IgsGatherer() {
-		Logger.info("start gatherer");
+	private final WeiqiStorage storage;
+
+	public IgsGatherer(WeiqiStorage storage) {
+		Logger.info("start IGS gatherer");
+		this.storage = storage;
 	}
 
 	@Override
@@ -142,8 +145,8 @@ public class IgsGatherer implements Gatherer {
 		send(TOGGLE_CLIENT, true);
 		telnet.readUntil(OK);
 
-		telnet.addOutputListener(new IgsGame(server));
-		telnet.addOutputListener(new IgsMove(server));
+		telnet.addOutputListener(new IgsGame(server, storage));
+		telnet.addOutputListener(new IgsMove(server, storage));
 		telnet.addOutputListener(new IgsMatch(this));
 		telnet.addOutputListener(new IgsConnect());
 		telnet.addOutputListener(new IgsDisconnect());

@@ -7,18 +7,16 @@ import play.data.validation.Password;
 import play.data.validation.Required;
 import play.data.validation.URL;
 import play.db.jpa.Model;
-import play.modules.search.Field;
-import play.modules.search.Indexed;
 
-@Indexed
+//@Indexed
 @Entity
 public class User extends Model {
 
-	@Field
+	// @Field
 	@Required
 	public String name;
 
-	@Field
+	// @Field
 	@Required
 	public String fullname;
 

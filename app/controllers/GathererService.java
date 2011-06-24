@@ -1,17 +1,22 @@
 package controllers;
 
-import gatherer.Gatherer;
 import gatherer.IgsGatherer;
+import gatherer.WeiqiGameGatherer;
+import gatherer.WeiqiStorage;
+import jobs.CreateGame;
+import jobs.CreateMove;
+import models.BlackOrWhite;
 import play.Logger;
 
-public class GathererService {
+public class GathererService implements WeiqiStorage {
 
 	public static GathererService instance = new GathererService();
 
-	private Gatherer igs = new IgsGatherer();
+	private final WeiqiGameGatherer igs;
 
 	private GathererService() {
 		Logger.debug("start gatherer service");
+		igs = new IgsGatherer(this);
 	}
 
 	public void startGatherer(String server, int port) {
@@ -37,5 +42,21 @@ public class GathererService {
 
 	public void observe(String number) {
 		igs.observce(number);
+	}
+
+	@Override
+	public String addGame(String server, String onlineId, String white, String wRank, String black,
+			String bRank, int turn, int size, int handicap, float komi, int byo, int observer) {
+		new CreateGame(server, onlineId, white, wRank, black, bRank, turn, size, handicap, komi,
+				byo, observer).now();
+		return onlineId;
+	}
+
+	@Override
+	public String addMove(String server, String onlineId, int number, BlackOrWhite player,
+			String coordinate, int seconds, int byo, String[] prisoners) {
+		new CreateMove(server, onlineId, number, player, coordinate, seconds, byo, prisoners)
+				.now();
+		return onlineId;
 	}
 }

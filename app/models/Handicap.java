@@ -3,10 +3,9 @@ package models;
 import javax.persistence.Entity;
 
 import play.data.validation.Required;
-import play.db.jpa.Model;
 
 @Entity
-public class Handicap extends Model {
+public class Handicap extends AbstractCriterion<Handicap> {
 
 	@Required
 	public int stones;
@@ -24,5 +23,10 @@ public class Handicap extends Model {
 	@Override
 	public String toString() {
 		return "" + stones;
+	}
+
+	@Override
+	public int compareTo(Handicap o) {
+		return Integer.valueOf(stones).compareTo(o.stones);
 	}
 }

@@ -4,7 +4,7 @@ package gatherer;
 /**
  * gather games and save those in storage
  */
-public interface Gatherer {
+public interface WeiqiGameGatherer {
 
 	void connect();
 

@@ -10,11 +10,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import play.data.validation.Required;
-import play.modules.search.Field;
-import play.modules.search.Indexed;
 import annotations.JSONhide;
 
-@Indexed
+//@Indexed
 @Entity
 public class Channel extends TemporalModel {
 
@@ -22,7 +20,7 @@ public class Channel extends TemporalModel {
 	@Column(unique = true)
 	public int number;
 
-	@Field
+	// @Field
 	@Required
 	@Column(unique = true, nullable = false)
 	public String title;

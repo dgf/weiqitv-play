@@ -6,8 +6,6 @@ import play.Logger;
 
 public class IgsVerboseTraffic implements TelnetOutputListener {
 
-	private boolean retrieveConnect;
-
 	@Override
 	public boolean notify(String line) {
 		if (line == null || line.equals("") || line.equals(OK)) {

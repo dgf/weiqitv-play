@@ -99,6 +99,7 @@ Game(phuzen_dagnu):
     komi: 6.5
     handicap: h0
     turn: 183
+    byo: 12
 
 Move(bQ16):
     number: 1
@@ -125,6 +126,7 @@ Game(dagnu_kiskane):
     komi: 0.5
     turn: 13
     handicap: h3
+    byo: 12
 
 Move(wD5):
     number: 1
@@ -200,6 +202,7 @@ Game(phuzen_kiskane):
     komi: 0.5
     turn: 54
     handicap: h6
+    byo: 12
 
 Criteria(proGames):
     name: Professional games

@@ -5,11 +5,8 @@ import java.util.List;
 
 import models.Channel;
 import models.Move;
-import models.Player;
 import models.SearchResult;
-import models.User;
 import play.Logger;
-import play.modules.search.Search;
 
 public class WeiqiTV extends AbstractController {
 
@@ -32,9 +29,9 @@ public class WeiqiTV extends AbstractController {
 	public static void search(String query) {
 		System.out.println("search " + query);
 		SearchResult sr = new SearchResult();
-		sr.channels = Search.search("title:" + query, Channel.class).fetch();
-		sr.users = Search.search("name:" + query, User.class).fetch();
-		sr.players = Search.search("name:" + query, Player.class).fetch();
+		// sr.channels = Search.search("title:" + query, Channel.class).fetch();
+		// sr.users = Search.search("name:" + query, User.class).fetch();
+		// sr.players = Search.search("name:" + query, Player.class).fetch();
 		renderJSONHide(sr);
 	}
 

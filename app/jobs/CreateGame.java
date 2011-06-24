@@ -1,7 +1,5 @@
 package jobs;
 
-import java.util.regex.Matcher;
-
 import models.Game;
 import models.GamePlayer;
 import models.GameServer;
@@ -14,45 +12,69 @@ import play.jobs.Job;
 
 public class CreateGame extends Job {
 
-	private final Matcher m;
 	private final String server;
+	private final String onlineId;
+	private final String white;
+	private final String wRank;
+	private final String black;
+	private final String bRank;
+	private final int turn;
+	private final int size;
+	private final int handicap;
+	private final float komi;
+	private final int byo;
+	private final int observer;
 
-	public CreateGame(String server, Matcher m) {
+	public CreateGame(String server, String onlineId, String white, String wRank, String black,
+			String bRank, int turn, int size, int handicap, float komi, int byoYomi, int observer) {
 		this.server = server;
-		this.m = m;
+		this.onlineId = onlineId;
+		this.white = white;
+		this.wRank = wRank;
+		this.black = black;
+		this.bRank = bRank;
+		this.turn = turn;
+		this.size = size;
+		this.handicap = handicap;
+		this.komi = komi;
+		this.byo = byoYomi;
+		this.observer = observer;
 	}
 
 	@Override
 	public void doJob() throws Exception {
-		String id = m.group(1);
 
-		GameServer gameServer = GameServer.find("host", server).<GameServer> first();
-		Game actual = Game.find("byServerAndOnlineId", gameServer, id).first();
+		GameServer gameServer = GameServer.findByHost(server);
+
+		Game actual = Game.findByServerAndOnlineId(gameServer, onlineId);
+
 		if (actual != null) {
 			Logger.error("game %s %s exists", actual.server, actual.onlineId);
 			return;
 		}
 
-		Game g = new Game();
-		g.server = gameServer;
-		g.onlineId = id;
+		Game game = new Game();
+		game.server = gameServer;
+		game.onlineId = onlineId;
 
-		GamePlayer white = new GamePlayer();
-		white.player = Player.getPlayer(m.group(2));
-		white.rank = Rank.getRank(m.group(3));
-		g.white = white;
+		GamePlayer w = new GamePlayer();
+		w.player = Player.getPlayer(white);
+		w.rank = Rank.getRank(wRank);
+		game.white = w;
 
-		GamePlayer black = new GamePlayer();
-		black.player = Player.getPlayer(m.group(4));
-		black.rank = Rank.getRank(m.group(5));
-		g.black = black;
+		GamePlayer b = new GamePlayer();
+		b.player = Player.getPlayer(black);
+		b.rank = Rank.getRank(bRank);
+		game.black = b;
 
-		g.turn = Integer.parseInt(m.group(6));
-		g.size = Size.get(Integer.parseInt(m.group(7)));
-		g.handicap = Handicap.getHandicap(Integer.parseInt(m.group(8)));
-		g.komi = Float.parseFloat(m.group(9));
+		game.turn = turn;
+		game.size = Size.get(size);
+		game.handicap = Handicap.getHandicap(handicap);
+		game.komi = komi;
+		game.byo = byo;
+		game.observer = observer;
 
-		Logger.debug("save game %s", g);
-		g.save();
+		Logger.debug("save game %s", game);
+		game.save();
 	}
 }

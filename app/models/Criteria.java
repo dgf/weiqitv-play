@@ -32,4 +32,18 @@ public class Criteria extends Model {
 	public String toString() {
 		return name + ": " + minRank + "-" + maxRank + " " + minHandicap + "-" + maxHandicap;
 	}
+
+	public boolean matches(Game game) {
+		if (minRank.le(game.black.rank) //
+				&& maxRank.ge(game.black.rank) //
+				&& minRank.le(game.white.rank) //
+				&& maxRank.ge(game.white.rank) //
+				&& minHandicap.le(game.handicap) //
+				&& maxHandicap.ge(game.handicap) //
+		) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

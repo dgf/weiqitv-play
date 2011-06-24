@@ -34,4 +34,8 @@ public class Move extends Turn {
 		Logger.debug("create game move %s", this);
 		ChannelList.publishEvent(game, me);
 	}
+
+	public static Move findByGameAndNumber(Game game, int number) {
+		return Move.find("byGameAndNumber", game, number).<Move> first();
+	}
 }
