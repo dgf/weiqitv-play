@@ -53,7 +53,6 @@ public class IgsGame implements TelnetOutputListener {
 
 		Matcher m = GAME_PATTERN.matcher(line);
 		if (m.matches() == false) {
-			Logger.error("unknown game line %s", line);
 			return false;
 		} else { // store game
 			String id = m.group(1);

@@ -77,7 +77,19 @@ public class Game extends TemporalModel {
 
 	@PostPersist
 	public void updateNextChannelGames() {
-		Logger.info("game created %s", this);
+		Logger.info("%s created", this);
+		// List<Criteria> criteriaList = Criteria.all().fetch();
+		// for (Criteria criteria : criteriaList) {
+		// if (criteria.matches(this)) {
+		// List<Channel> channels = criteria.channels;
+		// for (Channel channel : channels) {
+		// channel.nextGame = this;
+		// Logger.info("%s is the next game on channel %s", toString(),
+		// channel.title);
+		// channel.save();
+		// }
+		// }
+		// }
 	}
 
 	/**
