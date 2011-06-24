@@ -26,26 +26,12 @@
 
 <body>
   <h1>
-    <a href="@{Admin.restart}">
-      ${play.configuration.get("application.name")}${play.mode}
-    </a>
+    <a href="@{WeiqiTV.index}">${play.configuration.get("application.name")}</a>
+    <a href="@{Admin.reset}">${play.mode}</a>
   </h1>
-  <a href="@{WeiqiTV.games}">games</a>
-  <a href="@{Admin.start}">start</a>
-  <a href="@{Admin.stop}">stop</a>
-
-  <div id="messages">
-#{if flash.error}
-    <p style="color: #c00">${flash.error}</p>
-#{/if}
-#{if flash.success}
-    <p style="color: #cFF00">${flash.success}</p>
-#{/if}
-  </div>
 
   <!--main container-->
   <div id="main">
-
     <!--Zapper-->
     <div id="zapper">
       <ul>
@@ -85,6 +71,16 @@
 
     <!--content container-->
     <div id="content">
+
+      <div id="messages">
+#{if flash.error}
+        <p style="color: #c00">${flash.error}</p>
+#{/if}
+#{if flash.success}
+        <p style="color: #cFF00">${flash.success}</p>
+#{/if}
+      </div>
+
       #{doLayout /}
     </div>
     <!--/content container-->

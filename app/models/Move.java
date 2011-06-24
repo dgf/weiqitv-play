@@ -23,13 +23,15 @@ public class Move extends Turn {
 	}
 
 	@PostPersist
-	public void updateChannel() {
-		Logger.debug("create game move %s", this);
+	public void updateChannelSockets() {
 		MoveEvent me = new MoveEvent();
 		me.coordinate = coordinate;
 		me.player = player;
 		me.number = number;
-		// me.byoYomi = byoYomi;
-		ChannelList.instance.event.publish(me);
+		me.prisoners = prisoners;
+		me.time = secondsLeft;
+
+		Logger.debug("create game move %s", this);
+		ChannelList.publishEvent(game, me);
 	}
 }

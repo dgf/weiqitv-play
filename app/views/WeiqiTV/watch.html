@@ -9,27 +9,60 @@ size = game.size.getLength();
 }%
 
 <script type="text/javascript">
-$(document).ready(function() {
 
-  // create event socket callback
-  var display = function(event) { 
-    $('#output').prepend(event + '\n');
-    eval("e = " + event);
-    $("#" + e.coordinate).removeClass('empty black white ko')
-      .addClass(e.player.toLowerCase())
-      .append(e.number);
+function viewPrisoners (move, prisoners) {
+// 	alert(player + "|" + prisoners + "|");
+  if(prisoners != undefined) {
+    alert(move.number + " " + move.player + " " + prisoners + " " + count);
+    var color = move.player.toLowerCase();
+//     alert("type " + typeof prisoners);
+//     var ps = prisoners.split(" ");
+    for(p in prisoners) {
+      $('#' + prisoners[p]).removeClass('white black').addClass('empty').empty();
+      var dl = $('#' + color + "Prisoners");
+      var dt = $('#' + color + "PrisonerCount");
+      var count = parseInt(dt.text());
+//       alert(color + ' count = ' + count)
+      if(count == 0) {
+        dl.append('<dd class="first"></dd>');
+      } else {
+        dl.append('<dd></dd>');
+      }
+      dt.text(count + 1);
+    };
   }
-  
+}
+
+$(document).ready(function() {
+  // create event socket callback
+  var display = function(event) {
+    $('#commentList').append('<li class="igs">' + event + '</li>');
+      eval("e = " + event);
+      var player = e.player.toLowerCase();
+      $("#" + e.coordinate).removeClass('empty black white ko')
+        .addClass(player).append(e.number);
+      $('#' + player + "Time").empty().append(e.time);
+      if(e.prisoners && e.prisoners.length) {
+        viewPrisoners(e, e.prisoners)
+      }
+  }
+
   // create web socket
-  var socket = new WebSocket('@@{ChannelSocket.stream()}');
+  var socket = new WebSocket('@@{ChannelSocket.stream(channel.number)}');
   socket.onmessage = function(event) { display(event.data); }
 
   // initialize board
   var listAction = #{jsAction @listTurns(':game') /}
   $.getJSON(listAction({game: '${game.id}'}), function(data) {
-    var items = [];
     $.each(data, function(key, val) {
-      $("#" + val.coordinate).removeClass('empty').addClass(val.player.toLowerCase());
+//       eval("val = " + data);
+      var player = val.player.toLowerCase();
+      // set actual move
+      $("#" + val.coordinate).removeClass('empty').addClass(player);
+      // blank prisoners
+      if(val.prisoners && val.prisoners.length) { // array detection ?
+        viewPrisoners(val, val.prisoners);
+      }
     });
   });
 });
@@ -145,16 +178,8 @@ $results</p>
 <div id="white">
 <h3>${channel.game.white}</h3>
 <ul>
- <li>$whitetime</li>
- <li><dl>
-      <dt>$whiteprisoners</dt>
-        <dd class="first">1</dd>
-
-        <dd>2</dd>
-        <dd>3</dd>
-        <dd>4</dd>
-        <dd>5</dd>
-      </dl></li>
+ <li id="whiteTime">0</li>
+ <li><dl id="whitePrisoners"><dt  id="whitePrisonerCount">0</dt></dl></li>
 </ul>
 </div>
 <!--/Data for White-->
@@ -163,17 +188,8 @@ $results</p>
 <div id="black">
 <h3>${channel.game.black}</h3>
 <ul>
- <li>$blacktime</li>
- <li><dl>
-      <dt>$blackprisoners</dt>
-
-        <dd class="first">1</dd>
-        <dd>2</dd>
-        <dd>3</dd>
-        <dd>4</dd>
-        <dd>5</dd>
-      </dl></li>
-
+ <li id="blackTime">0</li>
+ <li><dl id="blackPrisoners"><dt id="blackPrisonerCount">0</dt></dl></li>
 </ul>
 </div>
 <!--/Data for Black-->
@@ -204,7 +220,7 @@ frei / gewertet<br />
 <div id="chat">
 <h3>Game comments</h3>
 <div id="comments">
-<ul>
+<ul id="commentList">
  <li class="igs">1. Text vom IGS-User</li>
  <li class="igs">2. Text vom IGS-User</li>
  <li class="wqtv">1. Text vom WeiqiTV-User</li>

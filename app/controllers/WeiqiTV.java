@@ -1,13 +1,14 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import models.Channel;
-import models.Game;
 import models.Move;
 import models.Player;
 import models.SearchResult;
 import models.User;
+import play.Logger;
 import play.modules.search.Search;
 
 public class WeiqiTV extends AbstractController {
@@ -24,7 +25,8 @@ public class WeiqiTV extends AbstractController {
 	}
 
 	public static void listTurns(int id) {
-		renderJSONHide(Move.find("game_id", id).fetch());
+		Logger.debug("list %s turns", id);
+		renderJSONHide(Move.find("game_id = ? order by number", id).fetch());
 	}
 
 	public static void search(String query) {
@@ -36,9 +38,26 @@ public class WeiqiTV extends AbstractController {
 		renderJSONHide(sr);
 	}
 
-	public static void games() {
-		List<Game> games = Game.findAll();
-		render(games);
+	public static void listPrisoners(int id) {
+		List<Move> moves = Move.find("game_id", id).fetch();
+		List<String[]> bp = new ArrayList<String[]>();
+		List<String[]> wp = new ArrayList<String[]>();
+		for (Move move : moves) {
+			if (move.prisoners != null && move.prisoners.length != 0) {
+				switch (move.player) {
+				case BLACK:
+					bp.add(move.prisoners);
+					break;
+				case WHITE:
+					wp.add(move.prisoners);
+					break;
+				default:
+					break;
+				}
+			}
+		}
+
+		renderJSON(wp);
 	}
 
 }

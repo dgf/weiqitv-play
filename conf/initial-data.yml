@@ -108,23 +108,88 @@ Move(bQ16):
     secondsLeft: 300
     byoYomi: -1
 
-Move(wD4):
+Move(wD3):
     number: 2
     game: phuzen_dagnu
     player: WHITE
-    coordinate: D4
+    coordinate: D3
     secondsLeft: 291
     byoYomi: -1
 
 Game(dagnu_kiskane):
-    onlineId: 171
     server: igs
+    onlineId: 171
     white: dagnu5k
     black: kiskane11k
     size: s9x9
     komi: 0.5
     turn: 13
     handicap: h3
+
+Move(wD5):
+    number: 1
+    game: dagnu_kiskane
+    player: BLACK
+    coordinate: D5
+    secondsLeft: 10
+    byoYomi: -1
+
+Move(wE6):
+    number: 2
+    game: dagnu_kiskane
+    player: BLACK
+    coordinate: E6
+    secondsLeft: 9
+    byoYomi: -1
+
+Move(wF5):
+    number: 3
+    game: dagnu_kiskane
+    player: BLACK
+    coordinate: F5
+    secondsLeft: 8
+    byoYomi: -1
+
+Move(wD4):
+    number: 4
+    game: dagnu_kiskane
+    player: BLACK
+    coordinate: D4
+    secondsLeft: 7
+    byoYomi: -1
+
+Move(wF4):
+    number: 5
+    game: dagnu_kiskane
+    player: BLACK
+    coordinate: F4
+    secondsLeft: 6
+    byoYomi: -1
+
+Move(wE5):
+    number: 6
+    game: dagnu_kiskane
+    player: WHITE
+    coordinate: E5
+    secondsLeft: 10
+    byoYomi: -1
+
+Move(wE4):
+    number: 6
+    game: dagnu_kiskane
+    player: WHITE
+    coordinate: E4
+    secondsLeft: 9
+    byoYomi: -1
+
+Move(wE3):
+    number: 7
+    game: dagnu_kiskane
+    player: BLACK
+    coordinate: E3
+    prisoners: E5 E4
+    secondsLeft: 5
+    byoYomi: -1
 
 Game(phuzen_kiskane):
     onlineId: 437

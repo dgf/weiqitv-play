@@ -7,6 +7,7 @@ import gatherer.listener.IgsGame;
 import gatherer.listener.IgsMatch;
 import gatherer.listener.IgsMove;
 import gatherer.listener.IgsResult;
+import gatherer.listener.IgsVerboseTraffic;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -146,7 +147,8 @@ public class IgsGatherer implements Gatherer {
 		telnet.addOutputListener(new IgsMatch(this));
 		telnet.addOutputListener(new IgsConnect());
 		telnet.addOutputListener(new IgsDisconnect());
-		telnet.addOutputListener(new IgsResult());
+		telnet.addOutputListener(new IgsResult(server));
+		telnet.addOutputListener(new IgsVerboseTraffic());
 
 		telnet.start();
 		Logger.debug("gathering " + this);

@@ -1,5 +1,9 @@
 package jobs;
 
+import java.util.List;
+
+import models.Channel;
+import models.ChannelList;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
 
@@ -7,11 +11,11 @@ import play.jobs.OnApplicationStart;
 public class Bootstrap extends Job {
 
 	public void doJob() {
-		// Check if the database is empty
-		// if (User.count() == 0) {
-		// Fixtures.deleteDatabase();
-		// Fixtures.loadModels("initial-data.yml");
-		// }
+		// create a socket for each channel
+		List<Channel> channels = Channel.findAll();
+		for (Channel channel : channels) {
+			ChannelList.instance.addStream(channel);
+		}
 	}
 
 }

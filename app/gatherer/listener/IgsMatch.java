@@ -1,7 +1,6 @@
 package gatherer.listener;
 
 import static gatherer.IgsConstants.*;
-
 import gatherer.IgsGatherer;
 import gatherer.TelnetOutputListener;
 

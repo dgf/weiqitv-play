@@ -5,6 +5,7 @@ import gatherer.TelnetOutputListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -74,7 +75,7 @@ public class IgsMove implements TelnetOutputListener {
 		if (mpm.matches()) {
 			Move turn = getMove(mpm);
 			moves.add(turn);
-			Logger.debug("move: " + turn);
+			Logger.debug("move %s", line);
 			return true;
 		}
 
@@ -110,11 +111,12 @@ public class IgsMove implements TelnetOutputListener {
 		}
 
 		List<String> list = Arrays.asList(mpm.group(3).split(" "));
+		LinkedList<String> stones = new LinkedList<String>(list);
 		move.player = player;
-		move.coordinate = list.get(0);
+		move.coordinate = stones.remove();
 		move.secondsLeft = gps.getSeconds();
 		move.byoYomi = gps.getByoYomi();
-		// move.prisoners = list.toArray(new String[] {});
+		move.prisoners = stones.toArray(new String[] {});
 
 		return move;
 	}

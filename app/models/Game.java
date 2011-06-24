@@ -8,9 +8,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
 
 import play.Logger;
 import play.data.validation.Required;
+import events.ResultEvent;
 
 @Entity
 public class Game extends TemporalModel {
@@ -51,6 +53,21 @@ public class Game extends TemporalModel {
 	@Override
 	public String toString() {
 		return white + " vs. " + black + ": " + turn;
+	}
+
+	public static Game findByServerHostAndOnlineId(String serverHost, String onlineId) {
+		GameServer gameServer = GameServer.find("host", serverHost).<GameServer> first();
+		return Game.find("byServerAndOnlineId", gameServer, onlineId).first();
+	}
+
+	@PostUpdate
+	public void publishResult() {
+		if (result != null) {
+			ResultEvent re = new ResultEvent();
+			re.result = result;
+			ChannelList.publishEvent(this, re);
+			Logger.info("game ENDS %s", this);
+		}
 	}
 
 	@PostPersist

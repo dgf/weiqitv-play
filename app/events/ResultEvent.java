@@ -4,4 +4,5 @@ public class ResultEvent implements ChannelEvent {
 
 	public final String type = "result";
 
+	public String result;
 }

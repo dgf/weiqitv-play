@@ -6,16 +6,18 @@
 GET     /                                       WeiqiTV.index
 GET     /watch/{number}                         WeiqiTV.watch
 GET     /search/{query}                         WeiqiTV.search
-GET     /games                                  WeiqiTV.games
 
 # JS channel interaction
+GET     /listPrisoners/{id}                     WeiqiTV.listPrisoners
 GET     /listTurns/{id}                         WeiqiTV.listTurns
-WS      /socket                                 ChannelSocket.stream
+WS      /socket/{number}                        ChannelSocket.stream
 
 # Admin tasks
+GET     /admin                                  Admin.index
+GET     /games                                  Admin.games
 GET     /start                                  Admin.start
 GET     /stop                                   Admin.stop
-GET     /restart                                Admin.restart
+GET     /reset                                  Admin.reset
 GET     /observe/{id}                           Admin.observe
 
 # Ignore favicon requests
@@ -25,7 +27,7 @@ GET     /favicon.ico                            404
 GET     /public/                                staticDir:public
 
 # Import CRUD routes
-*       /admin                                  module:crud
+*       /crud                                   module:crud
 
 # Import messages analyser
 *       /                                       module:messages

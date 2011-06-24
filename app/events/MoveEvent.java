@@ -1,6 +1,7 @@
 package events;
 
 import models.BlackOrWhite;
+import models.Move;
 
 public class MoveEvent implements ChannelEvent {
 
@@ -11,5 +12,11 @@ public class MoveEvent implements ChannelEvent {
 	public String coordinate;
 
 	public BlackOrWhite player;
+
+	public String[] prisoners;
+
+	public int time;
+
+	public Move move;
 
 }

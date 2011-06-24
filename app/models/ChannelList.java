@@ -1,5 +1,10 @@
 package models;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import play.Logger;
 import play.libs.F.EventStream;
 import events.ChannelEvent;
 
@@ -7,8 +12,24 @@ public class ChannelList {
 
 	public static ChannelList instance = new ChannelList();
 
-	public final EventStream<ChannelEvent> event = new EventStream<ChannelEvent>();
+	public final Map<Integer, EventStream<ChannelEvent>> eventStreams = new HashMap<Integer, EventStream<ChannelEvent>>();
 
 	private ChannelList() {
+	}
+
+	public EventStream<ChannelEvent> getStream(int number) {
+		return eventStreams.get(number);
+	}
+
+	public void addStream(Channel channel) {
+		Logger.info("add %s channel stream", channel.title);
+		eventStreams.put(channel.number, new EventStream<ChannelEvent>());
+	}
+
+	public static void publishEvent(Game game, ChannelEvent event) {
+		List<Channel> channels = Channel.find("game", game).fetch();
+		for (Channel channel : channels) {
+			ChannelList.instance.getStream(channel.number).publish(event);
+		}
 	}
 }

@@ -1,5 +1,7 @@
-package gatherer;
+package controllers;
 
+import gatherer.Gatherer;
+import gatherer.IgsGatherer;
 import play.Logger;
 
 public class GathererService {
