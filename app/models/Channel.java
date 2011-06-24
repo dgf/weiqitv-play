@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PostPersist;
 
 import play.data.validation.Required;
 import annotations.JSONhide;
@@ -76,4 +77,8 @@ public class Channel extends TemporalModel {
 		return this;
 	}
 
+	@PostPersist
+	public void createChannelStream() {
+		ChannelList.instance.addStream(this);
+	}
 }
