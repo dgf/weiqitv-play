@@ -81,4 +81,12 @@ public class Channel extends TemporalModel {
 	public void createChannelStream() {
 		ChannelList.instance.addStream(this);
 	}
+
+	public static Channel findByNumber(int number) {
+		return Channel.find("byNumber", number).first();
+	}
+
+	public static List<Channel> allByNumber() {
+		return Channel.find("order by number").fetch();
+	}
 }

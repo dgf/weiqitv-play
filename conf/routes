@@ -19,6 +19,7 @@ GET     /stop                                   Admin.stop
 GET     /reset                                  Admin.reset
 GET     /observe                                Admin.observe
 GET     /next                                   Admin.next
+GET     /broadcast                              Admin.broadcast
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

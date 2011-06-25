@@ -47,40 +47,12 @@
 
   <!--main container-->
   <div id="main">
-    <!--Zapper-->
-    <div id="zapper">
-      <ul>
-        <li><a name="info"><abbr title="Info">i</abbr></a>
-          <ul>
-            <li class="branding">0: preview</li>
-            <li class="branding">1-9: channel</li>
-            <li><a href="channel-cnr.html" title="zap to channel $channeltitle">1</a></li>
-            <li class="second"><a href="channel-cnr.html" title="zap to channel $channeltitle">2</a></li>
-            <li class="third"><a href="channel-cnr.html" title="zap to channel $channeltitle">3</a></li>
-            <li><a href="channel-cnr.html" title="zap to channel $channeltitle">4</a></li>
-            <li class="second"><a href="channel-cnr.html" title="zap to channel $channeltitle">5</a></li>
-            <li class="third"><a href="channel-cnr.html" title="zap to channel $channeltitle">6</a></li>
-            <li><a href="channel-cnr.html" title="zap to channel $channeltitle">7</a></li>
-            <li class="second"><a href="channel-cnr.html" title="zap to channel $channeltitle">8</a></li>
-            <li class="third"><a href="channel-cnr.html" title="zap to channel $channeltitle">9</a></li>
-            <li>&nbsp;</li>
-            <li class="second"><a href="channel-cnr.html" title="zap to channel $channeltitle">&#8657;</a></li>
-            <li class="third">&nbsp;</li>
-            <li><a href="channel-cnr.html" title="zap to channel $channeltitle">&#8656;</a></li>
-            <li class="second"><span>0</span></li>
-            <li class="third"><a href="channel-cnr.html" title="zap to channel $channeltitle">&#8658;</a></li>
-            <li>&nbsp;</li>
-            <li class="second"><a href="channel-cnr.html" title="zap to channel $channeltitle">&#8659;</a></li>
-            <li class="third">&nbsp;</li>
-            <li>&nbsp;</li>
-            <li class="branding">WeiqiTV</li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-    <!--/Zapper-->
-
+#{if role == 'admin'}
+    <a href="@{Admin.index}"><h2>#{get 'page' /}</h2></a>
+#{/if}
+#{else}
     <h2>#{get 'page' /}</h2>
+#{/else}
 
     <p id="note">#{get 'note' /}</p>
 

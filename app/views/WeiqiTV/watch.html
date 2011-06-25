@@ -3,6 +3,8 @@
 #{set page: channel.title /}
 #{set note:'WeiqiTV - Watching Weiqi like on TV (α-Status)' /}
 
+#{zapper channels: channels, actual: channel.number /}
+
 %{
 game = channel.game;
 size = game.size.getLength();
@@ -34,12 +36,22 @@ $(document).ready(function() {
   // create event socket callback
   var display = function(event) {
     $('#commentList').append('<li class="igs">' + event + '</li>');
-      eval("e = " + event);
-      var player = e.player.toLowerCase();
-      $("#" + e.coordinate).removeClass('empty black white ko')
-        .addClass(player).append(e.number);
-      $('#' + player + "Time").empty().append(e.time);
-      viewPrisoners(e)
+    eval("e = " + event);
+    switch(e.type) {
+      case "move":
+        var player = e.player.toLowerCase();
+        $("#" + e.coordinate).removeClass('empty black white ko')
+          .addClass(player).empty().append(e.number);
+        $('#' + player + "Time").empty().append(e.time);
+        viewPrisoners(e);
+        break;
+      case "message":
+        $('#result').empty().append(e.message).css('visibility','visible');
+        break;
+      default:
+        alert("unknown socket event " + event)
+        break;
+    }
   }
 
   // create web socket

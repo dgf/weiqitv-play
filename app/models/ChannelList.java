@@ -32,4 +32,11 @@ public class ChannelList {
 			ChannelList.instance.getStream(channel.number).publish(event);
 		}
 	}
+
+	public void publishEvent(ChannelEvent event) {
+		List<Channel> channels = Channel.all().fetch();
+		for (Channel channel : channels) {
+			ChannelList.instance.getStream(channel.number).publish(event);
+		}
+	}
 }

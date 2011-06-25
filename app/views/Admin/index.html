@@ -3,6 +3,20 @@
 #{set page:'Gatherer' /}
 #{set note:'WeiqiTV - Watching Weiqi like on TV (α-Status)' /}
 
+Welcome ${user}!
+
+<hr />
+
 <a href="@{Admin.start}">start</a>
 <a href="@{Admin.stop}">stop</a>
 <a href="@{Admin.games}">games</a>
+
+<hr />
+
+#{form @Admin.broadcast(message)}
+<p>
+  <label>Message</label>
+  <input type="text" name="message" value="" />
+  <input type="submit" value="broadcast" />
+</p>
+#{/form}

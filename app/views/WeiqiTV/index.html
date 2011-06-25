@@ -3,9 +3,9 @@
 #{set page:'Program Preview' /}
 #{set note:'WeiqiTV - Watching Weiqi like on TV (α-Status)' /}
 
-#{if channels.size() > 1}
-#{list items:channels, as:'channel'}
+#{zapper channels: channels, actual: '0' /}
 
+#{list items:channels, as:'channel'}
 <!-- ##################### Channelpreview ###################### -->
 <div class="channelpreview">
 
@@ -48,6 +48,4 @@
   #{/if}
 </div>
 <!-- ##################### /Channelpreview ##################### -->
-
 #{/list}
-#{/if}

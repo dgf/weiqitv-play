@@ -10,14 +10,15 @@ import play.Logger;
 public class WeiqiTV extends AbstractController {
 
 	public static void index() {
-		List<Channel> channels = Channel.find("order by number").fetch();
+		List<Channel> channels = Channel.allByNumber();
 		render(channels);
 	}
 
 	public static void watch(int number) {
-		Channel channel = Channel.find("byNumber", number).first();
-		flash.success("watch %s", number);
-		render(channel);
+		Channel channel = Channel.findByNumber(number);
+		List<Channel> channels = Channel.allByNumber();
+		flash.success("watch %s", channel.title);
+		render(channel, channels);
 	}
 
 	public static void listTurns(long id) {

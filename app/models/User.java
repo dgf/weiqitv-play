@@ -56,4 +56,8 @@ public class User extends Model {
 		return fullname;
 	}
 
+	public static User findByName(String name) {
+		return User.find("name", name).first();
+	}
+
 }
