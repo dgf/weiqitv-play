@@ -32,6 +32,9 @@ public class Criteria extends Model {
 	@ManyToOne
 	public Handicap maxHandicap;
 
+	@Required
+	public Size size;
+
 	@JSONhide
 	@OneToMany(mappedBy = "criteria")
 	public List<Channel> channels;
@@ -42,7 +45,8 @@ public class Criteria extends Model {
 	}
 
 	public boolean matches(Game game) {
-		if (minRank.le(game.black.rank) //
+		if (size.equals(game.size) //
+				&& minRank.le(game.black.rank) //
 				&& maxRank.ge(game.black.rank) //
 				&& minRank.le(game.white.rank) //
 				&& maxRank.ge(game.white.rank) //

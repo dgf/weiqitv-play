@@ -1,5 +1,6 @@
 package models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
@@ -12,6 +13,7 @@ public class Player extends Model {
 
 	// @Field
 	@Required
+	@Column(unique = true, nullable = false)
 	public String name;
 
 	@ManyToOne

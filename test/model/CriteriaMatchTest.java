@@ -17,7 +17,7 @@ public class CriteriaMatchTest extends UnitTest {
 	@Before
 	public void setup() {
 		cut = criteria("TEST");
-		game = game("white", "3k", "black", "5k", 19, 2, 0.5);
+		game = game("white", "3k", "black", "5k", 19, 2, 0.5f);
 	}
 
 	@Test

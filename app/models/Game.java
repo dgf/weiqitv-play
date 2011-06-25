@@ -10,6 +10,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PostPersist;
 import javax.persistence.PostUpdate;
 
+import jobs.CheckAsNextChannelGame;
 import play.Logger;
 import play.data.validation.Required;
 import events.ResultEvent;
@@ -36,7 +37,7 @@ public class Game extends TemporalModel {
 	public Size size;
 
 	@Required
-	public double komi;
+	public float komi;
 
 	@ManyToOne
 	@Required
@@ -78,18 +79,7 @@ public class Game extends TemporalModel {
 	@PostPersist
 	public void updateNextChannelGames() {
 		Logger.info("%s created", this);
-		// List<Criteria> criteriaList = Criteria.all().fetch();
-		// for (Criteria criteria : criteriaList) {
-		// if (criteria.matches(this)) {
-		// List<Channel> channels = criteria.channels;
-		// for (Channel channel : channels) {
-		// channel.nextGame = this;
-		// Logger.info("%s is the next game on channel %s", toString(),
-		// channel.title);
-		// channel.save();
-		// }
-		// }
-		// }
+		new CheckAsNextChannelGame(this).now();
 	}
 
 	/**

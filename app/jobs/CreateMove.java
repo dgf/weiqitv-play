@@ -1,8 +1,11 @@
 package jobs;
 
+import java.util.List;
+
 import models.BlackOrWhite;
 import models.Game;
 import models.Move;
+import models.Prisoner;
 import play.Logger;
 import play.jobs.Job;
 
@@ -15,10 +18,10 @@ public class CreateMove extends Job {
 	private final String coordinate;
 	private final int seconds;
 	private final int byoYomi;
-	private final String[] prisoners;
+	private final List<String> prisoners;
 
-	public CreateMove(String server, String onlineId, int number, BlackOrWhite player, String coordinate,
-			int seconds, int byoYomi, String[] prisoners) {
+	public CreateMove(String server, String onlineId, int number, BlackOrWhite player,
+			String coordinate, int seconds, int byoYomi, List<String> prisoners) {
 		this.server = server;
 		this.onlineId = onlineId;
 		this.number = number;
@@ -47,7 +50,7 @@ public class CreateMove extends Job {
 			move.coordinate = coordinate;
 			move.number = number;
 			move.player = player;
-			move.prisoners = prisoners;
+			move.prisoners = Prisoner.toList(move, prisoners);
 			move.secondsLeft = seconds;
 			move.save();
 

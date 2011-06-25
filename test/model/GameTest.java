@@ -17,9 +17,9 @@ public class GameTest extends UnitTest {
 
 	@Before
 	public void setup() {
-		aGame = game("dagnu", "4k", "phuzen", "4k", 19, 0, 6.5);
-		aBetterGame = game("peter", "2k", "dagnu", "4k", 19, 2, 0.5);
-		aTeachingGame = game("kiscane", "11k", "dagnu", "4k", 19, 0, -35.5);
+		aGame = game("dagnu", "4k", "phuzen", "4k", 19, 0, 6.5f);
+		aBetterGame = game("peter", "2k", "dagnu", "4k", 19, 2, 0.5f);
+		aTeachingGame = game("kiscane", "11k", "dagnu", "4k", 19, 0, -35.5f);
 	}
 
 	@Test

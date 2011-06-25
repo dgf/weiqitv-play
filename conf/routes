@@ -8,9 +8,8 @@ GET     /watch/{number}                         WeiqiTV.watch
 GET     /search/{query}                         WeiqiTV.search
 
 # JS channel interaction
-GET     /listPrisoners/{id}                     WeiqiTV.listPrisoners
-GET     /listTurns/{id}                         WeiqiTV.listTurns
-WS      /socket/{number}                        ChannelSocket.stream
+GET     /listTurns                              WeiqiTV.listTurns
+WS      /socket                                 ChannelSocket.stream
 
 # Admin tasks
 GET     /admin                                  Admin.index
@@ -18,7 +17,8 @@ GET     /games                                  Admin.games
 GET     /start                                  Admin.start
 GET     /stop                                   Admin.stop
 GET     /reset                                  Admin.reset
-GET     /observe/{id}                           Admin.observe
+GET     /observe                                Admin.observe
+GET     /next                                   Admin.next
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

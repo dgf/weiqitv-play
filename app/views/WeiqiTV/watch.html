@@ -10,26 +10,23 @@ size = game.size.getLength();
 
 <script type="text/javascript">
 
-function viewPrisoners (move, prisoners) {
-// 	alert(player + "|" + prisoners + "|");
-  if(prisoners != undefined) {
-    alert(move.number + " " + move.player + " " + prisoners + " " + count);
+function viewPrisoners (move) {
+  var prisoners = move.prisoners;
+  if(prisoners != undefined && prisoners.length) {
     var color = move.player.toLowerCase();
-//     alert("type " + typeof prisoners);
-//     var ps = prisoners.split(" ");
-    for(p in prisoners) {
-      $('#' + prisoners[p]).removeClass('white black').addClass('empty').empty();
+    $.each(prisoners, function(key, val) {
+      $('#' + val.coordinate).removeClass('white black').addClass('empty').empty();
       var dl = $('#' + color + "Prisoners");
       var dt = $('#' + color + "PrisonerCount");
       var count = parseInt(dt.text());
-//       alert(color + ' count = ' + count)
+//       alert(move.number + " " + move.player + " " + val.coordinate + " " + count);
       if(count == 0) {
         dl.append('<dd class="first"></dd>');
       } else {
         dl.append('<dd></dd>');
       }
       dt.text(count + 1);
-    };
+    });
   }
 }
 
@@ -42,9 +39,7 @@ $(document).ready(function() {
       $("#" + e.coordinate).removeClass('empty black white ko')
         .addClass(player).append(e.number);
       $('#' + player + "Time").empty().append(e.time);
-      if(e.prisoners && e.prisoners.length) {
-        viewPrisoners(e, e.prisoners)
-      }
+      viewPrisoners(e)
   }
 
   // create web socket
@@ -60,9 +55,7 @@ $(document).ready(function() {
       // set actual move
       $("#" + val.coordinate).removeClass('empty').addClass(player);
       // blank prisoners
-      if(val.prisoners && val.prisoners.length) { // array detection ?
-        viewPrisoners(val, val.prisoners);
-      }
+      viewPrisoners(val);
     });
   });
 });
@@ -210,7 +203,7 @@ frei / gewertet<br />
 <ul>
  <li><a href="">Play</a></li>
  <li><a href="">Pause</a></li>
- <li><a href="">Next Game</a></li>
+ <li><a href="@@{Admin.next(channel.number)}">Next Game</a></li>
 </ul>
 </div>
 </div>

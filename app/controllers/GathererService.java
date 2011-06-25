@@ -3,6 +3,9 @@ package controllers;
 import gatherer.IgsGatherer;
 import gatherer.WeiqiGameGatherer;
 import gatherer.WeiqiStorage;
+
+import java.util.List;
+
 import jobs.CreateGame;
 import jobs.CreateMove;
 import models.BlackOrWhite;
@@ -54,9 +57,8 @@ public class GathererService implements WeiqiStorage {
 
 	@Override
 	public String addMove(String server, String onlineId, int number, BlackOrWhite player,
-			String coordinate, int seconds, int byo, String[] prisoners) {
-		new CreateMove(server, onlineId, number, player, coordinate, seconds, byo, prisoners)
-				.now();
+			String coordinate, int seconds, int byo, List<String> prisoners) {
+		new CreateMove(server, onlineId, number, player, coordinate, seconds, byo, prisoners).now();
 		return onlineId;
 	}
 }

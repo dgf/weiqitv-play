@@ -2,7 +2,7 @@ User(admin):
     name:     admin
     fullname: Administrator
     mail:     admin@g2d.de
-    website:  http://www.g2d.de
+    website:  http://tv.g2d.de
     password: secretAdmin
     isAdmin:  true
 
@@ -18,7 +18,7 @@ User(aUser):
     name:     aUser
     fullname: User account
     mail:     user@g2d.de
-    website:  http://www.g2d.de
+    website:  http://www.dagnu.de
     password: secretUser
 
 Rank(9p):

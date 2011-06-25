@@ -21,8 +21,8 @@ public class ChannelSocket extends WebSocketController {
 							number);
 					outbound.sendJson(event);
 				}
-			} catch (Throwable t) {
-				Logger.error(ExceptionUtil.getStackTrace(t));
+			} catch (Exception e) {
+				Logger.error(ExceptionUtil.getStackTrace(e));
 			}
 		}
 	}

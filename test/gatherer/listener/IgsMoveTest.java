@@ -2,6 +2,9 @@ package gatherer.listener;
 
 import gatherer.IgsConstants;
 import gatherer.WeiqiStorage;
+
+import java.util.List;
+
 import models.BlackOrWhite;
 
 import org.junit.Test;
@@ -46,7 +49,7 @@ public class IgsMoveTest extends UnitTest {
 
 		@Override
 		public String addMove(String server, String id, int number, BlackOrWhite player,
-				String coordinate, int seconds, int byoYomi, String[] prisoners) {
+				String coordinate, int seconds, int byoYomi, List<String> prisoners) {
 			checked = true;
 			return id;
 		}

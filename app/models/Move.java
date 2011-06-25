@@ -1,7 +1,12 @@
 package models;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.PostPersist;
 
 import play.Logger;
@@ -13,9 +18,11 @@ import events.MoveEvent;
 public class Move extends Turn {
 
 	@Required
+	@Column(length = 3)
 	public String coordinate;
 
-	public String[] prisoners;
+	@OneToMany(mappedBy = "move", cascade = CascadeType.ALL)
+	public List<Prisoner> prisoners;
 
 	@Override
 	public String toString() {

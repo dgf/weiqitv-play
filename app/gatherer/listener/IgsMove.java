@@ -79,7 +79,7 @@ public class IgsMove implements TelnetOutputListener {
 			List<String> list = Arrays.asList(mpm.group(3).split(" "));
 			LinkedList<String> stones = new LinkedList<String>(list);
 			String coordinate = stones.remove();
-			String[] prisoners = stones.toArray(new String[] {});
+			List<String> prisoners = stones;
 
 			GamePlayerStatus gps;
 			if (player == BlackOrWhite.WHITE) {

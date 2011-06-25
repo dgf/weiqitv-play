@@ -1,5 +1,6 @@
 package models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import play.data.validation.Email;
@@ -14,14 +15,17 @@ public class User extends Model {
 
 	// @Field
 	@Required
+	@Column(unique = true, nullable = false)
 	public String name;
 
 	// @Field
 	@Required
+	@Column(unique = true, nullable = false)
 	public String fullname;
 
 	@Email
 	@Required
+	@Column(unique = true, nullable = false)
 	public String mail;
 
 	@Password
@@ -29,13 +33,15 @@ public class User extends Model {
 	public String password;
 
 	@URL
+	@Column(unique = true)
 	public String website;
 
 	public boolean isAdmin;
 
 	public boolean isPro;
 
-	public User(String mail, String password, String fullname) {
+	public User(String name, String mail, String password, String fullname) {
+		this.name = name;
 		this.mail = mail;
 		this.password = password;
 		this.fullname = fullname;

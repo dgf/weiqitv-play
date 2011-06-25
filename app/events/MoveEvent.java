@@ -1,7 +1,10 @@
 package events;
 
+import java.util.List;
+
 import models.BlackOrWhite;
 import models.Move;
+import models.Prisoner;
 
 public class MoveEvent implements ChannelEvent {
 
@@ -13,7 +16,7 @@ public class MoveEvent implements ChannelEvent {
 
 	public BlackOrWhite player;
 
-	public String[] prisoners;
+	public List<Prisoner> prisoners;
 
 	public int time;
 

@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.List;
 
+import jobs.ShowNextGame;
 import models.Game;
 import models.GameServer;
 import play.Logger;
@@ -15,11 +16,17 @@ public class Admin extends AbstractController {
 		render();
 	}
 
-	public static void observe(int channelId, int gameId) {
+	public static void observe(int number, String gameId) {
 		Logger.info("FOO %s BAR", gameId);
-		GathererService.instance.observe("" + gameId);
+		GathererService.instance.observe(gameId);
 		flash.success("observe %s", gameId);
-		WeiqiTV.watch(channelId);
+		WeiqiTV.watch(number);
+	}
+
+	public static void next(int number) throws Exception {
+		new ShowNextGame(number).now();
+		flash.success("switch to next game on channel %s", number);
+		WeiqiTV.watch(number);
 	}
 
 	public static void reset() {

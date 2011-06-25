@@ -48,7 +48,7 @@ public class Channel extends TemporalModel {
 
 	@JSONhide
 	@ManyToOne
-	public Game nextGame;
+	public Game next;
 
 	@JSONhide
 	@OneToMany(mappedBy = "channel", cascade = CascadeType.ALL)
@@ -62,7 +62,7 @@ public class Channel extends TemporalModel {
 		this.comments = new ArrayList<Comment>();
 		this.observer = 0;
 		this.game = new Game();
-		this.nextGame = new Game();
+		this.next = new Game();
 	}
 
 	@Override

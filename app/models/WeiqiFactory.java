@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 public class WeiqiFactory {
 
 	public static Game game(String white, String wRank, String black, String bRank, int size,
-			int handicap, double komi) {
+			int handicap, float komi) {
 		Game game = new Game();
 		game.white = gamePlayer(white, wRank);
 		game.black = gamePlayer(black, bRank);
@@ -53,6 +53,7 @@ public class WeiqiFactory {
 		criteria.minHandicap = handicap(0);
 		criteria.maxHandicap = handicap(9);
 		criteria.name = name;
+		criteria.size = Size.s19x19;
 		return criteria;
 	}
 }

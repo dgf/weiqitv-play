@@ -60,6 +60,9 @@ Handicap(h3):
 Handicap(h4):
     stones: 4
 
+Handicap(h5):
+    stones: 5
+
 Handicap(h6):
     stones: 6
 
@@ -189,9 +192,17 @@ Move(wE3):
     game: dagnu_kiskane
     player: BLACK
     coordinate: E3
-    prisoners: E5 E4
     secondsLeft: 5
     byoYomi: -1
+
+Prisoner(pE4):
+    coordinate: E4
+    move:       wE3
+
+Prisoner(pE5):
+    coordinate: E5
+    move:       wE3
+
 
 Game(phuzen_kiskane):
     onlineId: 437
@@ -210,6 +221,7 @@ Criteria(proGames):
     maxRank: 9p
     minHandicap: h0
     maxHandicap: h4
+    size: s19x19
 
 Criteria(danGames):
     name: Amateur games
@@ -217,6 +229,7 @@ Criteria(danGames):
     maxRank: 9d
     minHandicap: h0
     maxHandicap: h4
+    size: s19x19
 
 Criteria(kyuGames):
     name: Intermediate games
@@ -224,12 +237,30 @@ Criteria(kyuGames):
     maxRank: 1k
     minHandicap: h0
     maxHandicap: h4
+    size: s19x19
+
+Criteria(9x9Games):
+    name: 9x9 games
+    minRank: 9k
+    maxRank: 9p
+    minHandicap: h0
+    maxHandicap: h4
+    size: s9x9
+
+Criteria(13x13Games):
+    name: 13x13 games
+    minRank: 9k
+    maxRank: 9p
+    minHandicap: h0
+    maxHandicap: h5
+    size: s13x13
 
 Channel(pro):
     number:   1
     title:    Professional
     criteria: proGames
-    game:     dagnu_kiskane
+    game:     phuzen_dagnu
+    next:     phuzen_dagnu
     author:   dagnu
     content:  >
               Professional players have professional dan ranks (abbreviated p), 
@@ -240,7 +271,8 @@ Channel(dan):
     number:   2
     title:    Amateur
     criteria: danGames
-    game:     phuzen_kiskane
+    game:     phuzen_dagnu
+    next:     phuzen_dagnu
     author:   dagnu
     content:  >
               Dan grades (abbreviated d) are considered master grades, 
@@ -252,9 +284,35 @@ Channel(kyu):
     title:    Intermediate
     criteria: kyuGames
     game:     phuzen_dagnu
+    next:     phuzen_dagnu
     author:   kiskane
-    nextGame: dagnu_kiskane
     observer: 67
+    content:  >
+              Kyu grades (abbreviated k) are considered student grades 
+              and decrease as playing level increases, meaning 
+              1st kyu is the strongest available kyu grade.
+
+Channel(nine):
+    number:   4
+    title:    9x9
+    criteria: 9x9Games
+    game:     dagnu_kiskane
+    next:     dagnu_kiskane
+    author:   kiskane
+    observer: 9
+    content:  >
+              Kyu grades (abbreviated k) are considered student grades 
+              and decrease as playing level increases, meaning 
+              1st kyu is the strongest available kyu grade.
+
+Channel(thirteen):
+    number:   5
+    title:    13x13
+    criteria: 13x13Games
+    game:     phuzen_kiskane
+    next:     phuzen_kiskane
+    author:   kiskane
+    observer: 13
     content:  >
               Kyu grades (abbreviated k) are considered student grades 
               and decrease as playing level increases, meaning 

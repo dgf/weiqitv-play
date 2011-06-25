@@ -1,6 +1,5 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import models.Channel;
@@ -21,7 +20,7 @@ public class WeiqiTV extends AbstractController {
 		render(channel);
 	}
 
-	public static void listTurns(int id) {
+	public static void listTurns(long id) {
 		Logger.debug("list %s turns", id);
 		renderJSONHide(Move.find("game_id = ? order by number", id).fetch());
 	}
@@ -33,28 +32,6 @@ public class WeiqiTV extends AbstractController {
 		// sr.users = Search.search("name:" + query, User.class).fetch();
 		// sr.players = Search.search("name:" + query, Player.class).fetch();
 		renderJSONHide(sr);
-	}
-
-	public static void listPrisoners(int id) {
-		List<Move> moves = Move.find("game_id", id).fetch();
-		List<String[]> bp = new ArrayList<String[]>();
-		List<String[]> wp = new ArrayList<String[]>();
-		for (Move move : moves) {
-			if (move.prisoners != null && move.prisoners.length != 0) {
-				switch (move.player) {
-				case BLACK:
-					bp.add(move.prisoners);
-					break;
-				case WHITE:
-					wp.add(move.prisoners);
-					break;
-				default:
-					break;
-				}
-			}
-		}
-
-		renderJSON(wp);
 	}
 
 }

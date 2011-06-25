@@ -2,6 +2,9 @@ package gatherer.listener;
 
 import gatherer.IgsConstants;
 import gatherer.WeiqiStorage;
+
+import java.util.List;
+
 import models.BlackOrWhite;
 
 import org.junit.Test;
@@ -26,7 +29,7 @@ public class IgsGameTest extends UnitTest {
 		WeiqiStorage storageMock = new WeiqiStorage() {
 			@Override
 			public String addMove(String server, String id, int number, BlackOrWhite player,
-					String coordinate, int seconds, int byo, String[] prisoners) {
+					String coordinate, int seconds, int byo, List<String> prisoners) {
 				fail("move in a game test?");
 				return null;
 			}
@@ -78,7 +81,7 @@ public class IgsGameTest extends UnitTest {
 
 		@Override
 		public String addMove(String server, String id, int number, BlackOrWhite player,
-				String coordinate, int seconds, int byo, String[] prisoners) {
+				String coordinate, int seconds, int byo, List<String> prisoners) {
 			fail();
 			return null;
 		}
