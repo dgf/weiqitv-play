@@ -157,8 +157,8 @@ form {
 fieldset {
   background-color: #EFEFEF;
   border: 0;
-  margin: 1%;
-  padding: 1%;
+  margin: 0;
+  padding: 0;
   width: 94%;
 }
 
@@ -502,12 +502,13 @@ div#admin ul li a:focus {display: inline;}
   -webkit-border-bottom-left-radius: .5em;
   color: #000000;
   display: inline-block;
-  margin: .5em 0 0 .5em;
+  font-size: .8em;
+  margin: .5em 0 0 0;
   min-height: 13.5em;
   padding: 0;
   position: relative;
   text-align: left;
-  width: 90%;
+  width: 95%;
   z-index: 1;
 }
 
@@ -545,7 +546,7 @@ div#admin ul li a:focus {display: inline;}
   font-size: 1em;
   font-weight: bold;
   margin: 0;
-  padding: 0 .5em .2em .5em;
+  padding: .2em .5em;
 }
 
 /* viewers on channel */
@@ -554,7 +555,7 @@ div#admin ul li a:focus {display: inline;}
   float: right;
   font-size: .8em;
   font-weight: bold;
-  line-height: 1.5em;
+  line-height: 1em;
   margin: 0;
   padding: 0;
   text-align: right;
@@ -563,16 +564,14 @@ div#admin ul li a:focus {display: inline;}
 
 /* Listing the two players */
 .channelpreview ul {
-  clear: both;
   padding: .5em;
 }
 
 /* Listing the two players: each player is one item */
 .channelpreview ul li {
-  clear: both;
-  line-height: 25px;
-  min-height: 25px;
-  padding: 0 0 0 30px;
+  line-height: 23px;
+  min-height: 23px;
+  padding: 0 0 0 25px;
 }
 
 /* Listing the two players: White player */
@@ -699,8 +698,9 @@ p.next {
   color: transparent;
   display: block;
   font-size: 1em;
+  height: 13.5em;
   margin: 0;
-  min-height: 12em;
+  min-height: 13.5em;
   padding: 0;
   text-decoration: none;
 }
@@ -733,7 +733,7 @@ div#result {
   display: block;
   height: auto;
   margin: 0;
-  padding: .5em;
+  padding: .2em;
   position: relative;
   text-align: left;
   width: auto;
@@ -893,14 +893,14 @@ div#chat {
   color: #000000;
   margin: 0;
   height: auto;
-  padding: .5em;
+  padding: .2em;
   text-align: left;
   width: auto;
 }
 
-div#admin {min-height: 2em; margin-top: 1em;}
+div#admin {min-height: 2em; margin-top: 0;}
 
-div#chat {margin-top: 1em;}
+div#chat {margin-top: 0;}
 
 /* Player statistics */
 div#data div {
@@ -910,7 +910,7 @@ div#data div {
   float: left;
   min-height: 9em;
   text-align: left;
-  width: 49%;
+  width: 49.5%;
 }
 
 /* Player statistics: White */
@@ -969,25 +969,19 @@ div#content div#data h3 {
 #content div#data ul dl {
   clear: both;
   float: none;
-  margin: 0;
+  margin: 0 0 0 1em;
   padding: .5em 0 0 0;
-}
-
-#content div#data ul dl dt,
-#content div#data ul dl dd {
-  display: inline;
-  float: left;
 }
 
 /* Player statistics: number of prisoners */
 #content div#data ul dl dt {
-  clear: both;
-  float: left;
+  margin-left: -1em;
   width: 100%;
 }
 
 /* Player statistics: prisoners as stones */
 #content div#data ul dl dd {
+  float: left;
   margin: 0 0 0 -15px;
   min-height: 25px;
   min-width: 25px;
@@ -1000,8 +994,6 @@ div#content div#data h3 {
 
 /* Player statistics: prisoners of Black */
 #content div#data div#black ul dl dd {background: url(../images/white.png) top left no-repeat;}
-
-#content div#data ul dl dd.first {margin: 0;}
 
 #content div#data p {clear: both; background-color: #EFEFEF; text-align: center;}
 
@@ -1033,6 +1025,12 @@ div#content div#data h3 {
   border-right: 1px solid #CFCFCF;
   border-bottom: 1px solid #CFCFCF;
   border-left: 1px solid #FFFFFF;
+  border-bottom-right-radius: .5em;
+  border-bottom-left-radius: .5em;
+  -moz-border-radius-bottomright: .5em;
+  -moz-border-radius-bottomleft: .5em;
+  -webkit-border-bottom-right-radius: .5em;
+  -webkit-border-bottom-left-radius: .5em;
   height: auto;
   margin: 0;
   padding: 0;
