@@ -39,8 +39,8 @@ public abstract class Turn extends Model {
 	@Required
 	@Min(0)
 	@Max(3600)
-	public int secondsLeft;
+	public int seconds;
 
-	public int byoYomi;
+	public int byo;
 
 }

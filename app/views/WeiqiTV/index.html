@@ -30,22 +30,22 @@
         </div>
         <div class="turn">${game.turn}</div>
       </div>
-    #{/if}
-    #{if channel.next}
+#{/if}
+#{if channel.next}
         <p class="next">
-          Upcoming:<br /> ${channel.next}
+          Upcoming: ${channel.next}
         </p>
-    #{/if}
+#{/if}
   </div>
   <!--/Channel Preview: Content-->
   
-  #{if channel.game}
+#{if channel.game}
     <!--Channel Preview: Link-->
     <div class="channelzapper">
       <a href="@{WeiqiTV.watch(channel.number)}" title="zap to channel ${channel.title}">&nbsp;</a>      
     </div>
     <!--/Channel Preview: Link-->
-  #{/if}
+#{/if}
 </div>
 <!-- ##################### /Channelpreview ##################### -->
 #{/list}

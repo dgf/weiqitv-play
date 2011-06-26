@@ -1,5 +1,5 @@
 #{extends 'main.html' /}
-#{set title:'WeiqiTV :: Gatherer' /}
+#{set title:'WeiqiTV :: Administration' /}
 #{set page:'Gatherer' /}
 #{set note:'WeiqiTV - Watching Weiqi like on TV (α-Status)' /}
 
@@ -9,6 +9,7 @@ Welcome ${user}!
 
 <a href="@{Admin.start}">start</a>
 <a href="@{Admin.stop}">stop</a>
+<a href="@{crud.Channels.index}">crud</a>
 <a href="@{Admin.games}">games</a>
 
 <hr />

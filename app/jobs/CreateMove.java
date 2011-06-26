@@ -17,18 +17,18 @@ public class CreateMove extends Job {
 	private final BlackOrWhite player;
 	private final String coordinate;
 	private final int seconds;
-	private final int byoYomi;
+	private final int byo;
 	private final List<String> prisoners;
 
 	public CreateMove(String server, String onlineId, int number, BlackOrWhite player,
-			String coordinate, int seconds, int byoYomi, List<String> prisoners) {
+			String coordinate, int seconds, int byo, List<String> prisoners) {
 		this.server = server;
 		this.onlineId = onlineId;
 		this.number = number;
 		this.player = player;
 		this.coordinate = coordinate;
 		this.seconds = seconds;
-		this.byoYomi = byoYomi;
+		this.byo = byo;
 		this.prisoners = prisoners;
 	}
 
@@ -46,12 +46,14 @@ public class CreateMove extends Job {
 		} else {
 			Move move = new Move();
 			move.game = game;
-			move.byoYomi = byoYomi;
+			move.byo = byo;
 			move.coordinate = coordinate;
 			move.number = number;
 			move.player = player;
 			move.prisoners = Prisoner.toList(move, prisoners);
-			move.secondsLeft = seconds;
+			move.seconds = seconds;
+
+			Logger.debug("create move %s", move);
 			move.save();
 
 			if (game.turn < move.number) { // update game turn count

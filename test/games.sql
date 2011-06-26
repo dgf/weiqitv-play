@@ -1,15 +1,25 @@
 SELECT
-        g.onlineId
+        s.host
+        ,g.created
+        ,g.updated
+        ,g.onlineId
         ,wp.name AS 'white'
         ,wr.nr
-        ,wr. TYPE
+        ,wr.type
         ,bp.name AS 'black'
         ,br.nr
-        ,br. TYPE
-    FROM
+        ,br.type
+        ,g.result
+        ,g.turn
+        ,g.size
+        ,h.stones
+        ,g.komi
+        ,g.byo
+
+FROM
         Game g
             JOIN GameServer s
-                ON s.id = s.server_id
+                ON s.id = g.server_id
             JOIN GamePlayer w
                 ON w.id = g.white_id
             JOIN Player wp
@@ -21,4 +31,6 @@ SELECT
             JOIN Player bp
                 ON bp.id = b.player_id
             JOIN Rank br
-                ON br.id = b.rank_id;
+                ON br.id = b.rank_id
+            JOIN Handicap h
+                ON h.id = g.handicap_id;

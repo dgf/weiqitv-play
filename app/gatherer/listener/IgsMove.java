@@ -64,7 +64,7 @@ public class IgsMove implements TelnetOutputListener {
 		Matcher gsm = GAME_STATUS.matcher(line);
 		if (gsm.matches()) {
 			status = getGameStatus(gsm);
-			Logger.debug("game status: " + status);
+			Logger.debug("game status: " + line);
 			retrieveMoveList = true;
 			return true;
 		}
@@ -90,10 +90,10 @@ public class IgsMove implements TelnetOutputListener {
 
 			String game = status.getId();
 			int seconds = gps.getSeconds();
-			int byoYomi = gps.getByo();
+			int byo = gps.getByo();
 
-			String id = storage.addMove(server, game, number, player, coordinate, //
-					seconds, byoYomi, prisoners);
+			String id = storage.addMove(server, game, number, player, //
+					coordinate, seconds, byo, prisoners);
 			Logger.debug("game %s move %s", id, line);
 			return true;
 		}
@@ -105,13 +105,13 @@ public class IgsMove implements TelnetOutputListener {
 		String id = gsm.group(1);
 
 		GamePlayerStatus white = new GamePlayerStatus();
-		white.setSeconds(Integer.parseInt(gsm.group(3)));
-		white.setPrisoners(Integer.parseInt(gsm.group(4)));
+		white.setPrisoners(Integer.parseInt(gsm.group(3)));
+		white.setSeconds(Integer.parseInt(gsm.group(4)));
 		white.setByo(Integer.parseInt(gsm.group(5)));
 
 		GamePlayerStatus black = new GamePlayerStatus();
-		black.setSeconds(Integer.parseInt(gsm.group(7)));
-		black.setPrisoners(Integer.parseInt(gsm.group(8)));
+		black.setPrisoners(Integer.parseInt(gsm.group(7)));
+		black.setSeconds(Integer.parseInt(gsm.group(8)));
 		black.setByo(Integer.parseInt(gsm.group(9)));
 
 		return new GameStatus(id, white, black);

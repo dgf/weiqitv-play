@@ -26,7 +26,7 @@ public class Move extends Turn {
 
 	@Override
 	public String toString() {
-		return player + coordinate;
+		return player + " " + coordinate + " " + seconds + " " + byo;
 	}
 
 	@PostPersist
@@ -35,11 +35,16 @@ public class Move extends Turn {
 		me.coordinate = coordinate;
 		me.player = player;
 		me.number = number;
-		me.prisoners = prisoners;
-		me.time = secondsLeft;
+		me.prisoners = Prisoner.toList(prisoners);
+		me.time = seconds;
+		me.byo = byo;
 
 		Logger.debug("create game move %s", this);
 		ChannelList.publishEvent(game, me);
+	}
+
+	public static List<Move> findByGameId(long id) {
+		return Move.find("game_id = ? order by number", id).fetch();
 	}
 
 	public static Move findByGameAndNumber(Game game, int number) {

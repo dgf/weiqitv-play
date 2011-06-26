@@ -23,7 +23,7 @@ public class WeiqiTV extends AbstractController {
 
 	public static void listTurns(long id) {
 		Logger.debug("list %s turns", id);
-		renderJSONHide(Move.find("game_id = ? order by number", id).fetch());
+		renderJSONHide(Move.findByGameId(id));
 	}
 
 	public static void search(String query) {

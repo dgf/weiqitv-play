@@ -1,11 +1,8 @@
 package models;
 
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PostPersist;
 import javax.persistence.PostUpdate;
@@ -22,7 +19,6 @@ public class Game extends TemporalModel {
 	@Required
 	public GameServer server;
 
-	@Required
 	public String onlineId;
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -49,16 +45,13 @@ public class Game extends TemporalModel {
 	@Required
 	public int byo;
 
-	@OneToMany(mappedBy = "game")
-	public List<Turn> turns;
-
 	public int observer;
 
 	public String result;
 
 	@Override
 	public String toString() {
-		return white + " vs. " + black + ": " + turn;
+		return white + " vs. " + black;
 	}
 
 	public static Game findByServerHostAndOnlineId(String serverHost, String onlineId) {
@@ -70,7 +63,7 @@ public class Game extends TemporalModel {
 	public void publishResult() {
 		if (result != null) {
 			ResultEvent re = new ResultEvent();
-			re.result = result;
+			re.message = result;
 			ChannelList.publishEvent(this, re);
 			Logger.info("game ENDS %s", this);
 		}

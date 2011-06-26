@@ -23,7 +23,7 @@ public class CheckAsNextChannelGame extends Job {
 			Logger.debug("%s matches? %s", criteria.name, game);
 			if (criteria.matches(game)) {
 				Logger.debug("%s matches!", criteria.name);
-				List<Channel> channels = criteria.channels;
+				List<Channel> channels = Channel.findByCriteria(criteria);
 				for (Channel channel : channels) {
 					if (game.isBetterThan(channel.next)) {
 						channel.next = game;

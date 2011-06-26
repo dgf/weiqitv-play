@@ -1,8 +1,5 @@
 package events;
 
-public class ResultEvent implements ChannelEvent {
+public class ResultEvent extends MessageEvent {
 
-	public final String type = "result";
-
-	public String result;
 }

@@ -118,34 +118,84 @@ Game(gonerd_newcomer):
       onlineId: 765
     white:      gonerd7d
     black:      beginner1d
-    size:       s19x19
+    size:       s9x9
     komi:       0.5
-    move:       153
-    handicap:   h6
+    move:       8
+    handicap:   h0
     byo: 12
 
-Move(bQ16):
-    game:        gonerd_newcomer
-    number:      1
-    player:      BLACK
-    coordinate:  Q16
-    secondsLeft: 300
-    byoYomi:     -1
+Move(wD5):
+    number: 1
+    game: dagnu_kiskane
+    player: BLACK
+    coordinate: D5
+    secondsLeft: 10
+    byo: -1
 
-Move(wK10):
-    game:        gonerd_newcomer
-    number:      2
-    player:      WHITE
-    coordinate:  K10
-    secondsLeft: 291
-    byoYomi:     -1
+Move(wE6):
+    number: 2
+    game: dagnu_kiskane
+    player: BLACK
+    coordinate: E6
+    secondsLeft: 9
+    byo: -1
 
-Pass(bPass):
-    game:        gonerd_newcomer
-    number:      3
-    player:      BLACK
-    secondsLeft: 278
-    byoYomi:     -1
+Move(wF5):
+    number: 3
+    game: dagnu_kiskane
+    player: BLACK
+    coordinate: F5
+    secondsLeft: 8
+    byo: -1
+
+Move(wD4):
+    number: 4
+    game: dagnu_kiskane
+    player: BLACK
+    coordinate: D4
+    secondsLeft: 7
+    byo: -1
+
+Move(wF4):
+    number: 5
+    game: dagnu_kiskane
+    player: BLACK
+    coordinate: F4
+    secondsLeft: 6
+    byo: -1
+
+Move(wE5):
+    number: 6
+    game: dagnu_kiskane
+    player: WHITE
+    coordinate: E5
+    secondsLeft: 10
+    byo: -1
+
+Move(wE4):
+    number: 7
+    game: dagnu_kiskane
+    player: WHITE
+    coordinate: E4
+    secondsLeft: 9
+    byo: -1
+
+Move(wE3):
+    number: 8
+    game: dagnu_kiskane
+    player: BLACK
+    coordinate: E3
+    secondsLeft: 5
+    byo: -1
+
+Prisoner(pE4):
+    coordinate: E4
+    move:       wE3
+
+Prisoner(pE5):
+    coordinate: E5
+    move:       wE3
+
 
 Criteria(proGames):
     name: Professional games
@@ -194,28 +244,3 @@ Channel(kyu):
     content:  >
               single digit kyu
 
-Comment(proComment1):
-    channel:  pro
-    author:   Guest
-    content:  >
-              a detailed description about go professionals can be found at wikipedia,
-              see http://en.wikipedia.org/wiki/Go_professional
-              and http://en.wikipedia.org/wiki/Go_players
-
-Comment(proComment2):
-    channel:  pro
-    author:   Mike
-    content:  >
-              I knew that ...
-
-Comment(proComment3):
-    channel:  pro
-    author:   Tom
-    content:  >
-              This post is useless ?
-
-Comment(kyuComment3):
-    channel:  kyu
-    author:   SingleDigitKyu
-    content:  >
-              I am pleased to see a channel in my playing ability.

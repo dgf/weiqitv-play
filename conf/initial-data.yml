@@ -51,6 +51,10 @@ Rank(11k):
     nr: 11
     type: KYU
 
+Rank(NR):
+    nr: 0
+    type: NR
+
 Handicap(h0):
     stones: 0
 
@@ -66,201 +70,54 @@ Handicap(h5):
 Handicap(h6):
     stones: 6
 
-Player(phuzen):
-    name: phuzen
-
-Player(dagnu):
-    name: dagnu
-    user: dagnu
-
-Player(kiskane):
-    name: kiskane
-    user: kiskane
-
-GamePlayer(phuzen4k):
-    player: phuzen
-    rank: 4k
-
-GamePlayer(dagnu5k):
-    player: dagnu
-    rank: 5k
-
-GamePlayer(kiskane11k):
-    player: kiskane
-    rank: 11k
-
 GameServer(igs):
     host: igs.joyjoy.net
     port: 7777
 
-Game(phuzen_dagnu):
-    onlineId: 37
-    server: igs
-    white: phuzen4k
-    black: dagnu5k
-    size: s19x19
-    komi: 6.5
-    handicap: h0
-    turn: 183
-    byo: 12
-
-Move(bQ16):
-    number: 1
-    game: phuzen_dagnu
-    player: BLACK
-    coordinate: Q16
-    secondsLeft: 300
-    byoYomi: -1
-
-Move(wD3):
-    number: 2
-    game: phuzen_dagnu
-    player: WHITE
-    coordinate: D3
-    secondsLeft: 291
-    byoYomi: -1
-
-Game(dagnu_kiskane):
-    server: igs
-    onlineId: 171
-    white: dagnu5k
-    black: kiskane11k
-    size: s9x9
-    komi: 0.5
-    turn: 13
-    handicap: h3
-    byo: 12
-
-Move(wD5):
-    number: 1
-    game: dagnu_kiskane
-    player: BLACK
-    coordinate: D5
-    secondsLeft: 10
-    byoYomi: -1
-
-Move(wE6):
-    number: 2
-    game: dagnu_kiskane
-    player: BLACK
-    coordinate: E6
-    secondsLeft: 9
-    byoYomi: -1
-
-Move(wF5):
-    number: 3
-    game: dagnu_kiskane
-    player: BLACK
-    coordinate: F5
-    secondsLeft: 8
-    byoYomi: -1
-
-Move(wD4):
-    number: 4
-    game: dagnu_kiskane
-    player: BLACK
-    coordinate: D4
-    secondsLeft: 7
-    byoYomi: -1
-
-Move(wF4):
-    number: 5
-    game: dagnu_kiskane
-    player: BLACK
-    coordinate: F4
-    secondsLeft: 6
-    byoYomi: -1
-
-Move(wE5):
-    number: 6
-    game: dagnu_kiskane
-    player: WHITE
-    coordinate: E5
-    secondsLeft: 10
-    byoYomi: -1
-
-Move(wE4):
-    number: 6
-    game: dagnu_kiskane
-    player: WHITE
-    coordinate: E4
-    secondsLeft: 9
-    byoYomi: -1
-
-Move(wE3):
-    number: 7
-    game: dagnu_kiskane
-    player: BLACK
-    coordinate: E3
-    secondsLeft: 5
-    byoYomi: -1
-
-Prisoner(pE4):
-    coordinate: E4
-    move:       wE3
-
-Prisoner(pE5):
-    coordinate: E5
-    move:       wE3
-
-
-Game(phuzen_kiskane):
-    onlineId: 437
-    server: igs
-    white: phuzen4k
-    black: kiskane11k
-    size: s13x13
-    komi: 0.5
-    turn: 54
-    handicap: h6
-    byo: 12
-
 Criteria(proGames):
-    name: Professional games
-    minRank: 1p
-    maxRank: 9p
+    name:        Professional games
+    minRank:     1p
+    maxRank:     9p
     minHandicap: h0
     maxHandicap: h4
-    size: s19x19
+    size:        s19x19
 
 Criteria(danGames):
-    name: Amateur games
-    minRank: 1d
-    maxRank: 9d
+    name:        Amateur games
+    minRank:     1d
+    maxRank:     9d
     minHandicap: h0
     maxHandicap: h4
-    size: s19x19
+    size:        s19x19
 
 Criteria(kyuGames):
-    name: Intermediate games
-    minRank: 9k
-    maxRank: 1k
+    name:        Intermediate games
+    minRank:     9k
+    maxRank:     1k
     minHandicap: h0
     maxHandicap: h4
-    size: s19x19
+    size:        s19x19
 
 Criteria(9x9Games):
-    name: 9x9 games
-    minRank: 9k
-    maxRank: 9p
+    name:        9x9 games
+    minRank:     NR
+    maxRank:     9p
     minHandicap: h0
     maxHandicap: h4
-    size: s9x9
+    size:        s9x9
 
 Criteria(13x13Games):
-    name: 13x13 games
-    minRank: 9k
-    maxRank: 9p
+    name:        13x13 games
+    minRank:     NR
+    maxRank:     9p
     minHandicap: h0
     maxHandicap: h5
-    size: s13x13
+    size:        s13x13
 
 Channel(pro):
     number:   1
     title:    Professional
     criteria: proGames
-    game:     phuzen_dagnu
-    next:     phuzen_dagnu
     author:   dagnu
     content:  >
               Professional players have professional dan ranks (abbreviated p), 
@@ -271,8 +128,6 @@ Channel(dan):
     number:   2
     title:    Amateur
     criteria: danGames
-    game:     phuzen_dagnu
-    next:     phuzen_dagnu
     author:   dagnu
     content:  >
               Dan grades (abbreviated d) are considered master grades, 
@@ -283,10 +138,7 @@ Channel(kyu):
     number:   3
     title:    Intermediate
     criteria: kyuGames
-    game:     phuzen_dagnu
-    next:     phuzen_dagnu
     author:   kiskane
-    observer: 67
     content:  >
               Kyu grades (abbreviated k) are considered student grades 
               and decrease as playing level increases, meaning 
@@ -296,50 +148,15 @@ Channel(nine):
     number:   4
     title:    9x9
     criteria: 9x9Games
-    game:     dagnu_kiskane
-    next:     dagnu_kiskane
     author:   kiskane
     observer: 9
-    content:  >
-              Kyu grades (abbreviated k) are considered student grades 
-              and decrease as playing level increases, meaning 
-              1st kyu is the strongest available kyu grade.
+    content:  small fast 9x9 games
 
 Channel(thirteen):
     number:   5
     title:    13x13
     criteria: 13x13Games
-    game:     phuzen_kiskane
-    next:     phuzen_kiskane
     author:   kiskane
     observer: 13
-    content:  >
-              Kyu grades (abbreviated k) are considered student grades 
-              and decrease as playing level increases, meaning 
-              1st kyu is the strongest available kyu grade.
+    content:  13x13 games
 
-Comment(c1):
-    channel:  pro
-    author:   Guest
-    content:  >
-              a detailed description about go professionals can be found at wikipedia,
-              see http://en.wikipedia.org/wiki/Go_professional
-              and http://en.wikipedia.org/wiki/Go_players
-
-Comment(c2):
-    channel:  pro    
-    author:   Mike
-    content:  >
-              I knew that ...
-
-Comment(c3):
-    channel:  pro
-    author:   Tom
-    content:  >
-              This post is useless ?
-
-Comment(c4):
-    channel:  kyu
-    author:   SingleDigitKyu
-    content:  >
-              I am pleased to see a channel in my playing ability.

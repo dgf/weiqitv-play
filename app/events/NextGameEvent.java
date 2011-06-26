@@ -1,10 +1,12 @@
 package events;
 
-public class ShowNextGameEvent implements ChannelEvent {
+public class NextGameEvent implements ChannelEvent {
 
 	public final String type = "next";
 
 	public String game; // name
+
+	public int turn;
 
 	public int handicap;
 

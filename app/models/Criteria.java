@@ -1,14 +1,10 @@
 package models;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import play.data.validation.Required;
 import play.db.jpa.Model;
-import annotations.JSONhide;
 
 @Entity
 public class Criteria extends Model {
@@ -34,10 +30,6 @@ public class Criteria extends Model {
 
 	@Required
 	public Size size;
-
-	@JSONhide
-	@OneToMany(mappedBy = "criteria")
-	public List<Channel> channels;
 
 	@Override
 	public String toString() {

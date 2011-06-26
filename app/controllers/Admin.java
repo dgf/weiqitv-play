@@ -2,7 +2,7 @@ package controllers;
 
 import java.util.List;
 
-import jobs.ShowNextGame;
+import jobs.ShowNextGameOnChannel;
 import models.ChannelList;
 import models.Game;
 import models.GameServer;
@@ -25,9 +25,9 @@ public class Admin extends AbstractController {
 		WeiqiTV.watch(number);
 	}
 
-	@Check({ "isAdmin", "isPro" })
+	@Check("isAdmin")
 	public static void next(int number) throws Exception {
-		new ShowNextGame(number).now();
+		new ShowNextGameOnChannel(number).now();
 		flash.success("switch to next game on channel %s", number);
 		WeiqiTV.watch(number);
 	}
@@ -55,7 +55,7 @@ public class Admin extends AbstractController {
 		index();
 	}
 
-	@Check({ "isAdmin", "isPro" })
+	@Check("isAdmin")
 	public static void games() {
 		List<Game> games = Game.findAll();
 		render(games);
