@@ -61,7 +61,7 @@ public class Game extends TemporalModel {
 
 	@PostUpdate
 	public void publishResult() {
-		if (result != null) {
+		if (result != null && result.isEmpty() == false) {
 			ResultEvent re = new ResultEvent();
 			re.message = result;
 			ChannelList.publishEvent(this, re);

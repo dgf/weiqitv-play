@@ -1,5 +1,8 @@
 package controllers;
 
+import events.MessageEvent;
+import gatherer.IgsOption;
+
 import java.util.List;
 
 import jobs.ShowNextGameOnChannel;
@@ -8,7 +11,6 @@ import models.Game;
 import models.GameServer;
 import play.mvc.With;
 import play.test.Fixtures;
-import events.MessageEvent;
 
 @With(Secure.class)
 public class Admin extends AbstractController {
@@ -52,6 +54,13 @@ public class Admin extends AbstractController {
 	public static void stop() {
 		GathererService.instance.stopGatherer();
 		flash.success("gatherer stopped");
+		index();
+	}
+
+	@Check("isAdmin")
+	public static void toggle(String option) {
+		GathererService.instance.toggle(IgsOption.get(option));
+		flash.success("toogle %s", option);
 		index();
 	}
 

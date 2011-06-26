@@ -18,7 +18,7 @@ import events.MoveEvent;
 public class Move extends Turn {
 
 	@Required
-	@Column(length = 3)
+	@Column(length = 4)
 	public String coordinate;
 
 	@OneToMany(mappedBy = "move", cascade = CascadeType.ALL)

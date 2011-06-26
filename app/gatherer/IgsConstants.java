@@ -10,8 +10,8 @@ public interface IgsConstants {
 	static final String GUEST = "guest";
 	static final String PROMPT = "#> ";
 	static final String OK = "1 5";
-	static final String TOGGLE_CLIENT = "toggle client {0}";
-	static final String TOGGLE_QUIET = "toggle quiet {0}";
+	static final String TOGGLE = "toggle {0}";
+	static final String TOGGLE_ON = "toggle {0} {1}";
 
 	// games
 	static final String GET_GAME_INFO = "game {0}";

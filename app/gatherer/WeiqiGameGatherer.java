@@ -1,6 +1,5 @@
 package gatherer;
 
-
 /**
  * gather games and save those in storage
  */
@@ -29,5 +28,7 @@ public interface WeiqiGameGatherer {
 	void stop();
 
 	void unObservce(String id);
+
+	void toggle(IgsOption option);
 
 }

@@ -15,14 +15,16 @@ import play.Logger;
 
 // 15 Game 43 I: ryoken (14 359 4) vs rokujidoo (15 598 24)
 // 15 Game 530 I: k4152 (16 533 7) vs kindol (2 531 19)
+// 15   0(B): Handicap 2
 // 15 269(W): J9 K9
+// 15 301(W): Pass
 // 2
 // 1 8
 public class IgsMove implements TelnetOutputListener {
 
 	private String server;
 
-	private boolean retrieveMoveList;
+	public boolean retrieveMoveList;
 
 	private GameStatus status;
 
@@ -36,7 +38,7 @@ public class IgsMove implements TelnetOutputListener {
 
 	private static final Pattern MOVE_PATTERN = Pattern.compile("15 +" //
 			+ "([0-9]+)\\((W|B)\\): " // move nr and player
-			+ "([A-HJ-T0-9 ]+)"); // coordinates
+			+ "([A-HJ-T0-9 ]+|Pass|Handicap [0-9])"); // coordinates
 
 	private final WeiqiStorage storage;
 
@@ -69,7 +71,9 @@ public class IgsMove implements TelnetOutputListener {
 			return true;
 		}
 
+		// 15 0(B): Handicap 2
 		// 15 269(W): J9 K9
+		// 15 301(W): Pass
 		Matcher mpm = MOVE_PATTERN.matcher(line);
 		if (mpm.matches()) {
 
@@ -78,9 +82,13 @@ public class IgsMove implements TelnetOutputListener {
 
 			List<String> list = Arrays.asList(mpm.group(3).split(" "));
 			LinkedList<String> stones = new LinkedList<String>(list);
-			String coordinate = stones.remove();
-			List<String> prisoners = stones;
 
+			String coordinate = stones.remove();
+			if (coordinate.equals("Handicap")) {
+				coordinate = "HC" + stones.remove();
+			}
+
+			List<String> prisoners = stones;
 			GamePlayerStatus gps;
 			if (player == BlackOrWhite.WHITE) {
 				gps = status.getWhite();
@@ -92,9 +100,8 @@ public class IgsMove implements TelnetOutputListener {
 			int seconds = gps.getSeconds();
 			int byo = gps.getByo();
 
-			String id = storage.addMove(server, game, number, player, //
-					coordinate, seconds, byo, prisoners);
-			Logger.debug("game %s move %s", id, line);
+			storage.addMove(server, game, number, player, coordinate, seconds, byo, prisoners);
+			Logger.debug("game %s move %s", game, line);
 			return true;
 		}
 

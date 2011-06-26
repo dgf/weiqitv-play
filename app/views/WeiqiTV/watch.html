@@ -8,6 +8,7 @@
 %{
 game = channel.game;
 size = game.size.getLength();
+handi = game.handicap.stones;
 }%
 
 <script type="text/javascript">
@@ -37,7 +38,7 @@ $(document).ready(function() {
   setInterval(updateTime, 1000);
   // event socket callback
   var display = function(event) {
-    $('#commentList').append('<li class="igs">' + event + '</li>');
+    $('#commentList').prepend('<li class="igs">' + event + '</li>');
     eval("e = " + event);
     switch(e.type) {
       case "move":
@@ -56,7 +57,7 @@ $(document).ready(function() {
         $('#' + player + '_time').empty().append(e.time);
         $('#' + player + '_byo').empty().append(e.byo);
         // set game info
-        $('#turn').empty().append(e.number);
+        $('#turn').empty().append(e.coordinate);
         break;
       case "message":
         // show broadcast or result
@@ -113,7 +114,7 @@ $(document).ready(function() {
 <div id="channel">
 
 <table>
-<caption><span id="game">${game}</span> <span id="turn">${game.turn}</span></caption>
+<caption><span id="game">${game}</span> <span id="turn">H ${game.handicap}</span></caption>
 #{board/head size /}
 #{list items: (size == 19 ? 19..1 : (size == 13 ? 13..1 : 9..1)), as:'nr'}
 <tr class="${nr_isFirst ? 'first' : (nr_isLast ? 'last' : '')}">
@@ -125,10 +126,10 @@ $(document).ready(function() {
     <div id="B${nr}" class="empty"></div>
   </td>
   <td class="${size == 9 && (nr == 3 || nr == 7) ? 'hoshi' : 'blank'}">
-    <div id="C${nr}" class="empty"></div>
+    <div id="C${nr}" class="${size == 9 && ((nr == 3 && handi > 1) || (nr == 7 && handi > 2)) ? 'black' : 'blank'}"></div>
   </td>
   <td class="${size != 9 && (nr == 4 || nr == 10 || nr == 16) ? 'hoshi' : 'blank'}">
-    <div id="D${nr}" class="empty"></div>
+    <div id="D${nr}" class="${size > 9 && ((nr == 4 && handi > 1) || (nr == 10 && ((size == 13 && handi > 2) || handi > 5)) || (nr == 16 && handi > 2)) ? 'black' : 'blank'}"></div>
   </td>
   <td class="blank">
     <div id="E${nr}" class="empty"></div>
@@ -137,7 +138,7 @@ $(document).ready(function() {
     <div id="F${nr}" class="empty"></div>
   </td>
   <td class="${((size == 9 && (nr == 3 || nr == 7)) || (size == 13 && nr == 7)) ? 'hoshi' : 'blank'}">
-    <div id="G${nr}" class="empty"></div>
+    <div id="G${nr}" class="${(size == 9 && ((nr == 3 && handi == 4) || (nr == 7 && handi > 1))) || (size == 13 && nr == 7 && handi == 5) ? 'black' : 'blank'}"></div>
   </td>
   <td class="blank">
     <div id="H${nr}" class="empty"></div>
@@ -151,8 +152,20 @@ $(document).ready(function() {
   <td class="blank">
     <div id="J${nr}" class="empty"></div>
   </td>
+%{
+blackOrBlack = 'blank';
+if (size == 13) {
+  if ((nr == 4 && handi > 3) || (nr == 10 && handi > 1)) {
+    blackOrBlack = 'black';
+  }
+} else {
+  if ((nr == 10 && (handi == 5 || handi == 7 || handi == 9)) || ((nr == 4 || nr == 16) && handi > 7)) {
+    blackOrBlack = 'black';
+  }
+}
+%}
   <td class="${nr == 4 || nr == 10 || nr == 16 ? 'hoshi' : 'blank'}">
-    <div id="K${nr}" class="empty"></div>
+    <div id="K${nr}" class="${blackOrBlack}""></div>
   </td>
   <td class="blank">
     <div id="L${nr}" class="empty"></div>
@@ -176,7 +189,7 @@ $(document).ready(function() {
     <div id="P${nr}" class="empty"></div>
   </td>
   <td class="${nr == 4 || nr == 10 || nr == 16 ? 'hoshi' : 'blank'}">
-    <div id="Q${nr}" class="empty"></div>
+    <div id="Q${nr}" class="${(nr == 4 && handi > 3) || (nr == 10 && handi > 5) || (nr == 16 && handi >= 2) ? 'black' : 'blank'}"></div>
   </td>
   <td class="blank">
     <div id="R${nr}" class="empty"></div>

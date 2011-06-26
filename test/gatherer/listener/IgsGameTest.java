@@ -1,6 +1,6 @@
 package gatherer.listener;
 
-import gatherer.IgsConstants;
+import static gatherer.IgsConstants.*;
 import gatherer.WeiqiStorage;
 
 import java.util.List;
@@ -26,18 +26,22 @@ public class IgsGameTest extends UnitTest {
 	@Test
 	public void parseGameCheck() throws Exception {
 		String line = "7 [1] white [ 3p ] vs. black [ 1p ] (2 3 4 5.5 6 I) ( 7)";
-		WeiqiStorage storageMock = new WeiqiStorage() {
+		WeiqiStorage storageMock = new WeiqiStorageMock() {
 			@Override
-			public String addMove(String server, String id, int number, BlackOrWhite player,
+			public void addMove(String server, String id, int number, BlackOrWhite player,
 					String coordinate, int seconds, int byo, List<String> prisoners) {
 				fail("move in a game test?");
-				return null;
 			}
 
 			@Override
-			public String addGame(String server, String id, String white, String wRank,
-					String black, String bRank, int turn, int size, int handicap, float komi,
-					int byo, int observer) {
+			public void addResult(String server, String game, String result) {
+				fail("result in a game test?");
+			}
+
+			@Override
+			public void addGame(String server, String id, String white, String wRank, String black,
+					String bRank, int turn, int size, int handicap, float komi, int byo,
+					int observer) {
 				assertEquals("server:port", server);
 				assertEquals("1", id);
 				assertEquals("white", white);
@@ -50,47 +54,31 @@ public class IgsGameTest extends UnitTest {
 				assertEquals(5.5f, komi, 0.1);
 				assertEquals(6, byo);
 				assertEquals(7, observer);
-				return null;
 			}
 		};
 
 		IgsGame cut = new IgsGame("server:port", storageMock);
 
-		assertTrue(cut.notify(IgsConstants.GAME_HEADER));
+		assertTrue(cut.notify(GAME_HEADER));
 		assertTrue(line, cut.notify(line));
-		assertFalse(cut.notify(IgsConstants.OK));
+		assertFalse(cut.notify(OK));
+		assertFalse(cut.retrieveGameList);
 	}
 
 	@Test
 	public void parseGameList() throws Exception {
 
-		WeiqiGameStorageMock storageMock = new WeiqiGameStorageMock();
+		WeiqiStorageMock storageMock = new WeiqiStorageMock();
 		IgsGame cut = new IgsGame("server:port", storageMock);
 
-		assertTrue(cut.notify(IgsConstants.GAME_HEADER));
+		assertTrue(cut.notify(GAME_HEADER));
 		for (String line : testStrings) {
-			storageMock.checked = false;
+			storageMock.gameCalled = false;
 			assertTrue(line, cut.notify(line));
-			assertTrue(storageMock.checked);
+			assertTrue(storageMock.gameCalled);
 		}
-		assertFalse(cut.notify(IgsConstants.OK));
+		assertFalse(cut.notify(OK));
+		assertFalse(cut.retrieveGameList);
 	}
 
-	private class WeiqiGameStorageMock implements WeiqiStorage {
-		boolean checked = false;
-
-		@Override
-		public String addMove(String server, String id, int number, BlackOrWhite player,
-				String coordinate, int seconds, int byo, List<String> prisoners) {
-			fail();
-			return null;
-		}
-
-		@Override
-		public String addGame(String server, String id, String white, String wRank, String black,
-				String bRank, int turn, int size, int handicap, float komi, int byo, int observer) {
-			checked = true;
-			return id;
-		}
-	}
 }

@@ -1,6 +1,7 @@
 package controllers;
 
 import gatherer.IgsGatherer;
+import gatherer.IgsOption;
 import gatherer.WeiqiGameGatherer;
 import gatherer.WeiqiStorage;
 
@@ -8,6 +9,7 @@ import java.util.List;
 
 import jobs.CreateGame;
 import jobs.CreateMove;
+import jobs.SaveGameResult;
 import models.BlackOrWhite;
 import play.Logger;
 
@@ -47,18 +49,25 @@ public class GathererService implements WeiqiStorage {
 		igs.observce(number);
 	}
 
-	@Override
-	public String addGame(String server, String onlineId, String white, String wRank, String black,
-			String bRank, int turn, int size, int handicap, float komi, int byo, int observer) {
-		new CreateGame(server, onlineId, white, wRank, black, bRank, turn, size, handicap, komi,
-				byo, observer).now();
-		return onlineId;
+	public void toggle(IgsOption option) {
+		igs.toggle(option);
 	}
 
 	@Override
-	public String addMove(String server, String onlineId, int number, BlackOrWhite player,
+	public void addGame(String server, String onlineId, String white, String wRank, String black,
+			String bRank, int turn, int size, int handicap, float komi, int byo, int observer) {
+		new CreateGame(server, onlineId, white, wRank, black, bRank, turn, size, handicap, komi,
+				byo, observer).now();
+	}
+
+	@Override
+	public void addMove(String server, String onlineId, int number, BlackOrWhite player,
 			String coordinate, int seconds, int byo, List<String> prisoners) {
 		new CreateMove(server, onlineId, number, player, coordinate, seconds, byo, prisoners).now();
-		return onlineId;
+	}
+
+	@Override
+	public void addResult(String server, String game, String result) {
+		new SaveGameResult(server, game, result).now();
 	}
 }

@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.net.telnet.TelnetClient;
-import org.apache.log4j.Logger;
+
+import play.Logger;
 
 /**
  * synchronous write and read for initial commands like login
@@ -17,11 +18,10 @@ import org.apache.log4j.Logger;
  */
 class TelnetUtil extends Thread {
 
-	private static final Logger log = Logger.getLogger(TelnetUtil.class);
-
 	private TelnetClient telnet;
 
 	private BufferedReader in;
+
 	private PrintWriter out;
 
 	private String server;
@@ -47,20 +47,20 @@ class TelnetUtil extends Thread {
 		TelnetUtil util = new TelnetUtil();
 		util.setServer(server);
 		util.setPort(port);
-		log.debug("create telnet connection with " + util);
+		Logger.debug("create telnet connection with %s", util);
 		util.connect();
 		return util;
 	}
 
 	public synchronized String readUntil(String pattern) {
-		log.debug("read until: " + pattern);
+		Logger.debug("read until: %s", pattern);
 		StringBuffer sb = new StringBuffer();
 		char lastChar = pattern.charAt(pattern.length() - 1);
 		char ch = readChar();
 		while (true) {
 			sb.append(ch);
 			if (ch == lastChar && sb.toString().endsWith(pattern)) {
-				log.debug("readed: " + sb);
+				Logger.debug("readed: %s", sb);
 				return sb.toString();
 			}
 			ch = readChar();
@@ -76,7 +76,7 @@ class TelnetUtil extends Thread {
 	}
 
 	public synchronized void send(String value) {
-		log.debug("write: " + value);
+		Logger.debug("write: %s", value);
 		out.println(value);
 		out.flush();
 	}
@@ -101,15 +101,15 @@ class TelnetUtil extends Thread {
 	 * open telnet connection and assign streams
 	 */
 	public synchronized void connect() {
-		log.debug("check whether already connected with " + this);
+		Logger.debug("check whether already connected with %s", this);
 		if (telnet.isConnected()) {
 			throw new IllegalStateException("already connected");
 		}
 
 		try {
-			log.info("try to connect with " + this);
+			Logger.info("try to connect with %s", this);
 			telnet.connect(server, port);
-			log.debug("connected with " + this);
+			Logger.debug("connected with %", this);
 		} catch (Exception e) {
 			throw new RuntimeException("telnet connection failed with " + this, e);
 		}
@@ -150,7 +150,7 @@ class TelnetUtil extends Thread {
 			String line;
 			try {
 				line = in.readLine();
-				log.debug("read line: " + line);
+				Logger.debug("read line: %s", line);
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
@@ -168,7 +168,7 @@ class TelnetUtil extends Thread {
 				}
 			}
 		}
-		log.debug("telnet reading stopped");
+		Logger.debug("telnet reading stopped");
 	}
 
 }

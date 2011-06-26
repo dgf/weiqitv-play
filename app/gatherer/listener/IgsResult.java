@@ -2,22 +2,24 @@ package gatherer.listener;
 
 import static gatherer.IgsConstants.*;
 import gatherer.TelnetOutputListener;
+import gatherer.WeiqiStorage;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import jobs.SaveGameResult;
 import play.Logger;
 
+// 21 {Game 150: mstkigo vs orihiyoshi : Black resigns.}
+// 21 {Game 543: ks260820 vs MIYLI : W 69.5 B 79.0}
+// 21 {Game 165: cli vs boudu : Black forfeits on time.}
+// 9 {Game 348: weslie vs Yatsugatak : W 71.5 B 83.0} // observed game ends
+// 1 5
 public class IgsResult implements TelnetOutputListener {
 
-	private boolean retrieveConnect;
+	public boolean retrieveResult;
 
-	// 21 {Game 150: mstkigo vs orihiyoshi : Black resigns.}
-	// 21 {Game 543: ks260820 vs MIYLI : W 69.5 B 79.0}
-	// 1 5
-	private static final Pattern CONNECT = Pattern.compile("21 \\{Game " //
-			+ "([0-9]+): ([^ ]+) vs ([^ ]+) : (.*).\\}");
+	private static final Pattern CONNECT = Pattern.compile("(21|9) \\{Game " //
+			+ "([0-9]+): ([^ ]+) vs ([^ ]+) : (.*)\\}");
 
 	private final String server;
 
@@ -25,29 +27,31 @@ public class IgsResult implements TelnetOutputListener {
 
 	private String result;
 
-	public IgsResult(String server) {
+	private final WeiqiStorage storage;
+
+	public IgsResult(String server, WeiqiStorage storage) {
 		this.server = server;
+		this.storage = storage;
 	}
 
 	@Override
 	public boolean notify(String line) {
 
-		if (retrieveConnect && line.equals(OK)) {
-			new SaveGameResult(server, game, result).now();
-			retrieveConnect = false;
+		if (retrieveResult && (line.equals(OK) || line.equals(MOVE_LIST_OK))) {
+			storage.addResult(server, game, result);
+			retrieveResult = false;
 			return false;
 		}
 
 		Matcher m = CONNECT.matcher(line);
 		if (m.matches()) {
-			retrieveConnect = true;
-			game = m.group(1);
-			result = m.group(4);
-			Logger.trace("connect %s", line);
+			retrieveResult = true;
+			game = m.group(2);
+			result = m.group(5);
+			Logger.debug("result %s", line);
 			return true;
 		}
 
 		return false;
 	}
-
 }

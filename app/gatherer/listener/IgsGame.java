@@ -16,7 +16,7 @@ public class IgsGame implements TelnetOutputListener {
 
 	private final String server;
 
-	private boolean retrieveGameList;
+	public boolean retrieveGameList;
 
 	private final WeiqiStorage storage;
 
@@ -67,7 +67,7 @@ public class IgsGame implements TelnetOutputListener {
 			int byo = Integer.parseInt(m.group(10));
 			int observer = Integer.parseInt(m.group(11));
 
-			id = storage.addGame(server, id, white, wRank, black, bRank, //
+			storage.addGame(server, id, white, wRank, black, bRank, //
 					turn, size, handicap, komi, byo, observer);
 			Logger.debug("game %s: %s", id, line);
 			return true;

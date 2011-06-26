@@ -14,10 +14,13 @@ Welcome ${user}!
 
 <hr />
 
+#{form @Admin.toggle(option)}
+  #{select 'option', items:gatherer.IgsOption.values() /}
+  <input type="submit" value="toggle" />
+#{/form}
+
+<hr />
 #{form @Admin.broadcast(message)}
-<p>
-  <label>Message</label>
   <input type="text" name="message" value="" />
   <input type="submit" value="broadcast" />
-</p>
 #{/form}

@@ -1,6 +1,7 @@
 package gatherer;
 
 import static gatherer.IgsConstants.*;
+import static gatherer.IgsOption.*;
 import gatherer.listener.IgsConnect;
 import gatherer.listener.IgsDisconnect;
 import gatherer.listener.IgsGame;
@@ -131,6 +132,15 @@ public class IgsGatherer implements WeiqiGameGatherer {
 		}
 	}
 
+	@Override
+	public void toggle(IgsOption option) {
+		telnet.send(MessageFormat.format(IgsConstants.TOGGLE, option.option));
+	}
+
+	private void toggle(IgsOption option, boolean on) {
+		telnet.send(MessageFormat.format(IgsConstants.TOGGLE_ON, option.option, on));
+	}
+
 	private void send(String command, Object value) {
 		telnet.send(MessageFormat.format(command, value));
 	}
@@ -142,26 +152,28 @@ public class IgsGatherer implements WeiqiGameGatherer {
 			throw new IllegalStateException("not logged in");
 		}
 
-		send(TOGGLE_CLIENT, true);
+		toggle(CLIENT, true);
 		telnet.readUntil(OK);
 
 		telnet.addOutputListener(new IgsGame(server, storage));
 		telnet.addOutputListener(new IgsMove(server, storage));
+		telnet.addOutputListener(new IgsResult(server, storage));
 		telnet.addOutputListener(new IgsMatch(this));
 		telnet.addOutputListener(new IgsConnect());
 		telnet.addOutputListener(new IgsDisconnect());
-		telnet.addOutputListener(new IgsResult(server));
 		telnet.addOutputListener(new IgsVerboseTraffic());
 
 		telnet.start();
 		Logger.debug("gathering " + this);
-		send(TOGGLE_QUIET, false);
+		toggle(QUIET, false);
 	}
 
 	@Override
 	public void stop() {
 		telnet.setShouldRead(false);
-		send(TOGGLE_CLIENT, false);
+		toggle(QUIET, true);
+		telnet.readUntil(OK);
+		toggle(CLIENT, false);
 		telnet.readUntil(PROMPT);
 		Logger.debug("gathering stopped");
 	}

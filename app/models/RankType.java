@@ -12,26 +12,22 @@ public enum RankType {
 
 	static {
 		for (RankType e : EnumSet.allOf(RankType.class))
-			lookup.put(e.getCode(), e);
+			lookup.put(e.type, e);
 	}
 
-	public static RankType get(String code) {
-		return lookup.get(code);
+	public static RankType get(String type) {
+		return lookup.get(type);
 	}
 
-	private String code;
+	public String type;
 
-	RankType(String rc) {
-		code = rc;
-	}
-
-	public String getCode() {
-		return code;
+	RankType(String t) {
+		type = t;
 	}
 
 	@Override
 	public String toString() {
-		return code;
+		return type;
 	}
 
 }

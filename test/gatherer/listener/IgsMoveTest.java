@@ -1,7 +1,7 @@
 package gatherer.listener;
 
+import static gatherer.IgsConstants.*;
 import gatherer.IgsConstants;
-import gatherer.WeiqiStorage;
 
 import java.util.List;
 
@@ -13,6 +13,7 @@ import play.test.UnitTest;
 
 // 15 Game 43 I: ryoken (14 359 4) vs rokujidoo (15 598 24)
 // 9 Handicap and komi are disable.
+// 15   0(B): Handicap 2
 // 15 269(W): J9 K9
 // 2
 // 1 8
@@ -25,40 +26,85 @@ public class IgsMoveTest extends UnitTest {
 
 	private static final String[] moves = new String[] { "15   0(B): Q16", //
 			"15   1(W): D4", //
-			"15 269(W): J9 K9 K10", //
-			"15 301(W): Pass" };
+			"15 269(W): J9 K9 K10" };
+
+	@Test
+	public void handicap() throws Exception {
+		WeiqiStorageMock storageMock = new WeiqiStorageMock() {
+			@Override
+			public void addMove(String server, String id, int number, BlackOrWhite player,
+					String coordinate, int seconds, int byo, List<String> prisoners) {
+				assertEquals("server:port", server);
+				assertEquals("43", id);
+				assertEquals(0, number);
+				assertEquals(BlackOrWhite.BLACK, player);
+				assertEquals("HC2", coordinate);
+				assertEquals(546, seconds);
+				assertEquals(14, byo);
+				assertTrue(prisoners.isEmpty());
+			}
+		};
+		IgsMove cut = new IgsMove("server:port", storageMock);
+
+		assertTrue("handicap 2", cut.notify(states[0]));
+		assertTrue("handicap 2", cut.notify("15   0(B): Handicap 2"));
+		assertTrue(cut.notify(OBSERVED));
+		assertFalse(cut.notify(MOVE_LIST_OK));
+		assertFalse(cut.retrieveMoveList);
+	}
+
+	@Test
+	public void pass() throws Exception {
+		WeiqiStorageMock storageMock = new WeiqiStorageMock() {
+			@Override
+			public void addMove(String server, String id, int number, BlackOrWhite player,
+					String coordinate, int seconds, int byo, List<String> prisoners) {
+				assertEquals(BlackOrWhite.WHITE, player);
+				assertEquals("Pass", coordinate);
+			}
+		};
+		IgsMove cut = new IgsMove("server:port", storageMock);
+
+		assertTrue("pass", cut.notify(states[0]));
+		assertTrue("pass", cut.notify("15 301(W): Pass"));
+		assertTrue(cut.notify(OBSERVED));
+		assertFalse(cut.notify(MOVE_LIST_OK));
+		assertFalse(cut.retrieveMoveList);
+	}
 
 	@Test
 	public void parseMoveList() throws Exception {
 
-		WeiqiMoveStorageMock storageMock = new WeiqiMoveStorageMock();
+		WeiqiStorageMock storageMock = new WeiqiStorageMock();
+		IgsMove cut = new IgsMove("server:port", storageMock);
+
+		for (String move : moves) {
+			storageMock.moveCalled = false;
+			assertTrue(move, cut.notify(states[0]));
+			assertTrue(move, cut.notify(move));
+			assertTrue(cut.notify(IgsConstants.OBSERVED));
+			assertFalse(cut.notify(IgsConstants.MOVE_LIST_OK));
+			assertTrue(storageMock.moveCalled);
+			assertFalse(cut.retrieveMoveList);
+		}
+	}
+
+	@Test
+	public void parseStateList() throws Exception {
+
+		WeiqiStorageMock storageMock = new WeiqiStorageMock();
 		IgsMove cut = new IgsMove("server:port", storageMock);
 
 		for (String line : states) {
-			storageMock.checked = false;
+			storageMock.moveCalled = false;
 			assertTrue(line, cut.notify(line));
 			assertTrue(line, cut.notify(moves[0]));
+			assertTrue(cut.notify(IgsConstants.OBSERVED));
 			assertFalse(cut.notify(IgsConstants.MOVE_LIST_OK));
-			assertTrue(storageMock.checked);
+			assertTrue(storageMock.moveCalled);
+			assertFalse(cut.retrieveMoveList);
 		}
 
 	}
 
-	private class WeiqiMoveStorageMock implements WeiqiStorage {
-		boolean checked = false;
-
-		@Override
-		public String addMove(String server, String id, int number, BlackOrWhite player,
-				String coordinate, int seconds, int byoYomi, List<String> prisoners) {
-			checked = true;
-			return id;
-		}
-
-		@Override
-		public String addGame(String server, String id, String white, String wRank, String black,
-				String bRank, int turn, int size, int handicap, float komi, int byo, int observer) {
-			fail();
-			return null;
-		}
-	}
 }
