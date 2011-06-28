@@ -4,13 +4,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.PostPersist;
-import javax.persistence.PostUpdate;
 
-import jobs.CheckAsNextChannelGame;
-import play.Logger;
 import play.data.validation.Required;
-import events.ResultEvent;
 
 @Entity
 public class Game extends TemporalModel {
@@ -57,22 +52,6 @@ public class Game extends TemporalModel {
 	public static Game findByServerHostAndOnlineId(String serverHost, String onlineId) {
 		GameServer gameServer = GameServer.find("host", serverHost).<GameServer> first();
 		return Game.find("byServerAndOnlineId", gameServer, onlineId).first();
-	}
-
-	@PostUpdate
-	public void publishResult() {
-		if (result != null && result.isEmpty() == false) {
-			ResultEvent re = new ResultEvent();
-			re.message = result;
-			ChannelList.publishEvent(this, re);
-			Logger.info("game ENDS %s", this);
-		}
-	}
-
-	@PostPersist
-	public void updateNextChannelGames() {
-		Logger.info("%s created", this);
-		new CheckAsNextChannelGame(this).now();
 	}
 
 	/**

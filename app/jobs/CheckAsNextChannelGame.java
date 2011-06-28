@@ -8,6 +8,14 @@ import models.Game;
 import play.Logger;
 import play.jobs.Job;
 
+/**
+ * match a game with each criteria and update related channels
+ * 
+ * TODO use an upcoming game list per channel
+ * 
+ * @author dagnu
+ * 
+ */
 public class CheckAsNextChannelGame extends Job {
 
 	private final Game game;

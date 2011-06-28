@@ -43,16 +43,17 @@ public class CreateGame extends Job {
 
 	@Override
 	public void doJob() throws Exception {
-
 		GameServer gameServer = GameServer.findByHost(server);
-
 		Game actual = Game.findByServerAndOnlineId(gameServer, onlineId);
-
 		if (actual != null) {
 			Logger.error("game %s %s exists", actual.server, actual.onlineId);
 			return;
 		}
 
+		updateNextChannelGames(createGame(gameServer));
+	}
+
+	private Game createGame(GameServer gameServer) {
 		Game game = new Game();
 		game.server = gameServer;
 		game.onlineId = onlineId;
@@ -75,6 +76,11 @@ public class CreateGame extends Job {
 		game.observer = observer;
 
 		Logger.debug("save game %s", game);
-		game.save();
+		return game.save();
+	}
+
+	private void updateNextChannelGames(Game game) {
+		Logger.info("%s created", game);
+		new CheckAsNextChannelGame(game).now();
 	}
 }

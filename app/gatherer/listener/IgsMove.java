@@ -22,6 +22,8 @@ import play.Logger;
 // 1 8
 public class IgsMove implements TelnetOutputListener {
 
+	public static final String HANDICAP_PREFIX = "HC";
+
 	private String server;
 
 	public boolean retrieveMoveList;
@@ -85,7 +87,7 @@ public class IgsMove implements TelnetOutputListener {
 
 			String coordinate = stones.remove();
 			if (coordinate.equals("Handicap")) {
-				coordinate = "HC" + stones.remove();
+				coordinate = HANDICAP_PREFIX + stones.remove();
 			}
 
 			List<String> prisoners = stones;

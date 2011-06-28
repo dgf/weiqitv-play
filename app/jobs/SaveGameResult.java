@@ -1,8 +1,13 @@
 package jobs;
 
+import java.util.List;
+
+import models.Channel;
+import models.ChannelList;
 import models.Game;
 import play.Logger;
 import play.jobs.Job;
+import events.ResultEvent;
 
 public class SaveGameResult extends Job {
 
@@ -18,15 +23,35 @@ public class SaveGameResult extends Job {
 
 	@Override
 	public void doJob() throws Exception {
-		Game actual = Game.findByServerHostAndOnlineId(server, onlineId);
-		if (actual == null) {
+		Game game = Game.findByServerHostAndOnlineId(server, onlineId);
+		if (game == null) {
 			Logger.error("game %s %s doesn't exists", server, onlineId);
 			return;
 		} else {
-			actual.result = result;
-			actual.onlineId = null;
-			actual.save();
-			Logger.debug("save game %s result ", onlineId, result);
+			if (result != null && result.isEmpty() == false) {
+				game.result = result;
+				game.onlineId = null;
+				game.save();
+				Logger.debug("save game %s result ", onlineId, result);
+
+				// publish result
+				ResultEvent re = new ResultEvent();
+				re.message = result;
+				ChannelList.publishEvent(game, re);
+
+				// initialize channel update
+				List<Channel> channels = Channel.findByGame(game);
+				for (Channel channel : channels) {
+					new ShowNextGameOnChannel(channel.number).in("10s");
+				}
+
+				// remove upcoming
+				channels = Channel.findByNext(game);
+				for (Channel channel : channels) {
+					channel.next = null;
+					channel.save();
+				}
+			}
 		}
 	}
 

@@ -3,7 +3,6 @@ package controllers;
 import models.ChannelList;
 import play.Logger;
 import play.libs.F.EventStream;
-import play.modules.log4play.ExceptionUtil;
 import play.mvc.WebSocketController;
 import events.ChannelEvent;
 
@@ -22,7 +21,7 @@ public class ChannelSocket extends WebSocketController {
 					outbound.sendJson(event);
 				}
 			} catch (Exception e) {
-				Logger.error(ExceptionUtil.getStackTrace(e));
+				Logger.error(e, "outbound closed");
 			}
 		}
 	}

@@ -71,6 +71,10 @@ public class Channel extends TemporalModel {
 		return Channel.find("game", game).fetch();
 	}
 
+	public static List<Channel> findByNext(Game game) {
+		return Channel.find("next", game).fetch();
+	}
+
 	public static Channel findByNumber(int number) {
 		return Channel.find("byNumber", number).first();
 	}

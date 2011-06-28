@@ -1,8 +1,8 @@
 # Application dependencies
 
 require:
-    - play -> log4play 0.4
-    - play -> messages 1.1
+#    - play -> log4play 0.4
+#    - play -> messages 1.1
 #    - play -> search 2.0
 #    - play -> cobertura 2.1
     - play -> table 1.2

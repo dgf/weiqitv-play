@@ -20,6 +20,7 @@ public class ShowNextGameOnChannel extends Job {
 	public void doJob() throws Exception {
 		Channel channel = Channel.findByNumber(number);
 		channel.game = channel.next;
+		channel.next = null;
 		channel.save();
 
 		NextGameEvent nge = new NextGameEvent();
