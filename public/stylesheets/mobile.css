@@ -470,6 +470,16 @@ div#zapper ul ul li span {
   text-decoration: none;
 }
 
+/* Inactive numbers on zapper */
+div#zapper ul ul li span.blank {
+  background-color: #DFDFDF;
+  border-top: 1px solid #EFEFEF;
+  border-right: 3px solid #CFCFCF;
+  border-bottom: 3px solid #CFCFCF;
+  border-left: 1px solid #EFEFEF;
+  color: #5F5F5F;
+}
+
 div#admin ul li a:link,
 div#admin ul li a:visited,
 div#admin ul li a:hover,
