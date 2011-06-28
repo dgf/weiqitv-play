@@ -17,6 +17,12 @@
         </li>
 %{if(pos == '') { pos = 'second';} else if (pos == 'third') {pos = '';} else {pos = 'third';} }%
 #{/list}
+%{for(i = _channels.size() + 1; i < 10; i++) { }%
+        <li class="${pos}">
+          <span class="blank">${i}</span>
+        </li>
+%{if(pos == '') { pos = 'second';} else if (pos == 'third') {pos = '';} else {pos = 'third';} }%
+%{}}%
         <li>&nbsp;</li>
 
         <li class="second">

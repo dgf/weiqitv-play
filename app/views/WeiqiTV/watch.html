@@ -72,10 +72,12 @@ $(document).ready(function() {
         $('#turn').empty().append(e.turn);
         $('#white_name').empty().append(e.white);
         $('#white_time').empty().append(e.wTime);
-        $('#white_prisoner').empty().append(0);
+        $('#white_prisoner_count').empty().append(0);
+        $('#white_prisoner dd').remove();
         $('#black_name').empty().append(e.black);
         $('#black_time').empty().append(e.wTime);
-        $('#black_prisoner').empty().append(0);
+        $('#black_prisoner_count').empty().append(0);
+        $('#black_prisoner dd').remove();
 
         $('#handicap').empty().append(e.handicap);
         $('#byo').empty().append(e.byo);
@@ -126,10 +128,10 @@ $(document).ready(function() {
     <div id="B${nr}" class="empty"></div>
   </td>
   <td class="${size == 9 && (nr == 3 || nr == 7) ? 'hoshi' : 'blank'}">
-    <div id="C${nr}" class="${size == 9 && ((nr == 3 && handi > 1) || (nr == 7 && handi > 2)) ? 'black' : 'blank'}"></div>
+    <div id="C${nr}" class="empty"></div>
   </td>
   <td class="${size != 9 && (nr == 4 || nr == 10 || nr == 16) ? 'hoshi' : 'blank'}">
-    <div id="D${nr}" class="${size > 9 && ((nr == 4 && handi > 1) || (nr == 10 && ((size == 13 && handi > 2) || handi > 5)) || (nr == 16 && handi > 2)) ? 'black' : 'blank'}"></div>
+    <div id="D${nr}" class=empty"></div>
   </td>
   <td class="blank">
     <div id="E${nr}" class="empty"></div>
@@ -138,7 +140,7 @@ $(document).ready(function() {
     <div id="F${nr}" class="empty"></div>
   </td>
   <td class="${((size == 9 && (nr == 3 || nr == 7)) || (size == 13 && nr == 7)) ? 'hoshi' : 'blank'}">
-    <div id="G${nr}" class="${(size == 9 && ((nr == 3 && handi == 4) || (nr == 7 && handi > 1))) || (size == 13 && nr == 7 && handi == 5) ? 'black' : 'blank'}"></div>
+    <div id="G${nr}" class="empty"></div>
   </td>
   <td class="blank">
     <div id="H${nr}" class="empty"></div>
@@ -152,20 +154,8 @@ $(document).ready(function() {
   <td class="blank">
     <div id="J${nr}" class="empty"></div>
   </td>
-%{
-blackOrBlack = 'blank';
-if (size == 13) {
-  if ((nr == 4 && handi > 3) || (nr == 10 && handi > 1)) {
-    blackOrBlack = 'black';
-  }
-} else {
-  if ((nr == 10 && (handi == 5 || handi == 7 || handi == 9)) || ((nr == 4 || nr == 16) && handi > 7)) {
-    blackOrBlack = 'black';
-  }
-}
-%}
   <td class="${nr == 4 || nr == 10 || nr == 16 ? 'hoshi' : 'blank'}">
-    <div id="K${nr}" class="${blackOrBlack}""></div>
+    <div id="K${nr}" class="emtpy"></div>
   </td>
   <td class="blank">
     <div id="L${nr}" class="empty"></div>
@@ -189,7 +179,7 @@ if (size == 13) {
     <div id="P${nr}" class="empty"></div>
   </td>
   <td class="${nr == 4 || nr == 10 || nr == 16 ? 'hoshi' : 'blank'}">
-    <div id="Q${nr}" class="${(nr == 4 && handi > 3) || (nr == 10 && handi > 5) || (nr == 16 && handi >= 2) ? 'black' : 'blank'}"></div>
+    <div id="Q${nr}" class="empty"></div>
   </td>
   <td class="blank">
     <div id="R${nr}" class="empty"></div>

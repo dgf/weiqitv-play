@@ -2,6 +2,9 @@
 .project
 .settings
 eclipse
+data
+lib
+logs
 modules
 test-result
 tmp

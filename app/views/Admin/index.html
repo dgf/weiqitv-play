@@ -7,20 +7,26 @@ Welcome ${user}!
 
 <hr />
 
-<a href="@{Admin.start}">start</a>
-<a href="@{Admin.stop}">stop</a>
-<a href="@{crud.Channels.index}">crud</a>
-<a href="@{Admin.games}">games</a>
+<div>
+  <span>Gatherer</span>
+  <a href="@{Admin.start}">start</a>
+  <a href="@{Admin.stop}">stop</a>
+  #{form @Admin.toggle(option)}
+    #{select 'option', items:gatherer.IgsOption.values() /}
+    <input type="submit" value="toggle" />
+  #{/form}
+</div>
 
-<hr />
+<div>
+  <span>Database</span>
+  <a href="@{crud.Channels.index}">crud</a>
+  <a href="@{Admin.games}">games</a>
+</div>
 
-#{form @Admin.toggle(option)}
-  #{select 'option', items:gatherer.IgsOption.values() /}
-  <input type="submit" value="toggle" />
-#{/form}
-
-<hr />
+<div>
+  <span>Channel</span>
 #{form @Admin.broadcast(message)}
   <input type="text" name="message" value="" />
   <input type="submit" value="broadcast" />
 #{/form}
+</div>

@@ -42,12 +42,23 @@
 <body>
   <h1>
     <a href="@{WeiqiTV.index}">${play.configuration.get("application.name")}</a>
+#{if role == 'admin'}
     <a href="@{Admin.reset}">${play.mode}</a>
+#{/if}
   </h1>
   
   <!--Login-->
   <p class="login">
-    <a href="" title="Login to WeiqiTV"><img src="@{'/public/images/power-off.png'}" alt="Login" width="16" height="18" title="Login to WeiqiTV" /></a>
+#{if role.equals('watcher')}
+    <a href="@{Secure.login}" title="Login to WeiqiTV">
+      <img src="@{'/public/images/power-off.png'}" alt="Login" width="16" height="18" title="Login to WeiqiTV" />
+    </a>
+#{/if}
+#{else}
+    <a href="@{Secure.logout}" title="Logout from WeiqiTV">
+      <img src="@{'/public/images/power-on.png'}" alt="Logout" width="16" height="18" title="Logout from WeiqiTV" />
+    </a>
+#{/else}
   </p>
   <!--/Login-->
   
