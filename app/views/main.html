@@ -44,7 +44,13 @@
     <a href="@{WeiqiTV.index}">${play.configuration.get("application.name")}</a>
     <a href="@{Admin.reset}">${play.mode}</a>
   </h1>
-
+  
+  <!--Login-->
+  <p class="login">
+    <a href="" title="Login to WeiqiTV"><img src="@{'/public/images/power-off.png'}" alt="Login" width="16" height="18" title="Login to WeiqiTV" /></a>
+  </p>
+  <!--/Login-->
+  
   <!--main container-->
   <div id="main">
 #{if role == 'admin'}

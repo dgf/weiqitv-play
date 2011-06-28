@@ -55,6 +55,69 @@ h1 {
   width: 100%;
 }
 
+/* Login button */
+p.login {
+  position: static;
+  right: 0;
+  top: 0;
+  font-size: 1.5em;
+  line-height: 1em;
+  margin: 0;
+  padding: .2em .5em 0 .5em;
+  z-index: 3;
+}
+
+p.login a:link,
+p.login a:visited {
+  border-top: 1px solid #CFCFCF;
+  border-right: 3px solid #505050;
+  border-bottom: 3px solid #505050;
+  border-left: 1px solid #CFCFCF;
+  border-top-right-radius: 1em;
+  border-top-left-radius: 1em;
+  border-bottom-right-radius: 1em;
+  border-bottom-left-radius: 1em;
+  -moz-border-radius-topright: 1em;
+  -moz-border-radius-topleft: 1em;
+  -moz-border-radius-bottomright: 1em;
+  -moz-border-radius-bottomleft: 1em;
+  -webkit-border-top-right-radius: 1em;
+  -webkit-border-top-left-radius: 1em;
+  -webkit-border-bottom-right-radius: 1em;
+  -webkit-border-bottom-left-radius: 1em;
+  line-height: 1em;
+  background-color: #EFEFEF;
+  color: #000000;
+  margin: 0;
+  padding: .1em .3em 0 .3em;
+}
+
+p.login a:hover,
+p.login a:active,
+p.login a:focus {
+  border-top: 2px solid #CFCFCF;
+  border-right: 2px solid #D09E6D;
+  border-bottom: 2px solid #D09E6D;
+  border-left: 2px solid #CFCFCF;
+  border-top-right-radius: 1.5em;
+  border-top-left-radius: 1.5em;
+  border-bottom-right-radius: 1.5em;
+  border-bottom-left-radius: 1.5em;
+  -moz-border-radius-topright: 1.5em;
+  -moz-border-radius-topleft: 1.5em;
+  -moz-border-radius-bottomright: 1.5em;
+  -moz-border-radius-bottomleft: 1.5em;
+  -webkit-border-top-right-radius: 1.5em;
+  -webkit-border-top-left-radius: 1.5em;
+  -webkit-border-bottom-right-radius: 1.5em;
+  -webkit-border-bottom-left-radius: 1.5em;
+  background-color: #D0B499;
+  color: #000000;
+  margin: 0;
+  padding: .1em .3em 0 .3em;
+  line-height: 1em;
+}
+
 /* Second header (content header, e.g. channeltitle) */
 h2 {
   background: #708090 url(../images/channel.png) top right no-repeat;
