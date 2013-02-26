@@ -97,7 +97,6 @@ $(document).ready(function() {
   
   var listAction = #{jsAction @WeiqiTV.turns(':game') /};
   $.getJSON(listAction({ game: ${game.id} }), function(data) {
-    alert("call list action" + data);
     $.each(data, function(key, turn) {
       if(turn.number == 0) { alert(data); }
       // set actual move
