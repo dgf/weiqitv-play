@@ -10,17 +10,17 @@ import java.util.regex.Pattern;
 import play.Logger;
 
 /**
- * filter igs game list entries
+ * filter IGS game list entries
  */
-public class IgsGame implements TelnetOutputListener {
+public class IgsGameList implements TelnetOutputListener {
 
 	private final String server;
 
-	public boolean retrieveGameList;
+	private boolean retrieveGames;
 
 	private final WeiqiStorage storage;
 
-	public IgsGame(String server, WeiqiStorage storage) {
+	public IgsGameList(String server, WeiqiStorage storage) {
 		this.server = server;
 		this.storage = storage;
 	}
@@ -37,17 +37,21 @@ public class IgsGame implements TelnetOutputListener {
 			+ "([0-9]+) +([0-9\\.\\-]+) +" // handi, komi
 			+ "([0-9]+) +I\\) +\\( *([0-9]+) *\\)"); // byo, observer
 
+	public boolean isRetrieving() {
+		return retrieveGames;
+	}
+
 	@Override
 	public synchronized boolean notify(String line) {
-		if (retrieveGameList && line.equals(OK)) {
+		if (retrieveGames && line.equals(OK)) {
 			Logger.debug("game list retrieved");
-			retrieveGameList = false;
+			retrieveGames = false;
 			return false;
 		}
 
 		if (line.equals(GAME_HEADER)) {
 			Logger.debug("start game list reading");
-			retrieveGameList = true;
+			retrieveGames = true;
 			return true;
 		}
 

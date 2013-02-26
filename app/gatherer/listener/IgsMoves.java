@@ -20,13 +20,13 @@ import play.Logger;
 // 15 301(W): Pass
 // 2
 // 1 8
-public class IgsMove implements TelnetOutputListener {
+public class IgsMoves implements TelnetOutputListener {
 
 	public static final String HANDICAP_PREFIX = "HC";
 
 	private String server;
 
-	public boolean retrieveMoveList;
+	private boolean retrieveMoves;
 
 	private GameStatus status;
 
@@ -44,22 +44,25 @@ public class IgsMove implements TelnetOutputListener {
 
 	private final WeiqiStorage storage;
 
-	public IgsMove(String server, WeiqiStorage storage) {
+	public IgsMoves(String server, WeiqiStorage storage) {
 		this.server = server;
 		this.storage = storage;
+	}
+
+	public boolean isRetrieving() {
+		return retrieveMoves;
 	}
 
 	@Override
 	public boolean notify(String line) {
 
-		if (retrieveMoveList) {
+		if (retrieveMoves) {
 			if (line.equals(OBSERVED)) { // ignore flag output for observed move
 				Logger.debug("end of observed");
 				return true;
-			} else if (line.equals(OK) //
-					|| line.equals(MOVE_LIST_OK)) { // all moves readed
+			} else if (line.equals(OK) || line.equals(MOVE_LIST_OK)) { // all moves read
 				Logger.debug("move list of %s retrieved", status.getId());
-				retrieveMoveList = false;
+				retrieveMoves = false;
 				return false;
 			}
 		}
@@ -67,9 +70,9 @@ public class IgsMove implements TelnetOutputListener {
 		// Game 13 I: SHIGE08 (2 546 17) vs YMT123 (3 462 1)
 		Matcher gsm = GAME_STATUS.matcher(line);
 		if (gsm.matches()) {
-			status = getGameStatus(gsm);
+			status = mapGameStatus(gsm);
 			Logger.debug("game status: " + line);
-			retrieveMoveList = true;
+			retrieveMoves = true;
 			return true;
 		}
 
@@ -89,8 +92,8 @@ public class IgsMove implements TelnetOutputListener {
 			if (coordinate.equals("Handicap")) {
 				coordinate = HANDICAP_PREFIX + stones.remove();
 			}
+			String[] prisoners = stones.toArray(new String[stones.size()]);
 
-			List<String> prisoners = stones;
 			GamePlayerStatus gps;
 			if (player == BlackOrWhite.WHITE) {
 				gps = status.getWhite();
@@ -110,7 +113,7 @@ public class IgsMove implements TelnetOutputListener {
 		return false;
 	}
 
-	private GameStatus getGameStatus(Matcher gsm) {
+	private GameStatus mapGameStatus(Matcher gsm) {
 		String id = gsm.group(1);
 
 		GamePlayerStatus white = new GamePlayerStatus();
