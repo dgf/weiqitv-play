@@ -10,7 +10,7 @@ import play.data.validation.URL;
 import play.db.jpa.Model;
 
 @Entity
-public class User extends Model {
+public class User extends Model implements Cloneable {
 
 	@Required
 	@Column(unique = true, nullable = false)
@@ -57,4 +57,10 @@ public class User extends Model {
 		return User.find("name", name).first();
 	}
 
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		User user = (User) super.clone();
+		user.id = null;
+		return user;
+	}
 }

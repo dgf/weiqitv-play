@@ -2,10 +2,12 @@ package controllers;
 
 import events.MessageEvent;
 import gatherer.IgsOption;
+import jobs.Bootstrap;
 import jobs.ShowNextGameOnChannel;
 import models.ChannelList;
 import models.Game;
 import models.GameServer;
+import models.User;
 import play.Logger;
 import play.mvc.With;
 import play.test.Fixtures;
@@ -39,8 +41,20 @@ public class Admin extends AbstractController {
 	@Check("isAdmin")
 	public static void reset() {
 		Logger.debug("reset database");
-		Fixtures.deleteDatabase();
-		Fixtures.loadModels("initial-data.yml");
+		try {
+			// cache the actual account
+			User actual = User.findByName(Security.connected());
+			User clone = (User) actual.clone();
+			// reset database
+			Fixtures.deleteDatabase();
+			Fixtures.loadModels("initial-data.yml");
+			// persist the cached account
+			clone.save();
+			// initialize channel list
+			new Bootstrap().doJob();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 		flash.success("database reloaded");
 		index();
 	}
