@@ -1,10 +1,10 @@
 # WeiqiTV - Watching Weiqi like on TV (α-Status)
 
+![screenshot](https://github.com/dgf/weiqitv-play/raw/master/screenshot.png)
+
 ## Requirements
 
 * [play! 1.2.5](http://www.playframework.com/documentation/1.2.5/home)
-
-![screenshot](https://github.com/dgf/weiqitv-play/raw/master/screenshot.png)
 
 ## run your own TV server
 
