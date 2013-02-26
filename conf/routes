@@ -3,43 +3,39 @@
 # ~~~~
 
 # Home page
-GET     /                                       WeiqiTV.index
-GET     /watch/{number}                         WeiqiTV.watch
-GET     /search/{query}                         WeiqiTV.search
+GET     /                          WeiqiTV.index
+GET     /watch/{<[1-9]>number}     WeiqiTV.watch
 
 # JS channel interaction
-GET     /listTurns                              WeiqiTV.listTurns
-WS      /socket                                 ChannelSocket.stream
+GET     /channels                  WeiqiTV.channels
+GET     /turns                     WeiqiTV.turns
+WS      /socket                    ChannelSocket.stream
 
 # Admin tasks
-GET     /admin                                  Admin.index
-GET     /games                                  Admin.games
-GET     /start                                  Admin.start
-GET     /stop                                   Admin.stop
-GET     /reset                                  Admin.reset
-GET     /observe                                Admin.observe
-GET     /next                                   Admin.next
-GET     /broadcast                              Admin.broadcast
+GET     /next                      Admin.next
+GET     /broadcast                 Admin.broadcast
+GET     /admin                     Admin.index
+GET     /admin/games               Admin.games
+GET     /admin/reset               Admin.reset
+GET     /gatherer/observe          Admin.observe
+GET     /gatherer/start            Admin.start
+GET     /gatherer/stop             Admin.stop
+GET     /gatherer/toggle           Admin.toggle
 
 # Ignore favicon requests
-GET     /favicon.ico                            404
+GET     /favicon.ico               404
 
 # Map static resources from the /app/public folder to the /public path
-GET     /public/                                staticDir:public
+GET     /public/                   staticDir:public
 
 # Import CRUD routes
-*       /crud                                   module:crud
+*       /crud                      module:crud
 
 # Import messages analyser
-*       /                                       module:messages
+*       /                          module:messages
 
 # Import Secure routes
-*       /                                       module:secure
-
-# Use log4play
-WS      /logstream                              Log4Play.WebSocket.index
-GET     /@logs                                  Log4Play.index
-GET     /public_log4play/                       staticDir:public_log4play
+*       /                          module:secure
 
 # Catch all
-*       /{controller}/{action}                  {controller}.{action}
+#*       /{controller}/{action}     {controller}.{action}

@@ -7,7 +7,7 @@
 
 %{
 game = channel.game;
-size = game.size.getLength();
+size = game.size.length;
 handi = game.handicap.stones;
 }%
 
@@ -84,7 +84,7 @@ $(document).ready(function() {
         $('#komi').empty().append(e.komi);
         break;
       default:
-        alert("unknown socket event " + event)
+        alert("unknown socket event " + event);
         break;
     }
   }
@@ -92,18 +92,20 @@ $(document).ready(function() {
   // create web socket
   var socket = new WebSocket('@@{ChannelSocket.stream(channel.number)}');
   socket.onmessage = function(event) { display(event.data); }
-
+  
   // initialize board
-  var listAction = #{jsAction @listTurns(':game') /}
-  $.getJSON(listAction({game: '${game.id}'}), function(data) {
-    $.each(data, function(key, move) {
-      var player = move.player.toLowerCase();
+  
+  var listAction = #{jsAction @WeiqiTV.turns(':game') /};
+  $.getJSON(listAction({ game: ${game.id} }), function(data) {
+    alert("call list action" + data);
+    $.each(data, function(key, turn) {
+      if(turn.number == 0) { alert(data); }
       // set actual move
-      $("#" + move.coordinate).removeClass('empty').addClass(player);
+      $("#" + turn.coordinate).removeClass('empty').addClass(turn.player);
       // blank prisoners
-      if(move.prisoners && move.prisoners.length) {
-        for(var i=0,len=move.prisoners.length; prisoner=move.prisoners[i], i<len; i++) {
-          viewPrisoner(prisoner.coordinate);
+      if(turn.prisoners && turn.prisoners.length) {
+        for(var i=0,len=turn.prisoners.length; p=turn.prisoners[i], i<len; i++) {
+          viewPrisoner(p.coordinate);
         }
       }
     });

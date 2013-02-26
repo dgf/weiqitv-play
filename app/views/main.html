@@ -15,27 +15,18 @@
 <meta name="robots" content="NOINDEX,NOFOLLOW" />
 <meta name="title" content="${title}" />
 
+
+#{get 'cssStlyes' }
 <link rel="stylesheet" type="text/css" media="handheld, only screen and (max-device-width: 480px)" href="@{'/public/stylesheets/mobile.css'}" />
 <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/screen.css'}" />
 <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}" />
-
+#{/get}
 #{get 'moreStyles' /}
-<script src="@{'/public/javascripts/jquery-1.6.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+
+#{get 'jsScripts' }
+#{script 'jquery-1.6.min.js' /}
+#{/get}
 #{get 'moreScripts' /}
-
-<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-24171413-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
 
 </head>
 
