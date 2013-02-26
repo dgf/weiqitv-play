@@ -12,33 +12,22 @@ public enum Size {
 
 	static {
 		for (Size e : EnumSet.allOf(Size.class))
-			lookup.put(e.getLength(), e);
+			lookup.put(e.length, e);
 	}
 
 	public static Size get(int length) {
 		return lookup.get(length);
 	}
 
-	private String code;
-
-	private int length;
+	public final int length;
 
 	Size(int l) {
 		length = l;
-		code = "" + l + "x" + l;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public int getLength() {
-		return length;
 	}
 
 	@Override
 	public String toString() {
-		return code;
+		return "" + length + "x" + length;
 	}
 
 }

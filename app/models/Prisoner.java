@@ -5,19 +5,16 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
 import play.data.validation.Required;
 import play.db.jpa.Model;
-import annotations.JSONhide;
 
 @Entity
 public class Prisoner extends Model {
 
-	@JSONhide
 	@Required
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	public Move move;
 
 	@Required
@@ -29,7 +26,7 @@ public class Prisoner extends Model {
 		this.coordinate = coordinate;
 	}
 
-	public static List<Prisoner> toList(Move move, List<String> coordinates) {
+	public static List<Prisoner> toPrisonerList(Move move, List<String> coordinates) {
 		List<Prisoner> list = new ArrayList<Prisoner>(coordinates.size());
 		for (String coordinate : coordinates) {
 			list.add(new Prisoner(move, coordinate));
@@ -37,7 +34,7 @@ public class Prisoner extends Model {
 		return list;
 	}
 
-	public static List<String> toList(List<Prisoner> prisoners) {
+	public static List<String> toStringList(List<Prisoner> prisoners) {
 		if (prisoners == null) {
 			return null;
 		} else {

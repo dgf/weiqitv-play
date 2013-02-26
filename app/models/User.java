@@ -9,16 +9,13 @@ import play.data.validation.Required;
 import play.data.validation.URL;
 import play.db.jpa.Model;
 
-//@Indexed
 @Entity
 public class User extends Model {
 
-	// @Field
 	@Required
 	@Column(unique = true, nullable = false)
 	public String name;
 
-	// @Field
 	@Required
 	@Column(unique = true, nullable = false)
 	public String fullname;

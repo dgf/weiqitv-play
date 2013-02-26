@@ -8,9 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PostPersist;
 
 import play.data.validation.Required;
-import annotations.JSONhide;
 
-//@Indexed
 @Entity
 public class Channel extends TemporalModel {
 
@@ -18,12 +16,10 @@ public class Channel extends TemporalModel {
 	@Column(unique = true)
 	public int number;
 
-	// @Field
 	@Required
 	@Column(unique = true, nullable = false)
 	public String title;
 
-	@JSONhide
 	@Required
 	@ManyToOne
 	public Criteria criteria;
@@ -32,18 +28,15 @@ public class Channel extends TemporalModel {
 	@Column(nullable = false)
 	public String content;
 
-	@JSONhide
 	@Required
 	@ManyToOne
 	public User author;
 
 	public int observer;
 
-	@JSONhide
 	@ManyToOne
 	public Game game;
 
-	@JSONhide
 	@ManyToOne
 	public Game next;
 

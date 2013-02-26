@@ -19,18 +19,12 @@ public class Player extends Model {
 	@ManyToOne
 	public User user;
 
-	public static Player getPlayer(String name) {
-		Player player = find("name", name).first();
-		if (player == null) {
-			player = new Player();
-			player.name = name;
-		}
-		return player;
-	}
-
 	@Override
 	public String toString() {
 		return name;
+	}
 
+	static Player findByName(String name) {
+		return Player.find("name", name).first();
 	}
 }

@@ -2,7 +2,6 @@ package models;
 
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
@@ -13,17 +12,13 @@ import play.data.validation.Max;
 import play.data.validation.Min;
 import play.data.validation.Required;
 import play.db.jpa.Model;
-import annotations.JSONhide;
 
 @Entity
-// @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
-@DiscriminatorValue("Turn")
-// @MappedSuperclass
+//@DiscriminatorValue("Turn")
 public abstract class Turn extends Model {
 
-	@JSONhide
 	@Required
 	@ManyToOne(fetch = FetchType.LAZY)
 	public Game game;

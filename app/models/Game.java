@@ -49,11 +49,6 @@ public class Game extends TemporalModel {
 		return white + " vs. " + black;
 	}
 
-	public static Game findByServerHostAndOnlineId(String serverHost, String onlineId) {
-		GameServer gameServer = GameServer.find("host", serverHost).<GameServer> first();
-		return Game.find("byServerAndOnlineId", gameServer, onlineId).first();
-	}
-
 	/**
 	 * @return rank of stronger player
 	 */
@@ -72,7 +67,12 @@ public class Game extends TemporalModel {
 		return false;
 	}
 
-	public static Game findByServerAndOnlineId(GameServer gameServer, String onlineId) {
-		return Game.find("byServerAndOnlineId", gameServer, onlineId).first();
+	public static Game findByServerHostAndOnlineId(String host, String onlineId) {
+		GameServer gs = GameServer.find("host", host).first();
+		return Game.find("byServerAndOnlineId", gs, onlineId).first();
+	}
+
+	public static Game findByServerAndOnlineId(GameServer server, String onlineId) {
+		return Game.find("byServerAndOnlineId", server, onlineId).first();
 	}
 }

@@ -2,13 +2,13 @@ package models;
 
 import static models.RankType.*;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
+import play.Logger;
 import play.data.validation.Required;
 
 /**
@@ -32,40 +32,6 @@ public class Rank extends AbstractCriterion<Rank> {
 	@Required
 	@Enumerated(EnumType.STRING)
 	public RankType type;
-
-	public static Rank getRank(int nr, RankType type) {
-		Rank rank = find("byNrAndType", nr, type).first();
-		if (rank == null) {
-			rank = new Rank();
-			rank.nr = nr;
-			rank.type = type;
-			rank.save();
-		}
-		return rank;
-	}
-
-	public static Rank getRank(String nr, String type) {
-		return getRank(Integer.parseInt(nr), RankType.get(type));
-	}
-
-	public static Rank getRank(String rank) {
-		try {
-			if (rank.equals(NR.name())) {
-				return getRank(0, NR);
-			}
-		} catch (NullPointerException e) {
-			throw new IllegalArgumentException(e);
-		}
-
-		Matcher matcher = RANK_PATTERN.matcher(rank);
-
-		if (matcher.matches() == false) {
-			throw new IllegalArgumentException( //
-					rank + " matching failed: " + RANK_PATTERN);
-		}
-
-		return getRank(matcher.group(1), matcher.group(2));
-	}
 
 	@Override
 	public String toString() {
@@ -102,5 +68,10 @@ public class Rank extends AbstractCriterion<Rank> {
 				return 1 - o.nr - nr;
 			}
 		}
+	}
+
+	public static Rank findByNrAndType(int nr, RankType type) {
+		Logger.info("find by nr:%s type:%s class:%s", nr, type, type.getClass().getName());
+		return Rank.find("byNrAndType", nr, type).first();
 	}
 }

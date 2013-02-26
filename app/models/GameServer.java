@@ -19,7 +19,11 @@ public class GameServer extends Model {
 		return host + ":" + port;
 	}
 
-	public static GameServer findByHost(String server) {
-		return GameServer.find("host", server).<GameServer> first();
+	public static GameServer findByHost(String host) {
+		return GameServer.find("host", host).first();
+	}
+
+	public static GameServer findByHostAndPort(String host, int port) {
+		return GameServer.find("byHostAndPort", host, port).first();
 	}
 }

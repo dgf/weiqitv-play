@@ -19,7 +19,7 @@ public enum RankType {
 		return lookup.get(type);
 	}
 
-	public String type;
+	public final String type;
 
 	RankType(String t) {
 		type = t;
