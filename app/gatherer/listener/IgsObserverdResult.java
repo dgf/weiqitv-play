@@ -65,7 +65,6 @@ public class IgsObserverdResult implements TelnetOutputListener {
 	 */
 	@Override
 	public boolean notify(String line) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

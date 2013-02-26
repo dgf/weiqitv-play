@@ -1,0 +1,2 @@
+[#{list items:channels, as:'c'}
+{ number: '${c.number}', title: '${c.title}' }${c_isLast ? '' : ',\n'}#{/list}]

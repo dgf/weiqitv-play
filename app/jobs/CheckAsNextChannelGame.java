@@ -13,8 +13,6 @@ import play.jobs.Job;
  * 
  * TODO use an upcoming game list per channel
  * 
- * @author dagnu
- * 
  */
 public class CheckAsNextChannelGame extends Job {
 

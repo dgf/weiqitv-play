@@ -9,9 +9,6 @@ import play.jobs.OnApplicationStart;
 
 /**
  * create a websocket for each channel at startup
- * 
- * @author dagnu
- * 
  */
 @OnApplicationStart
 public class Bootstrap extends Job {
