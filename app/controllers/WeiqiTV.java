@@ -14,6 +14,7 @@ public class WeiqiTV extends AbstractController {
 	}
 
 	public static void watch(Integer number) {
+		Logger.debug("watch %s", number);
 		Channel channel = Channel.findByNumber(number);
 		List<Channel> channels = Channel.allByNumber();
 		flash.success("watch %s", channel.title);
