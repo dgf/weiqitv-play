@@ -3,4 +3,11 @@
 #{set page:'Gatherer' /}
 #{set note:'WeiqiTV - Watching Weiqi like on TV (α-Status)' /}
 
-#{table games /}
+#{table games, as: 'game'}
+  #{column 'white'}
+    ${game.white.player.name} ${game.white.rank}
+  #{/column}
+  #{column 'black'}
+    ${game.black.player.name} ${game.black.rank}
+  #{/column}
+#{/table}
