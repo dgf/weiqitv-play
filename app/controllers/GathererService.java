@@ -4,9 +4,6 @@ import gatherer.IgsGatherer;
 import gatherer.IgsOption;
 import gatherer.WeiqiGameGatherer;
 import gatherer.WeiqiStorage;
-
-import java.util.List;
-
 import jobs.CreateGame;
 import jobs.CreateMove;
 import jobs.SaveGameResult;
@@ -62,7 +59,7 @@ public class GathererService implements WeiqiStorage {
 
 	@Override
 	public void addMove(String server, String onlineId, int number, BlackOrWhite player,
-			String coordinate, int seconds, int byo, List<String> prisoners) {
+			String coordinate, int seconds, int byo, String... prisoners) {
 		new CreateMove(server, onlineId, number, player, coordinate, seconds, byo, prisoners).now();
 	}
 
