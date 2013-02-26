@@ -1,12 +1,8 @@
 package jobs;
 
+import static models.WeiqiJpaFactory.*;
 import models.Game;
-import models.GamePlayer;
 import models.GameServer;
-import models.Handicap;
-import models.Player;
-import models.Rank;
-import models.Size;
 import play.Logger;
 import play.jobs.Job;
 
@@ -54,24 +50,13 @@ public class CreateGame extends Job {
 	}
 
 	private Game createGame(GameServer gameServer) {
-		Game game = new Game();
+
+		Game game = game(white, wRank, black, bRank, size, handicap, komi);
+
 		game.server = gameServer;
 		game.onlineId = onlineId;
 
-		GamePlayer w = new GamePlayer();
-		w.player = Player.getPlayer(white);
-		w.rank = Rank.getRank(wRank);
-		game.white = w;
-
-		GamePlayer b = new GamePlayer();
-		b.player = Player.getPlayer(black);
-		b.rank = Rank.getRank(bRank);
-		game.black = b;
-
 		game.turn = turn;
-		game.size = Size.get(size);
-		game.handicap = Handicap.getHandicap(handicap);
-		game.komi = komi;
 		game.byo = byo;
 		game.observer = observer;
 

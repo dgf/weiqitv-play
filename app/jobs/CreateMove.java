@@ -1,7 +1,8 @@
 package jobs;
 
+import static models.WeiqiJpaFactory.*;
 import events.MoveEvent;
-import gatherer.listener.IgsMove;
+import gatherer.listener.IgsMoves;
 
 import java.util.List;
 
@@ -23,10 +24,10 @@ public class CreateMove extends Job {
 	private final String coordinate;
 	private final int seconds;
 	private final int byo;
-	private final List<String> prisoners;
+	private final String[] prisoners;
 
 	public CreateMove(String server, String onlineId, int number, BlackOrWhite player,
-			String coordinate, int seconds, int byo, List<String> prisoners) {
+			String coordinate, int seconds, int byo, String... prisoners) {
 		this.server = server;
 		this.onlineId = onlineId;
 		this.number = number;
@@ -50,8 +51,9 @@ public class CreateMove extends Job {
 			Logger.warn("move %s exist with id %s", m, m.id);
 		} else {
 			Move move = null;
-			if (coordinate.startsWith(IgsMove.HANDICAP_PREFIX)) { // add handicap moves
-				String count = coordinate.substring(IgsMove.HANDICAP_PREFIX.length());
+			// add handicap moves
+			if (coordinate.startsWith(IgsMoves.HANDICAP_PREFIX)) { 
+				String count = coordinate.substring(IgsMoves.HANDICAP_PREFIX.length());
 				List<String> stones = Handicap.getStones(game.size, Integer.parseInt(count));
 				for (String stone : stones) {
 					move = createMove(game, stone);
@@ -71,17 +73,9 @@ public class CreateMove extends Job {
 	}
 
 	private Move createMove(Game game, String coordinate) {
-		Move move = new Move();
-		move.game = game;
-		move.byo = byo;
-		move.coordinate = coordinate;
-		move.number = number;
-		move.player = player;
-		move.prisoners = Prisoner.toList(move, prisoners);
-		move.seconds = seconds;
-
+		Move move = move(game, number, player, coordinate, seconds, byo, prisoners);
 		Logger.debug("create move %s", move);
-		return move.save();
+		return move;
 	}
 
 	private void updateChannelSockets(Game game, Move move) {
@@ -89,7 +83,7 @@ public class CreateMove extends Job {
 		me.coordinate = move.coordinate;
 		me.player = move.player;
 		me.number = move.number;
-		me.prisoners = Prisoner.toList(move.prisoners);
+		me.prisoners = Prisoner.toStringList(move.prisoners);
 		me.time = move.seconds;
 		me.byo = move.byo;
 
