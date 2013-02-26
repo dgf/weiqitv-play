@@ -1,28 +1,28 @@
-# Saved by @messages on Thu Jun 23 13:43:19 CEST 2011
+# Saved by @messages on Sat Jul 02 15:53:12 CEST 2011
 author=Author
 black=Black
-channel=Related channel
+channel=Related Channel
 content=Content
 created=Created At
 criteria=Criteria
-fullname=Full name
+fullname=Full Name
 game=Game
 handicap=Handicap
 isAdmin=User is admin
-isPro=Pro user
+isPro=Pro User
 komi=Komi
 mail=Email
 maxHandicap=Maximum Handicap
-maxRank=Maximum rank
+maxRank=Maximum Rank
 minHandicap=Minimum Handicap
-minRank=Minimum rank
-name=Common name
-nextGame=Next game
+minRank=Minimum Rank
+name=Common Name
+nextGame=Next Game
 number=Number
 observer=Observer
 onlineId=Server Game Id
 password=Password
-postedAt=Posted at
+postedAt=Posted At
 result=Result
 server=Server
 size=Size
