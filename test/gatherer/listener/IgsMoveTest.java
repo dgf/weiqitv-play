@@ -2,9 +2,6 @@ package gatherer.listener;
 
 import static gatherer.IgsConstants.*;
 import gatherer.IgsConstants;
-
-import java.util.List;
-
 import models.BlackOrWhite;
 
 import org.junit.Test;
@@ -19,9 +16,9 @@ import play.test.UnitTest;
 // 1 8
 public class IgsMoveTest extends UnitTest {
 
-	private static final String[] states = new String[] { //
-	"15 Game 43 I: ryoken (21 578 20) vs rokujidoo (19 546 14)", //
-			"15 Game 23 I: Fuku5858 (0 23 -1) vs odamori25 (0 39 -1)", //
+	private static final String[] states = new String[] {
+			"15 Game 43 I: ryoken (21 578 20) vs rokujidoo (19 546 14)",
+			"15 Game 23 I: Fuku5858 (0 23 -1) vs odamori25 (0 39 -1)",
 			"15 Game 256 I: dokirisan (0 397 14) vs GONTA3 (0 82 0)" };
 
 	private static final String[] moves = new String[] { "15   0(B): Q16", //
@@ -33,7 +30,7 @@ public class IgsMoveTest extends UnitTest {
 		WeiqiStorageMock storageMock = new WeiqiStorageMock() {
 			@Override
 			public void addMove(String server, String id, int number, BlackOrWhite player,
-					String coordinate, int seconds, int byo, List<String> prisoners) {
+					String coordinate, int seconds, int byo, String... prisoners) {
 				assertEquals("server:port", server);
 				assertEquals("43", id);
 				assertEquals(0, number);
@@ -41,16 +38,16 @@ public class IgsMoveTest extends UnitTest {
 				assertEquals("HC2", coordinate);
 				assertEquals(546, seconds);
 				assertEquals(14, byo);
-				assertTrue(prisoners.isEmpty());
+				assertEquals(0, prisoners.length);
 			}
 		};
-		IgsMove cut = new IgsMove("server:port", storageMock);
+		IgsMoves cut = new IgsMoves("server:port", storageMock);
 
-		assertTrue("handicap 2", cut.notify(states[0]));
+		assertTrue("game 43", cut.notify(states[0]));
 		assertTrue("handicap 2", cut.notify("15   0(B): Handicap 2"));
 		assertTrue(cut.notify(OBSERVED));
 		assertFalse(cut.notify(MOVE_LIST_OK));
-		assertFalse(cut.retrieveMoveList);
+		assertFalse(cut.isRetrieving());
 	}
 
 	@Test
@@ -58,25 +55,25 @@ public class IgsMoveTest extends UnitTest {
 		WeiqiStorageMock storageMock = new WeiqiStorageMock() {
 			@Override
 			public void addMove(String server, String id, int number, BlackOrWhite player,
-					String coordinate, int seconds, int byo, List<String> prisoners) {
+					String coordinate, int seconds, int byo, String... prisoners) {
 				assertEquals(BlackOrWhite.WHITE, player);
 				assertEquals("Pass", coordinate);
 			}
 		};
-		IgsMove cut = new IgsMove("server:port", storageMock);
+		IgsMoves cut = new IgsMoves("server:port", storageMock);
 
-		assertTrue("pass", cut.notify(states[0]));
+		assertTrue("game 43", cut.notify(states[0]));
 		assertTrue("pass", cut.notify("15 301(W): Pass"));
 		assertTrue(cut.notify(OBSERVED));
 		assertFalse(cut.notify(MOVE_LIST_OK));
-		assertFalse(cut.retrieveMoveList);
+		assertFalse(cut.isRetrieving());
 	}
 
 	@Test
 	public void parseMoveList() throws Exception {
 
 		WeiqiStorageMock storageMock = new WeiqiStorageMock();
-		IgsMove cut = new IgsMove("server:port", storageMock);
+		IgsMoves cut = new IgsMoves("server:port", storageMock);
 
 		for (String move : moves) {
 			storageMock.moveCalled = false;
@@ -85,7 +82,7 @@ public class IgsMoveTest extends UnitTest {
 			assertTrue(cut.notify(IgsConstants.OBSERVED));
 			assertFalse(cut.notify(IgsConstants.MOVE_LIST_OK));
 			assertTrue(storageMock.moveCalled);
-			assertFalse(cut.retrieveMoveList);
+			assertFalse(cut.isRetrieving());
 		}
 	}
 
@@ -93,7 +90,7 @@ public class IgsMoveTest extends UnitTest {
 	public void parseStateList() throws Exception {
 
 		WeiqiStorageMock storageMock = new WeiqiStorageMock();
-		IgsMove cut = new IgsMove("server:port", storageMock);
+		IgsMoves cut = new IgsMoves("server:port", storageMock);
 
 		for (String line : states) {
 			storageMock.moveCalled = false;
@@ -102,9 +99,8 @@ public class IgsMoveTest extends UnitTest {
 			assertTrue(cut.notify(IgsConstants.OBSERVED));
 			assertFalse(cut.notify(IgsConstants.MOVE_LIST_OK));
 			assertTrue(storageMock.moveCalled);
-			assertFalse(cut.retrieveMoveList);
+			assertFalse(cut.isRetrieving());
 		}
-
 	}
 
 }

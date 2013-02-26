@@ -1,9 +1,6 @@
 package gatherer.listener;
 
 import gatherer.WeiqiStorage;
-
-import java.util.List;
-
 import models.BlackOrWhite;
 
 class WeiqiStorageMock implements WeiqiStorage {
@@ -13,7 +10,7 @@ class WeiqiStorageMock implements WeiqiStorage {
 
 	@Override
 	public void addMove(String server, String id, int number, BlackOrWhite player,
-			String coordinate, int seconds, int byo, List<String> prisoners) {
+			String coordinate, int seconds, int byo, String... prisoners) {
 		moveCalled = true;
 	}
 

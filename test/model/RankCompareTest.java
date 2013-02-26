@@ -1,6 +1,6 @@
 package model;
 
-import static models.WeiqiFactory.*;
+import static models.WeiqiBeanFactory.*;
 import static org.junit.Assert.*;
 
 import org.junit.Test;

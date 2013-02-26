@@ -1,7 +1,7 @@
 package model;
 
 import static models.Game.*;
-import static models.WeiqiFactory.*;
+import static models.WeiqiBeanFactory.*;
 import models.Game;
 
 import org.junit.Before;
@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import play.test.UnitTest;
 
-public class GameTest extends UnitTest {
+public class GameCompareTest extends UnitTest {
 
 	private Game aGame;
 	private Game aBetterGame;
