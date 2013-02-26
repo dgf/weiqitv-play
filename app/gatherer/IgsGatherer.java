@@ -4,9 +4,9 @@ import static gatherer.IgsConstants.*;
 import static gatherer.IgsOption.*;
 import gatherer.listener.IgsConnect;
 import gatherer.listener.IgsDisconnect;
-import gatherer.listener.IgsGame;
+import gatherer.listener.IgsGameList;
 import gatherer.listener.IgsMatch;
-import gatherer.listener.IgsMove;
+import gatherer.listener.IgsMoves;
 import gatherer.listener.IgsResult;
 import gatherer.listener.IgsVerboseTraffic;
 
@@ -67,7 +67,7 @@ public class IgsGatherer implements WeiqiGameGatherer {
 
 	@Override
 	public boolean isConnected() {
-		return telnet.isConnected();
+		return telnet == null ? false : telnet.isConnected();
 	}
 
 	@Override
@@ -155,8 +155,8 @@ public class IgsGatherer implements WeiqiGameGatherer {
 		toggle(CLIENT, true);
 		telnet.readUntil(OK);
 
-		telnet.addOutputListener(new IgsGame(server, storage));
-		telnet.addOutputListener(new IgsMove(server, storage));
+		telnet.addOutputListener(new IgsGameList(server, storage));
+		telnet.addOutputListener(new IgsMoves(server, storage));
 		telnet.addOutputListener(new IgsResult(server, storage));
 		telnet.addOutputListener(new IgsMatch(this));
 		telnet.addOutputListener(new IgsConnect());

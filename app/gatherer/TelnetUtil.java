@@ -13,8 +13,6 @@ import play.Logger;
 
 /**
  * synchronous write and read for initial commands like login
- * 
- * @author danny
  */
 class TelnetUtil extends Thread {
 
@@ -109,7 +107,7 @@ class TelnetUtil extends Thread {
 		try {
 			Logger.info("try to connect with %s", this);
 			telnet.connect(server, port);
-			Logger.debug("connected with %", this);
+			Logger.debug("connected with %s", this);
 		} catch (Exception e) {
 			throw new RuntimeException("telnet connection failed with " + this, e);
 		}
