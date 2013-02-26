@@ -3,10 +3,10 @@ SELECT
         ,g.created
         ,g.updated
         ,g.onlineId
-        ,wp.name AS 'white'
+        ,wp.name
         ,wr.nr
         ,wr.type
-        ,bp.name AS 'black'
+        ,bp.name
         ,br.nr
         ,br.type
         ,h.stones
