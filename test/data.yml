@@ -1,7 +1,7 @@
 User(admin):
     name:     admin
     fullname: Administrator
-    mail:     admin@g2d.de
+    mail:     admin@tv.g2d.de
     website:  http://tv.g2d.de
     password: secretAdmin
     isAdmin:  true
@@ -9,7 +9,7 @@ User(admin):
 User(aProUser):
     name:     aProUser
     fullname: Pro User account
-    mail:     prouser@g2d.de
+    mail:     prouser@tv.g2d.de
     website:  http://www.g2d.de
     password: secretPro
     isPro:    true
@@ -17,7 +17,7 @@ User(aProUser):
 User(aUser):
     name:     aUser
     fullname: User account
-    mail:     user@g2d.de
+    mail:     user@tv.g2d.de
     website:  http://www.dagnu.de
     password: secretUser
 

@@ -5,17 +5,15 @@ SELECT
         ,g.onlineId
         ,wp.name AS 'white'
         ,wr.nr
-        ,wr. TYPE
+        ,wr.type
         ,bp.name AS 'black'
         ,br.nr
-        ,br. TYPE
-        ,g.result
-        ,g.turn
-        ,g. SIZE
+        ,br.type
         ,h.stones
-        ,g.komi
         ,g.byo
-    FROM
+        ,g.komi
+
+FROM
         Game g
             JOIN GameServer s
                 ON s.id = g.server_id
@@ -32,6 +30,4 @@ SELECT
             JOIN Rank br
                 ON br.id = b.rank_id
             JOIN Handicap h
-                ON h.id = g.handicap_id
-    ORDER BY
-        g.turn DESC;
+                ON h.id = g.handicap_id;
