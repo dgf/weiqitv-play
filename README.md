@@ -29,7 +29,7 @@ GT-I9100, Android 4, Firefox 19:
 
 * press the *start* button on the http://localhost:9000/admin page
 * check a channel state in the CRUD interface http://localhost:9000/crud
-  and start the *next game* on it with http://localhost:9000/next?number=<CHANNEL_ID>
+  and start the *next game* on it with http://localhost:9000/next?number=&lt;CHANNEL_ID&gt;
 
 ### power of by IGS
 
