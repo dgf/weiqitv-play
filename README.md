@@ -1,6 +1,12 @@
 # WeiqiTV - Watching Weiqi like on TV (α-Status)
 
-![screenshot](https://github.com/dgf/weiqitv-play/raw/master/screenshot.png)
+## Screenshots
+
+Ubuntu Desktop, Firefox 19:
+![screenshot ubuntu](https://github.com/dgf/weiqitv-play/raw/master/screenshot.png)
+
+GT-I9100, Android 4, Firefox 19:
+![screenshot android](https://github.com/dgf/weiqitv-play/raw/master/android.png)
 
 ## Requirements
 
