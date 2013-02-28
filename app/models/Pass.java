@@ -7,8 +7,8 @@ import javax.persistence.Entity;
 @DiscriminatorValue("Pass")
 public class Pass extends Turn {
 
-	@Override
-	public String toString() {
-		return player + "P";
-	}
+    @Override
+    public String toString() {
+        return player + "P";
+    }
 }

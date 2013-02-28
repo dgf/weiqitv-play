@@ -2,7 +2,7 @@ package events;
 
 public class MessageEvent implements ChannelEvent {
 
-	public final String type = "message";
+    public final String type = "message";
 
-	public String message;
+    public String message;
 }

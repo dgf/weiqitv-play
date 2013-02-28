@@ -6,27 +6,27 @@ import java.util.Map;
 
 public enum IgsOption {
 
-	CLIENT("client"), QUIET("quiet"), NMATCH("nmatch"), SEEK("seek"), NEWUNDO("newundo");
+    CLIENT("client"), QUIET("quiet"), NMATCH("nmatch"), SEEK("seek"), NEWUNDO("newundo");
 
-	private static final Map<String, IgsOption> lookup = new HashMap<String, IgsOption>();
+    private static final Map<String, IgsOption> lookup = new HashMap<String, IgsOption>();
 
-	static {
-		for (IgsOption e : EnumSet.allOf(IgsOption.class))
-			lookup.put(e.option, e);
-	}
+    static {
+        for (IgsOption e : EnumSet.allOf(IgsOption.class))
+            lookup.put(e.option, e);
+    }
 
-	public static IgsOption get(String option) {
-		return lookup.get(option);
-	}
+    public static IgsOption get(String option) {
+        return lookup.get(option);
+    }
 
-	public String option;
+    public String option;
 
-	IgsOption(String o) {
-		option = o;
-	}
+    IgsOption(String o) {
+        option = o;
+    }
 
-	@Override
-	public String toString() {
-		return option;
-	}
+    @Override
+    public String toString() {
+        return option;
+    }
 }

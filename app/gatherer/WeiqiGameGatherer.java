@@ -5,30 +5,30 @@ package gatherer;
  */
 public interface WeiqiGameGatherer {
 
-	void connect();
+    void connect();
 
-	void disconnect();
+    void disconnect();
 
-	boolean isConnected();
+    boolean isConnected();
 
-	boolean isLoggedIn();
+    boolean isLoggedIn();
 
-	void loginAnonymous();
+    void loginAnonymous();
 
-	void login(String user, String password);
+    void login(String user, String password);
 
-	void logout();
+    void logout();
 
-	void observce(String id);
+    void observce(String id);
 
-	void setServer(String server, int port);
+    void setServer(String server, int port);
 
-	void start();
+    void start();
 
-	void stop();
+    void stop();
 
-	void unObservce(String id);
+    void unObservce(String id);
 
-	void toggle(IgsOption option);
+    void toggle(IgsOption option);
 
 }
