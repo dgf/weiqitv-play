@@ -1,2 +1,2 @@
 [#{list items:turns, as:'t'}
-{ coordinate: '${t.coordinate}', player: '${t.player.toString().toLowerCase()}'#{ifnot t.prisoners.isEmpty()}, prisoners: [#{list items:t.prisoners, as:'p'} '${p.coordinate}' ${p_isLast ? '' : ','}#{/list}]#{/ifnot} }${t_isLast ? '' : ',\n'}#{/list}]
+{ "coordinate": "${t.coordinate}", "player": "${t.player.toString().toLowerCase()}"#{ifnot t.prisoners.isEmpty()}, "prisoners": [#{list items:t.prisoners, as:'p'} "${p.coordinate}" ${p_isLast ? '' : ','}#{/list}]#{/ifnot} }${t_isLast ? '' : ',\n'}#{/list}]
