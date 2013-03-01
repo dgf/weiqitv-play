@@ -16,14 +16,14 @@ handi = game.handicap.stones;
 var player = 'black';
 var other = 'white';
 
-function viewPrisoner (coordinate) {
+function viewPrisoner(tPlayer, coordinate) {
   // remove stone
   $('#' + coordinate).removeClass('white black').addClass('empty').empty();
   // update prisoner list of player
-  var dl = $('#' + player + '_prisoners');
+  var dl = $('#' + tPlayer + '_prisoners');
   dl.append('<dd></dd>');
   // update prisoner count
-  var dt = $('#' + player + '_prisoner_count');
+  var dt = $('#' + tPlayer + '_prisoner_count');
   var count = parseInt(dt.text());
   dt.text(count + 1);
 }
@@ -50,8 +50,8 @@ $(document).ready(function() {
         $('#' + e.coordinate).removeClass('empty black white ko')
           .addClass(player + 'last').empty();
         // remove prisoners
-        $.each(e.prisoners, function(key, val) {
-            viewPrisoner(val);
+        $.each(e.prisoners, function(p, prisoner) {
+            viewPrisoner(e.player, prisoner);
         });
         // set player infos
         $('#' + player + '_time').empty().append(e.time);
@@ -103,9 +103,9 @@ $(document).ready(function() {
       $("#" + turn.coordinate).removeClass('empty').addClass(turn.player);
       // blank prisoners
       if(turn.prisoners && turn.prisoners.length) {
-        for(var i=0,len=turn.prisoners.length; p=turn.prisoners[i], i<len; i++) {
-          viewPrisoner(p.coordinate);
-        }
+        $.each(turn.prisoners, function(p, prisoner) {
+          viewPrisoner(turn.player, prisoner);
+        })
       }
     });
   });
