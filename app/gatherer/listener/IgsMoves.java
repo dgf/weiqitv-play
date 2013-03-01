@@ -2,7 +2,6 @@ package gatherer.listener;
 
 import gatherer.TelnetOutputListener;
 import gatherer.WeiqiStorage;
-import models.BlackOrWhite;
 import play.Logger;
 
 import java.util.Arrays;
@@ -58,10 +57,10 @@ public class IgsMoves implements TelnetOutputListener {
 
         if (retrieveMoves) {
             if (line.equals(OBSERVED)) { // ignore flag output for observed move
-                Logger.debug("end of observed");
+                Logger.trace("end of observed");
                 return true;
             } else if (line.equals(OK) || line.equals(MOVE_LIST_OK)) { // all moves read
-                Logger.debug("move list of %s retrieved", status.getId());
+                Logger.trace("move list of %s retrieved", status.getId());
                 retrieveMoves = false;
                 return false;
             }
@@ -71,7 +70,7 @@ public class IgsMoves implements TelnetOutputListener {
         Matcher gsm = GAME_STATUS.matcher(line);
         if (gsm.matches()) {
             status = mapGameStatus(gsm);
-            Logger.debug("game status: " + line);
+            Logger.trace("game status: " + line);
             retrieveMoves = true;
             return true;
         }
@@ -83,7 +82,7 @@ public class IgsMoves implements TelnetOutputListener {
         if (mpm.matches()) {
 
             int number = Integer.parseInt(mpm.group(1));
-            BlackOrWhite player = BlackOrWhite.get(mpm.group(2));
+            String player = mpm.group(2);
 
             List<String> list = Arrays.asList(mpm.group(3).split(" "));
             LinkedList<String> stones = new LinkedList<String>(list);
@@ -95,7 +94,7 @@ public class IgsMoves implements TelnetOutputListener {
             String[] prisoners = stones.toArray(new String[stones.size()]);
 
             GamePlayerStatus gps;
-            if (player == BlackOrWhite.WHITE) {
+            if (player == "W") {
                 gps = status.getWhite();
             } else {
                 gps = status.getBlack();
@@ -106,7 +105,7 @@ public class IgsMoves implements TelnetOutputListener {
             int byo = gps.getByo();
 
             storage.addMove(server, game, number, player, coordinate, seconds, byo, prisoners);
-            Logger.debug("game %s move %s", game, line);
+            Logger.trace("game %s move %s", game, line);
             return true;
         }
 

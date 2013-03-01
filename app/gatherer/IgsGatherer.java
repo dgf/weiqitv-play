@@ -120,7 +120,7 @@ public class IgsGatherer implements WeiqiGameGatherer {
     }
 
     @Override
-    public void observce(String id) {
+    public void observe(String id) {
         if (games.contains(id)) {
             Logger.info("update game %s moves", id);
             send(MOVES, id);
@@ -184,7 +184,7 @@ public class IgsGatherer implements WeiqiGameGatherer {
     }
 
     @Override
-    public void unObservce(String id) {
+    public void unObserve(String id) {
         games.remove(id);
         send(UNOBSERVE_GAME, id);
     }

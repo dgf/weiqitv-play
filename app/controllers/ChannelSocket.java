@@ -16,8 +16,8 @@ public class ChannelSocket extends WebSocketController {
                 Logger.info("Waiting for next change... %s", number);
                 ChannelEvent event = await(stream.nextEvent());
                 if (event != null) {
-                    Logger.info("publish event %s to channel %s subscribers", event.getClass(),
-                            number);
+                    Logger.info("publish event %s to channel %s subscribers", //
+                            event.getClass(), number);
                     outbound.sendJson(event);
                 }
             } catch (Exception e) {

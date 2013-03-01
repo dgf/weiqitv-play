@@ -18,8 +18,6 @@ GET     /admin                     Admin.index
 GET     /admin/games               Admin.games
 GET     /admin/reset               Admin.reset
 GET     /gatherer/observe          Admin.observe
-GET     /gatherer/start            Admin.start
-GET     /gatherer/stop             Admin.stop
 GET     /gatherer/toggle           Admin.toggle
 
 # Ignore favicon requests

@@ -4,10 +4,12 @@ import gatherer.IgsGatherer;
 import gatherer.IgsOption;
 import gatherer.WeiqiGameGatherer;
 import gatherer.WeiqiStorage;
+import groovy.util.ResourceConnector;
 import jobs.CreateGame;
 import jobs.CreateMove;
-import jobs.SaveGameResult;
+import jobs.SaveResult;
 import models.BlackOrWhite;
+import models.GameServer;
 import play.Logger;
 
 public class GathererService implements WeiqiStorage {
@@ -17,33 +19,29 @@ public class GathererService implements WeiqiStorage {
     private final WeiqiGameGatherer igs;
 
     private GathererService() {
-        Logger.debug("start gatherer service");
+        Logger.info("start gatherer service");
         igs = new IgsGatherer(this);
     }
 
-    public void startGatherer(String server, int port) {
-        Logger.info("start gatherer %s:%s", server, port);
-        igs.setServer(server, port);
-        igs.connect();
-        igs.loginAnonymous();
-        igs.start();
+    public void start() {
+        GameServer gs = GameServer.all().first();
+        if (gs == null) {
+            Logger.warn("please configure a game server");
+        } else {
+            Logger.info("start gatherer %s:%s", gs.host, gs.port);
+            igs.setServer(gs.host, gs.port);
+            igs.connect();
+            igs.loginAnonymous();
+            igs.start();
+        }
     }
 
-    public void restartGatherer(String server, int port) {
-        Logger.info("restart gatherer %s:%s", server, port);
-        stopGatherer();
-        startGatherer(server, port);
-    }
-
-    public void stopGatherer() {
-        Logger.info("stop gatherer");
-        igs.stop();
-        igs.logout();
-        igs.disconnect();
+    public boolean isActive() {
+        return igs.isConnected() && igs.isLoggedIn();
     }
 
     public void observe(String number) {
-        igs.observce(number);
+        igs.observe(number);
     }
 
     public void toggle(IgsOption option) {
@@ -58,13 +56,13 @@ public class GathererService implements WeiqiStorage {
     }
 
     @Override
-    public void addMove(String server, String onlineId, int number, BlackOrWhite player,
+    public void addMove(String server, String onlineId, int number, String player,
                         String coordinate, int seconds, int byo, String... prisoners) {
         new CreateMove(server, onlineId, number, player, coordinate, seconds, byo, prisoners).now();
     }
 
     @Override
     public void addResult(String server, String game, String result) {
-        new SaveGameResult(server, game, result).now();
+        new SaveResult(server, game, result).now();
     }
 }

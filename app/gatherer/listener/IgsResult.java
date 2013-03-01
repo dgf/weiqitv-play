@@ -48,7 +48,7 @@ public class IgsResult implements TelnetOutputListener {
             retrieveResult = true;
             game = m.group(2);
             result = m.group(5);
-            Logger.debug("result %s", line);
+            Logger.trace("result %s", line);
             return true;
         }
 

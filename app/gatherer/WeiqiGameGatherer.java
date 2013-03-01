@@ -19,7 +19,7 @@ public interface WeiqiGameGatherer {
 
     void logout();
 
-    void observce(String id);
+    void observe(String id);
 
     void setServer(String server, int port);
 
@@ -27,7 +27,7 @@ public interface WeiqiGameGatherer {
 
     void stop();
 
-    void unObservce(String id);
+    void unObserve(String id);
 
     void toggle(IgsOption option);
 

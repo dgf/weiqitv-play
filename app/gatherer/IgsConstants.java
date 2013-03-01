@@ -3,7 +3,7 @@ package gatherer;
 public interface IgsConstants {
 
     public static final String IGS_SERVER = "igs.joyjoy.net";
-    public static final int IGS_PORT = 7777;
+    public static final int IGS_PORT = 6969;
 
     // client
     static final String LOGIN_PROMPT = "Login: ";

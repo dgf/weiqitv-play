@@ -1,7 +1,6 @@
 package gatherer.listener;
 
 import gatherer.WeiqiStorage;
-import models.BlackOrWhite;
 
 class WeiqiStorageMock implements WeiqiStorage {
     boolean gameCalled = false;
@@ -9,7 +8,7 @@ class WeiqiStorageMock implements WeiqiStorage {
     boolean resultCalled = false;
 
     @Override
-    public void addMove(String server, String id, int number, BlackOrWhite player,
+    public void addMove(String server, String id, int number, String player,
                         String coordinate, int seconds, int byo, String... prisoners) {
         moveCalled = true;
     }

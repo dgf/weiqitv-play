@@ -9,13 +9,13 @@ import play.jobs.Job;
 
 import java.util.List;
 
-public class SaveGameResult extends Job {
+public class SaveResult extends Job {
 
     private final String onlineId;
     private final String server;
     private final String result;
 
-    public SaveGameResult(String server, String onlineId, String result) {
+    public SaveResult(String server, String onlineId, String result) {
         this.server = server;
         this.onlineId = onlineId;
         this.result = result;
@@ -25,14 +25,14 @@ public class SaveGameResult extends Job {
     public void doJob() throws Exception {
         Game game = Game.findByServerHostAndOnlineId(server, onlineId);
         if (game == null) {
-            Logger.error("game %s %s doesn't exists", server, onlineId);
+            Logger.warn("game %s %s doesn't exists", server, onlineId);
             return;
         } else {
             if (result != null && result.isEmpty() == false) {
                 game.result = result;
                 game.onlineId = null;
                 game.save();
-                Logger.debug("save game %s result ", onlineId, result);
+                Logger.info("save game %s result %s", onlineId, result);
 
                 // publish result
                 ResultEvent re = new ResultEvent();
@@ -42,10 +42,12 @@ public class SaveGameResult extends Job {
                 // initialize channel update
                 List<Channel> channels = Channel.findByGame(game);
                 for (Channel channel : channels) {
-                    new ShowNextGameOnChannel(channel.number).in("10s");
+                    if (channel.next != null) {
+                        new NextGame(channel.number).in("10s");
+                    }
                 }
 
-                // remove upcoming
+                // remove upcoming references of this game
                 channels = Channel.findByNext(game);
                 for (Channel channel : channels) {
                     channel.next = null;

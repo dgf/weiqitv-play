@@ -3,7 +3,7 @@ package gatherer.listener;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-class GamePlayerStatus {
+public class GamePlayerStatus {
 
     private int seconds;
 

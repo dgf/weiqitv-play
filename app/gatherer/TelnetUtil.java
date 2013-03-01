@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,9 +56,12 @@ class TelnetUtil extends Thread {
         char lastChar = pattern.charAt(pattern.length() - 1);
         char ch = readChar();
         while (true) {
+            if (ch == 65535) { // connection closed
+                throw new IllegalArgumentException(sb.toString());
+            }
             sb.append(ch);
             if (ch == lastChar && sb.toString().endsWith(pattern)) {
-                Logger.debug("readed: %s", sb);
+                Logger.debug("read: %s", sb);
                 return sb.toString();
             }
             ch = readChar();

@@ -28,12 +28,12 @@ public class IgsMoveTest extends UnitTest {
     public void handicap() throws Exception {
         WeiqiStorageMock storageMock = new WeiqiStorageMock() {
             @Override
-            public void addMove(String server, String id, int number, BlackOrWhite player,
+            public void addMove(String server, String id, int number, String player,
                                 String coordinate, int seconds, int byo, String... prisoners) {
                 assertEquals("server:port", server);
                 assertEquals("43", id);
                 assertEquals(0, number);
-                assertEquals(BlackOrWhite.BLACK, player);
+                assertEquals(BlackOrWhite.BLACK, BlackOrWhite.get(player));
                 assertEquals("HC2", coordinate);
                 assertEquals(546, seconds);
                 assertEquals(14, byo);
@@ -53,9 +53,9 @@ public class IgsMoveTest extends UnitTest {
     public void pass() throws Exception {
         WeiqiStorageMock storageMock = new WeiqiStorageMock() {
             @Override
-            public void addMove(String server, String id, int number, BlackOrWhite player,
+            public void addMove(String server, String id, int number, String player,
                                 String coordinate, int seconds, int byo, String... prisoners) {
-                assertEquals(BlackOrWhite.WHITE, player);
+                assertEquals(BlackOrWhite.WHITE, BlackOrWhite.get(player));
                 assertEquals("Pass", coordinate);
             }
         };

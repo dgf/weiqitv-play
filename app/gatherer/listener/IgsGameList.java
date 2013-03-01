@@ -44,13 +44,13 @@ public class IgsGameList implements TelnetOutputListener {
     @Override
     public synchronized boolean notify(String line) {
         if (retrieveGames && line.equals(OK)) {
-            Logger.debug("game list retrieved");
+            Logger.trace("game list retrieved");
             retrieveGames = false;
             return false;
         }
 
         if (line.equals(GAME_HEADER)) {
-            Logger.debug("start game list reading");
+            Logger.trace("start game list reading");
             retrieveGames = true;
             return true;
         }
@@ -73,7 +73,7 @@ public class IgsGameList implements TelnetOutputListener {
 
             storage.addGame(server, id, white, wRank, black, bRank, //
                     turn, size, handicap, komi, byo, observer);
-            Logger.debug("game %s: %s", id, line);
+            Logger.trace("game %s: %s", id, line);
             return true;
         }
     }

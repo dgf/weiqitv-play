@@ -72,7 +72,7 @@ Handicap(h6):
 
 GameServer(igs):
     host: igs.joyjoy.net
-    port: 7777
+    port: 6969
 
 Criteria(proGames):
     name:        Professional games

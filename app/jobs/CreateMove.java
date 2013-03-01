@@ -26,12 +26,12 @@ public class CreateMove extends Job {
     private final int byo;
     private final String[] prisoners;
 
-    public CreateMove(String server, String onlineId, int number, BlackOrWhite player,
+    public CreateMove(String server, String onlineId, int number, String player,
                       String coordinate, int seconds, int byo, String... prisoners) {
         this.server = server;
         this.onlineId = onlineId;
         this.number = number;
-        this.player = player;
+        this.player = BlackOrWhite.get(player);
         this.coordinate = coordinate;
         this.seconds = seconds;
         this.byo = byo;
@@ -42,7 +42,7 @@ public class CreateMove extends Job {
     public void doJob() throws Exception {
         Game game = Game.findByServerHostAndOnlineId(server, onlineId);
         if (game == null) {
-            Logger.error("game %s %s doesn't exists", server, onlineId);
+            Logger.warn("game %s %s doesn't exists", server, onlineId);
             return;
         }
 
@@ -50,31 +50,28 @@ public class CreateMove extends Job {
         if (m != null) { // exist!
             Logger.warn("move %s exist with id %s", m, m.id);
         } else {
-            Move move = null;
-            // add handicap moves
-            if (coordinate.startsWith(IgsMoves.HANDICAP_PREFIX)) {
-                String count = coordinate.substring(IgsMoves.HANDICAP_PREFIX.length());
-                List<String> stones = Handicap.getStones(game.size, Integer.parseInt(count));
-                for (String stone : stones) {
-                    move = createMove(game, stone);
-                    updateChannelSockets(game, move);
-                }
-            } else { // add single move
-                move = createMove(game, coordinate);
-                updateChannelSockets(game, move);
-            }
-
             // update game turn count
             if (game.turn < number) {
                 game.turn = number;
                 game.save();
+            }
+            if (coordinate.startsWith(IgsMoves.HANDICAP_PREFIX)) {
+                // add handicap moves
+                String count = coordinate.substring(IgsMoves.HANDICAP_PREFIX.length());
+                List<String> stones = Handicap.getStones(game.size, Integer.parseInt(count));
+                for (String stone : stones) {
+                    updateChannelSockets(game, createMove(game, stone));
+                }
+            } else {
+                // add single move
+                updateChannelSockets(game, createMove(game, coordinate));
             }
         }
     }
 
     private Move createMove(Game game, String coordinate) {
         Move move = move(game, number, player, coordinate, seconds, byo, prisoners);
-        Logger.debug("create move %s", move);
+        Logger.info("create move %s", move);
         return move;
     }
 
@@ -87,7 +84,7 @@ public class CreateMove extends Job {
         me.time = move.seconds;
         me.byo = move.byo;
 
-        Logger.debug("publish game move %s", this);
+        Logger.info("publish game move %s", this);
         ChannelList.publishEvent(game, me);
     }
 }

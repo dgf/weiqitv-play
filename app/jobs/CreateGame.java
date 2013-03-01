@@ -1,9 +1,13 @@
 package jobs;
 
+import models.Channel;
+import models.Criteria;
 import models.Game;
 import models.GameServer;
 import play.Logger;
 import play.jobs.Job;
+
+import java.util.List;
 
 import static models.WeiqiJpaFactory.game;
 
@@ -43,8 +47,7 @@ public class CreateGame extends Job {
         GameServer gameServer = GameServer.findByHost(server);
         Game actual = Game.findByServerAndOnlineId(gameServer, onlineId);
         if (actual != null) {
-            Logger.error("game %s %s exists", actual.server, actual.onlineId);
-            return;
+            Logger.warn("game %s %s exists", actual.server, actual.onlineId);
         }
 
         updateNextChannelGames(createGame(gameServer));
@@ -61,12 +64,30 @@ public class CreateGame extends Job {
         game.byo = byo;
         game.observer = observer;
 
-        Logger.debug("save game %s", game);
+        Logger.info("save game %s", game);
         return game.save();
     }
 
+    /**
+     * match a game with each criteria and update related channels
+     * TODO use an upcoming game list per channel
+     */
     private void updateNextChannelGames(Game game) {
-        Logger.info("%s created", game);
-        new CheckAsNextChannelGame(game).now();
+
+        List<Criteria> criteriaList = Criteria.all().fetch();
+        for (Criteria criteria : criteriaList) {
+            Logger.debug("%s matches? %s", criteria.name, game);
+            if (criteria.matches(game)) {
+                Logger.debug("%s matches!", criteria.name);
+                List<Channel> channels = Channel.findByCriteria(criteria);
+                for (Channel channel : channels) {
+                    if (game.isBetterThan(channel.next)) {
+                        channel.next = game;
+                        Logger.info("%s is the next game on channel %s", game, channel.title);
+                        channel.save();
+                    }
+                }
+            }
+        }
     }
 }

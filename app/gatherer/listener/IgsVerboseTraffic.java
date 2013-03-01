@@ -12,7 +12,7 @@ public class IgsVerboseTraffic implements TelnetOutputListener {
         if (line == null || line.equals("") || line.equals(OK)) {
             // ignore it
         } else {
-            Logger.debug("#### OTHER FOO  #### " + line);
+            Logger.trace("telnet message ignored, line: " + line);
         }
         return false;
     }

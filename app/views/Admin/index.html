@@ -9,8 +9,6 @@ Welcome ${user}!
 
 <div>
   <span>Gatherer</span>
-  <a href="@{Admin.start}">start</a>
-  <a href="@{Admin.stop}">stop</a>
   #{form @Admin.toggle(option)}
     #{select 'option', items:gatherer.IgsOption.values() /}
     <input type="submit" value="toggle" />

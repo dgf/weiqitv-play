@@ -8,11 +8,14 @@ import models.Game;
 import play.Logger;
 import play.jobs.Job;
 
-public class ShowNextGameOnChannel extends Job {
+/**
+ * start gathering and watching the next game of a channel
+ */
+public class NextGame extends Job {
 
     private final int number;
 
-    public ShowNextGameOnChannel(int number) {
+    public NextGame(int number) {
         this.number = number;
     }
 

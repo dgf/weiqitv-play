@@ -1,7 +1,6 @@
 package gatherer.listener;
 
 import gatherer.WeiqiStorage;
-import models.BlackOrWhite;
 import org.junit.Test;
 import play.test.UnitTest;
 
@@ -17,7 +16,7 @@ public class IgsGameTest extends UnitTest {
         String line = "7 [1] white [ 3p ] vs. black [ 1p ] (2 3 4 5.5 6 I) ( 7)";
         WeiqiStorage storageMock = new WeiqiStorageMock() {
             @Override
-            public void addMove(String server, String id, int number, BlackOrWhite player,
+            public void addMove(String server, String id, int number, String player,
                                 String coordinate, int seconds, int byo, String... prisoners) {
                 fail("move in a game test?");
             }
