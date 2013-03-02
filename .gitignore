@@ -2,7 +2,7 @@
 eclipse/
 .idea/
 lib/
-logs/
+log/*.log*
 modules/
 nbproject/
 .project
