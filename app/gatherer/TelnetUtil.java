@@ -151,7 +151,7 @@ class TelnetUtil extends Thread {
             String line;
             try {
                 line = in.readLine();
-                Logger.debug("read line: %s", line);
+                Logger.trace("read line: %s", line);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

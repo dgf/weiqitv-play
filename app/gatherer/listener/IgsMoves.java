@@ -57,11 +57,12 @@ public class IgsMoves implements TelnetOutputListener {
 
         if (retrieveMoves) {
             if (line.equals(OBSERVED)) { // ignore flag output for observed move
-                Logger.trace("end of observed");
+                Logger.trace("end observing");
                 return true;
             } else if (line.equals(OK) || line.equals(MOVE_LIST_OK)) { // all moves read
                 Logger.trace("move list of %s retrieved", status.getId());
                 retrieveMoves = false;
+                status = null;
                 return false;
             }
         }
@@ -94,7 +95,7 @@ public class IgsMoves implements TelnetOutputListener {
             String[] prisoners = stones.toArray(new String[stones.size()]);
 
             GamePlayerStatus gps;
-            if (player == "W") {
+            if (player.equals("W")) {
                 gps = status.getWhite();
             } else {
                 gps = status.getBlack();
@@ -105,7 +106,7 @@ public class IgsMoves implements TelnetOutputListener {
             int byo = gps.getByo();
 
             storage.addMove(server, game, number, player, coordinate, seconds, byo, prisoners);
-            Logger.trace("game %s move %s", game, line);
+            Logger.trace("game %s move %s %s", game, line, seconds);
             return true;
         }
 
