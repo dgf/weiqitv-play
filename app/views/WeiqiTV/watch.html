@@ -11,107 +11,16 @@ size = game.size.length;
 handi = game.handicap.stones;
 }%
 
+#{set 'moreScripts'}
 <script type="text/javascript">
-
-var player = 'black';
-var other = 'white';
-
-function viewPrisoner(tPlayer, coordinate) {
-  // remove stone
-  $('#' + coordinate).removeClass('white black').addClass('empty').empty();
-  // update prisoner list of player
-  var dl = $('#' + tPlayer + '_prisoners');
-  dl.append('<dd></dd>');
-  // update prisoner count
-  var dt = $('#' + tPlayer + '_prisoner_count');
-  var count = parseInt(dt.text());
-  dt.text(count + 1);
+var listAction = #{jsAction @WeiqiTV.turns(':game') /};
+CHANNEL = {
+    moves: function() { return listAction({ game: ${game.id} }) },
+    socket: new WebSocket('@@{ChannelSocket.stream(channel.number)}')
 }
-
-function updateTime() {
-  var time = $('#' + other + '_time').text();
-  $('#' + other + '_time').empty().append(parseInt(time) - 1);
-//  alert("other " + other);
-}
-
-$(document).ready(function() {
-  setInterval(updateTime, 1000);
-  // event socket callback
-  var display = function(event) {
-    $('#commentList').prepend('<li class="igs">' + event + '</li>');
-    eval("e = " + event);
-    switch(e.type) {
-      case "move":
-        player = e.player.toLowerCase();
-        other = player == 'black' ? 'white' : 'black';
-        // replace last move
-        $('.' + other + 'last').removeClass(other + 'last').addClass(other);
-        // show stone and number
-        $('#' + e.coordinate).removeClass('empty black white ko')
-          .addClass(player + 'last').empty();
-        // remove prisoners
-        $.each(e.prisoners, function(p, prisoner) {
-            viewPrisoner(e.player, prisoner);
-        });
-        // set player infos
-        $('#' + player + '_time').empty().append(e.time);
-        $('#' + player + '_byo').empty().append(e.byo);
-        // set game info
-        $('#turn').empty().append(e.coordinate);
-        break;
-      case "message":
-        // show broadcast or result
-        $('#result').empty().append(e.message).css('visibility','visible');
-        break;
-      case "next":
-        // black the whole view for next game
-        $('table tr td div').removeClass('empty black white ko').addClass('empty');
-        $('#result').empty().css('visibility','hidden');
-
-        $('#game').empty().append(e.game);
-        $('#turn').empty().append(e.turn);
-        $('#white_name').empty().append(e.white);
-        $('#white_time').empty().append(e.wTime);
-        $('#white_prisoner_count').empty().append(0);
-        $('#white_prisoners dd').remove();
-        $('#black_name').empty().append(e.black);
-        $('#black_time').empty().append(e.wTime);
-        $('#black_prisoner_count').empty().append(0);
-        $('#black_prisoners dd').remove();
-
-        $('#handicap').empty().append(e.handicap);
-        $('#byo').empty().append(e.byo);
-        $('#komi').empty().append(e.komi);
-        break;
-      default:
-        alert("unknown socket event " + event);
-        break;
-    }
-  }
-
-  // create web socket
-  var socket = new WebSocket('@@{ChannelSocket.stream(channel.number)}');
-  socket.onmessage = function(event) { display(event.data); }
-  
-  // initialize board
-  
-  var listAction = #{jsAction @WeiqiTV.turns(':game') /};
-  $.getJSON(listAction({ game: ${game.id} }), function(data) {
-    $.each(data, function(key, turn) {
-      if(turn.number == 0) { alert(data); }
-      // set actual move
-      $("#" + turn.coordinate).removeClass('empty').addClass(turn.player);
-      // blank prisoners
-      if(turn.prisoners && turn.prisoners.length) {
-        $.each(turn.prisoners, function(p, prisoner) {
-          viewPrisoner(turn.player, prisoner);
-        })
-      }
-    });
-  });
-});
-
 </script>
+#{script 'watch.js' /}
+#{/set}
 
 <!--Channel-->
 <div id="channel">
@@ -132,7 +41,7 @@ $(document).ready(function() {
     <div id="C${nr}" class="empty"></div>
   </td>
   <td class="${size != 9 && (nr == 4 || nr == 10 || nr == 16) ? 'hoshi' : 'blank'}">
-    <div id="D${nr}" class=empty"></div>
+    <div id="D${nr}" class="empty"></div>
   </td>
   <td class="blank">
     <div id="E${nr}" class="empty"></div>
@@ -156,7 +65,7 @@ $(document).ready(function() {
     <div id="J${nr}" class="empty"></div>
   </td>
   <td class="${nr == 4 || nr == 10 || nr == 16 ? 'hoshi' : 'blank'}">
-    <div id="K${nr}" class="emtpy"></div>
+    <div id="K${nr}" class="empty"></div>
   </td>
   <td class="blank">
     <div id="L${nr}" class="empty"></div>
