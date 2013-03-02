@@ -8,6 +8,7 @@ import models.Game;
 import models.Handicap;
 import models.Move;
 import models.Prisoner;
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import play.Logger;
 import play.jobs.Job;
 
@@ -72,6 +73,7 @@ public class CreateMove extends Job {
     private Move createMove(Game game, String coordinate) {
         Move move = move(game, number, player, coordinate, seconds, byo, prisoners);
         Logger.info("create move %s", move);
+        Logger.debug("create move %s", ReflectionToStringBuilder.toString(move));
         return move;
     }
 
@@ -84,7 +86,7 @@ public class CreateMove extends Job {
         me.time = move.seconds;
         me.byo = move.byo;
 
-        Logger.info("publish game move %s", this);
+        Logger.info("publish game move %s", me);
         ChannelList.publishEvent(game, me);
     }
 }
